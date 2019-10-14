@@ -1,0 +1,10 @@
+C:\Users\Chu\Documents\SharpDevelop Projects\Proyecto Mineria de Datos\Proyecto Mineria de Datos\bin\Debug\Proyecto Mineria de Datos.exe.config
+C:\Users\Chu\Documents\SharpDevelop Projects\Proyecto Mineria de Datos\Proyecto Mineria de Datos\bin\Debug\Proyecto Mineria de Datos.exe
+C:\Users\Chu\Documents\SharpDevelop Projects\Proyecto Mineria de Datos\Proyecto Mineria de Datos\bin\Debug\Proyecto Mineria de Datos.pdb
+C:\Users\Chu\Documents\SharpDevelop Projects\Proyecto Mineria de Datos\Proyecto Mineria de Datos\obj\Debug\Proyecto Mineria de Datos.csprojResolveAssemblyReference.cache
+C:\Users\Chu\Documents\SharpDevelop Projects\Proyecto Mineria de Datos\Proyecto Mineria de Datos\obj\Debug\Proyecto Mineria de Datos.exe
+C:\Users\Chu\Documents\SharpDevelop Projects\Proyecto Mineria de Datos\Proyecto Mineria de Datos\obj\Debug\Proyecto Mineria de Datos.pdb
+C:\Users\Chu\Documents\SharpDevelop Projects\Proyecto Mineria de Datos\Proyecto Mineria de Datos\obj\Debug\Proyecto_Mineria_de_Datos.SplashScreenForm.resources
+C:\Users\Chu\Documents\SharpDevelop Projects\Proyecto Mineria de Datos\Proyecto Mineria de Datos\obj\Debug\Proyecto Mineria de Datos.csproj.GenerateResource.Cache
+C:\Users\Chu\Documents\SharpDevelop Projects\Proyecto Mineria de Datos\Proyecto Mineria de Datos\obj\Debug\Proyecto_Mineria_de_Datos.MainForm.resources
+C:\Users\Chu\Documents\SharpDevelop Projects\Proyecto Mineria de Datos\Proyecto Mineria de Datos\obj\Debug\Proyecto_Mineria_de_Datos.AcercaDeForm.resources
