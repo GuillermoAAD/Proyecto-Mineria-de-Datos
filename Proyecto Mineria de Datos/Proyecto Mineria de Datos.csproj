@@ -54,6 +54,8 @@
     <Compile Include="AcercaDeForm.Designer.cs">
       <DependentUpon>AcercaDeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="entradaDeDatos.cs" />
+    <Compile Include="formatoCSV.cs" />
     <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>

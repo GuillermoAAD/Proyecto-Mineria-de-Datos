@@ -26,6 +26,7 @@ namespace Proyecto_Mineria_de_Datos
 		private System.Windows.Forms.ToolStripMenuItem limpiezaDeDatosToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem aprendizajeMáquinaToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem acercaDeToolStripMenuItem;
+		private System.Windows.Forms.DataGridView dataGridView1;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -61,7 +62,9 @@ namespace Proyecto_Mineria_de_Datos
 			this.bivariableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.limpiezaDeDatosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.aprendizajeMáquinaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.dataGridView1 = new System.Windows.Forms.DataGridView();
 			this.menuStrip1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -73,7 +76,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.aprendizajeMáquinaToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(481, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(592, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -157,19 +160,35 @@ namespace Proyecto_Mineria_de_Datos
 			this.aprendizajeMáquinaToolStripMenuItem.Size = new System.Drawing.Size(119, 20);
 			this.aprendizajeMáquinaToolStripMenuItem.Text = "Aprendizaje máquina";
 			// 
+			// dataGridView1
+			// 
+			this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+			this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.dataGridView1.Location = new System.Drawing.Point(0, 118);
+			this.dataGridView1.Name = "dataGridView1";
+			this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+			this.dataGridView1.Size = new System.Drawing.Size(592, 255);
+			this.dataGridView1.TabIndex = 1;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(481, 273);
+			this.AutoSize = true;
+			this.ClientSize = new System.Drawing.Size(592, 373);
+			this.Controls.Add(this.dataGridView1);
 			this.Controls.Add(this.menuStrip1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "MainForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Proyecto Mineria de Datos";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

@@ -26,12 +26,10 @@ namespace Proyecto_Mineria_de_Datos
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
-			
 			// Esta parte es para el SplashScreen
 			Thread t=new Thread(new ThreadStart(StartForm));
 			t.Start();
 			Thread.Sleep(7000);
-			
 			
 			InitializeComponent();
 			
@@ -59,11 +57,13 @@ namespace Proyecto_Mineria_de_Datos
 		public void alertaSalir()
 		{
 			//FALTA AGREGAR LA PARTE EN LA QUE PREGUNTA SI DESEA GUARDAR LOS CAMBIOS HECHOS
+			//Revisar como saber si se hicieron cambios, tal vez con un bool?
  			
-			if ( MessageBox.Show ( "¿Desea Salir?", "Salir", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 ) == System.Windows.Forms.DialogResult.Yes )
+			if ( MessageBox.Show ( "¿Desea salir?", "Salir", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 ) == System.Windows.Forms.DialogResult.Yes )
  			{
  				this.Close();
 			}
+			
 		}
 		
 		
@@ -71,7 +71,33 @@ namespace Proyecto_Mineria_de_Datos
 		
 		void CargarArchivoToolStripMenuItemClick(object sender, EventArgs e)
 		{
-	
+			entradaDeDatos edd = new entradaDeDatos();
+			//dataGridView1.
+			
+			//if (label1.Text != "No hay datos")
+			if (dataGridView1.Rows.Count != 0)
+			{
+				if ( MessageBox.Show ( "Hay un conjunto de datos en memoria,\n" +
+				                      "¿Desea guardar cambios y cargar uno nuevo?", "Salir", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 ) == System.Windows.Forms.DialogResult.Yes )
+ 				{
+					//agregar codigo para guardar
+					//reinicializar todas las variables
+					
+					//Abre el nuevo archivo y carga en el dataGridView
+					//label1.Text = edd.abrirArchivo();
+					dataGridView1.DataSource = null;
+					dataGridView1.DataSource = edd.abrirArchivo();
+				}
+			}
+			else{
+				dataGridView1.DataSource = edd.abrirArchivo();
+			}
+			
+			//esto agrega el numero de fila como encabezado de filas
+			for(int i = 0; i<dataGridView1.Rows.Count; i++)
+			{
+				dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();
+			}
 		}
 		void GuardarToolStripMenuItemClick(object sender, EventArgs e)
 		{
@@ -95,7 +121,20 @@ namespace Proyecto_Mineria_de_Datos
 			alertaSalir();
 		}
 		
-		
+		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			//alertaSalir(e);
+    		DialogResult dialogo = MessageBox.Show("¿Desea cerrar el programa?",
+               "Cerrar el programa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+    		if (dialogo == DialogResult.No)
+    		{
+        		e.Cancel = true;
+    		}
+    		else
+    		{
+        		e.Cancel = false;
+    		}
+		}
 		
 	}
 }
