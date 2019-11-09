@@ -18,8 +18,21 @@ namespace Proyecto_Mineria_de_Datos
 	/// </summary>
 	public class entradaDeDatos
 	{
+		public string nombreConjuntoDatos;
+		public int cantidadInstancias;
+		public int cantidadAtributos;
+		public int numeroValoresFaltantes;
+		public float proporcionValoresFaltantes;
+		DataTable dt;
+			
 		public entradaDeDatos()
 		{
+			nombreConjuntoDatos = "";
+			cantidadInstancias = 0;
+			cantidadAtributos = 0;
+			numeroValoresFaltantes = 0;
+			proporcionValoresFaltantes = 0;
+			dt = new DataTable();
 		}
 		
 		public DataTable abrirArchivo()
@@ -28,7 +41,7 @@ namespace Proyecto_Mineria_de_Datos
 			String extension = "";
 			String ruta = "";
             //String contenido = "";
-            DataTable dt = new DataTable();
+            //DataTable dt = new DataTable();
             try
             {
                 OpenFileDialog oFD = new OpenFileDialog();
@@ -51,13 +64,16 @@ namespace Proyecto_Mineria_de_Datos
                          	formatoCSV fCSV = new formatoCSV();
                          	
                          	dt = fCSV.abrirCSV(ruta);
-                         	//ruta = extension;
-                		
+                         	nombreConjuntoDatos = System.IO.Path.GetFileNameWithoutExtension(oFD.FileName);
                          }
                          else if(extension == ".DATA" || extension == ".data"  )
                          {
-                         	//ruta = extension;
-                		
+                         	formatoDATA fDATA = new formatoDATA();
+                         	
+                         	fDATA.abrirDATA(ruta);
+                         	dt = fDATA.dtDATA;
+                         	nombreConjuntoDatos= fDATA.relation;
+                         	
                          }
                          
                   	}
@@ -68,7 +84,37 @@ namespace Proyecto_Mineria_de_Datos
                 MessageBox.Show(ex.ToString());
             }
             
+            cantidadInstancias = dt.Rows.Count;
+            cantidadAtributos = dt.Columns.Count;
+            calcularValoresFaltantes();
+            calcularProporcionValoresFaltantes();
+            
             return dt;
 		}
+		
+		public void calcularValoresFaltantes()
+		{
+			for(int i = 0; i < cantidadInstancias; i++)
+			{
+				for(int j = 0; j < cantidadAtributos; j ++)
+				{
+					if(dt.Rows[i][j] == "")
+					{
+						numeroValoresFaltantes ++;
+					}
+				}
+			}
+		}
+		
+		public void calcularProporcionValoresFaltantes()
+		{
+			float numValoresTotales = cantidadInstancias * cantidadAtributos;
+			
+			proporcionValoresFaltantes = numValoresTotales / 100;
+			
+			proporcionValoresFaltantes *= numeroValoresFaltantes;
+			
+		}
+		
 	}
 }

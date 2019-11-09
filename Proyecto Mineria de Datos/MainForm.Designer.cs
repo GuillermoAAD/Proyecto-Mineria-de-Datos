@@ -27,6 +27,16 @@ namespace Proyecto_Mineria_de_Datos
 		private System.Windows.Forms.ToolStripMenuItem aprendizajeMáquinaToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem acercaDeToolStripMenuItem;
 		private System.Windows.Forms.DataGridView dataGridView1;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label labelNombreConjuntoDatos;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label labelCantidadInstancias;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.Label labelCantidadAtributos;
+		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.Label labelNumeroValoresFaltantes;
+		private System.Windows.Forms.Label labelProporcionValoresFaltantes;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -63,6 +73,16 @@ namespace Proyecto_Mineria_de_Datos
 			this.limpiezaDeDatosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.aprendizajeMáquinaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
+			this.label1 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.labelNombreConjuntoDatos = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
+			this.labelCantidadInstancias = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
+			this.labelCantidadAtributos = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
+			this.labelNumeroValoresFaltantes = new System.Windows.Forms.Label();
+			this.labelProporcionValoresFaltantes = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
@@ -76,7 +96,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.aprendizajeMáquinaToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(592, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(892, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -162,22 +182,114 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			// dataGridView1
 			// 
-			this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-			this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.dataGridView1.Location = new System.Drawing.Point(0, 118);
+			this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Right;
+			this.dataGridView1.Location = new System.Drawing.Point(292, 24);
 			this.dataGridView1.Name = "dataGridView1";
-			this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-			this.dataGridView1.Size = new System.Drawing.Size(592, 255);
+			this.dataGridView1.Size = new System.Drawing.Size(600, 549);
 			this.dataGridView1.TabIndex = 1;
+			// 
+			// label1
+			// 
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label1.Location = new System.Drawing.Point(20, 40);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(220, 23);
+			this.label1.TabIndex = 2;
+			this.label1.Text = "Nombre del conjunto de datos:";
+			// 
+			// label2
+			// 
+			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label2.Location = new System.Drawing.Point(19, 87);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(218, 24);
+			this.label2.TabIndex = 4;
+			this.label2.Text = "Cantidad de  instancias:";
+			// 
+			// labelNombreConjuntoDatos
+			// 
+			this.labelNombreConjuntoDatos.Location = new System.Drawing.Point(20, 63);
+			this.labelNombreConjuntoDatos.Name = "labelNombreConjuntoDatos";
+			this.labelNombreConjuntoDatos.Size = new System.Drawing.Size(217, 24);
+			this.labelNombreConjuntoDatos.TabIndex = 5;
+			this.labelNombreConjuntoDatos.Text = "No hay un conjunto de datos cargado.";
+			// 
+			// label4
+			// 
+			this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label4.Location = new System.Drawing.Point(20, 135);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(218, 24);
+			this.label4.TabIndex = 6;
+			this.label4.Text = "Cantidad de  atributos:";
+			// 
+			// labelCantidadInstancias
+			// 
+			this.labelCantidadInstancias.Location = new System.Drawing.Point(19, 111);
+			this.labelCantidadInstancias.Name = "labelCantidadInstancias";
+			this.labelCantidadInstancias.Size = new System.Drawing.Size(118, 24);
+			this.labelCantidadInstancias.TabIndex = 7;
+			this.labelCantidadInstancias.Text = "0";
+			// 
+			// label6
+			// 
+			this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label6.Location = new System.Drawing.Point(19, 183);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(218, 24);
+			this.label6.TabIndex = 8;
+			this.label6.Text = "Numero de valores faltantes:";
+			// 
+			// labelCantidadAtributos
+			// 
+			this.labelCantidadAtributos.Location = new System.Drawing.Point(20, 159);
+			this.labelCantidadAtributos.Name = "labelCantidadAtributos";
+			this.labelCantidadAtributos.Size = new System.Drawing.Size(118, 24);
+			this.labelCantidadAtributos.TabIndex = 9;
+			this.labelCantidadAtributos.Text = "0";
+			// 
+			// label8
+			// 
+			this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label8.Location = new System.Drawing.Point(19, 231);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(249, 24);
+			this.label8.TabIndex = 10;
+			this.label8.Text = "Proporcion de valores faltantes\r\nrespecto a los valores totales:";
+			// 
+			// labelNumeroValoresFaltantes
+			// 
+			this.labelNumeroValoresFaltantes.Location = new System.Drawing.Point(19, 207);
+			this.labelNumeroValoresFaltantes.Name = "labelNumeroValoresFaltantes";
+			this.labelNumeroValoresFaltantes.Size = new System.Drawing.Size(118, 24);
+			this.labelNumeroValoresFaltantes.TabIndex = 11;
+			this.labelNumeroValoresFaltantes.Text = "0";
+			// 
+			// labelProporcionValoresFaltantes
+			// 
+			this.labelProporcionValoresFaltantes.Location = new System.Drawing.Point(19, 268);
+			this.labelProporcionValoresFaltantes.Name = "labelProporcionValoresFaltantes";
+			this.labelProporcionValoresFaltantes.Size = new System.Drawing.Size(118, 23);
+			this.labelProporcionValoresFaltantes.TabIndex = 12;
+			this.labelProporcionValoresFaltantes.Text = "0%";
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
-			this.ClientSize = new System.Drawing.Size(592, 373);
+			this.ClientSize = new System.Drawing.Size(892, 573);
+			this.Controls.Add(this.labelProporcionValoresFaltantes);
+			this.Controls.Add(this.labelNumeroValoresFaltantes);
+			this.Controls.Add(this.label8);
+			this.Controls.Add(this.labelCantidadAtributos);
+			this.Controls.Add(this.label6);
+			this.Controls.Add(this.labelCantidadInstancias);
+			this.Controls.Add(this.label4);
+			this.Controls.Add(this.labelNombreConjuntoDatos);
+			this.Controls.Add(this.label2);
+			this.Controls.Add(this.label1);
 			this.Controls.Add(this.dataGridView1);
 			this.Controls.Add(this.menuStrip1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

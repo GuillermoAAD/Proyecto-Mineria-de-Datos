@@ -24,6 +24,7 @@ namespace Proyecto_Mineria_de_Datos
 		public DataTable abrirCSV(string ruta)
 		{
 			DataTable dtCSV = new DataTable();
+			//Extrae cada linea del archivo y las pone en un arreglo
 			string[] lineas = System.IO.File.ReadAllLines(ruta);
 			
 			//

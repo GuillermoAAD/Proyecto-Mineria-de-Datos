@@ -93,6 +93,19 @@ namespace Proyecto_Mineria_de_Datos
 				dataGridView1.DataSource = edd.abrirArchivo();
 			}
 			
+			labelNombreConjuntoDatos.Text = edd.nombreConjuntoDatos;
+			
+			labelCantidadInstancias.Text = edd.cantidadInstancias.ToString();
+			
+			labelCantidadAtributos.Text = edd.cantidadAtributos.ToString();
+			
+			labelNumeroValoresFaltantes.Text = edd.numeroValoresFaltantes.ToString();
+			
+			//string cadena = edd.proporcionValoresFaltantes.ToString() + "a";
+			labelProporcionValoresFaltantes.Text = edd.proporcionValoresFaltantes.ToString() + "%";
+			
+
+			
 			//esto agrega el numero de fila como encabezado de filas
 			for(int i = 0; i<dataGridView1.Rows.Count; i++)
 			{
