@@ -88,14 +88,14 @@ namespace Proyecto_Mineria_de_Datos
 			return numeroValoresFaltantes;
 		}
 		
-		public float calcularProporcionValoresFaltantes()
+		public double calcularProporcionValoresFaltantes()
 		{
 			int cantidadInstancias = calcularCantidadInstancias();
 			int cantidadAtributos = calcularCantidadAtributos();
 			int numeroValoresFaltantes = calcularValoresFaltantes();
 			
-			float numValoresTotales = cantidadInstancias * cantidadAtributos;
-			float proporcionValoresFaltantes;
+			double numValoresTotales = cantidadInstancias * cantidadAtributos;
+			double proporcionValoresFaltantes;
 			
 			
 			proporcionValoresFaltantes = numeroValoresFaltantes * 100;
@@ -106,7 +106,7 @@ namespace Proyecto_Mineria_de_Datos
 		
 		
 		
-		public float calcularMedia(string encabezadoAtributo)
+		public double calcularMedia(string encabezadoAtributo)
 		{
 			//aqui obtiene el index para el atributo en la lista de encabezados
 			int c = encabezados.IndexOf(encabezadoAtributo);
@@ -116,7 +116,7 @@ namespace Proyecto_Mineria_de_Datos
 			//cuenta las celdas donde si exista un valor
 			int contador = 0;
 			
-			float media = 0;
+			double media = 0;
 			
 			string valorCelda = "";
 			
@@ -125,7 +125,7 @@ namespace Proyecto_Mineria_de_Datos
 				valorCelda = dtConjuntoDatos.Rows[f][c].ToString();
 				if(valorCelda != "" && valorCelda != valorNulo)
 				{
-					media += float.Parse(valorCelda);
+					media += double.Parse(valorCelda);
 					contador++;
 				}
 			}
@@ -134,16 +134,16 @@ namespace Proyecto_Mineria_de_Datos
 			return media;
 		}
 		
-		public float calcularMediana(string encabezadoAtributo)
+		public double calcularMediana(string encabezadoAtributo)
 		{
 			//aqui obtiene el index para el atributo en la lista de encabezados
 			int c = encabezados.IndexOf(encabezadoAtributo);
 			//ese mismo index sirve para sacar la posicion de columna de donde se saccan datos
 			int cantInstancias= calcularCantidadInstancias();
 			
-			float mediana = 0;
+			double mediana = 0;
 			
-			List<float> valores = new List<float>();
+			List<double> valores = new List<double>();
 			
 			string valorCelda = "";
 			
@@ -152,7 +152,7 @@ namespace Proyecto_Mineria_de_Datos
 				valorCelda = dtConjuntoDatos.Rows[f][c].ToString();
 				if(valorCelda != "" && valorCelda != valorNulo)
 				{
-					valores.Add(float.Parse(valorCelda));
+					valores.Add(double.Parse(valorCelda));
 				}
 			}
 			valores.Sort();
@@ -162,22 +162,22 @@ namespace Proyecto_Mineria_de_Datos
 			return mediana;
 		}
 		
-		public float calcularModa(string encabezadoAtributo)
+		public double calcularModa(string encabezadoAtributo)
 		{
 			//aqui obtiene el index para el atributo en la lista de encabezados
 			int c = encabezados.IndexOf(encabezadoAtributo);
 			//ese mismo index sirve para sacar la posicion de columna de donde se saccan datos
 			int cantInstancias= calcularCantidadInstancias();
 			
-			float moda = 0;
+			double moda = 0;
 			
 			int mayor = 0;
 			int pos = 0;
 			
-			List<float> valores = new List<float>();
+			List<double> valores = new List<double>();
 			
 			//van a estar relacionadas los valores de las siguientes dos tablas por su indice
-			List<float> valoresSimples = new List<float>();
+			List<double> valoresSimples = new List<double>();
 			List<int> repeticiones = new List<int>();
 			
 			string valorCelda = "";
@@ -187,7 +187,7 @@ namespace Proyecto_Mineria_de_Datos
 				valorCelda = dtConjuntoDatos.Rows[f][c].ToString();
 				if(valorCelda != "" && valorCelda != valorNulo)
 				{
-					valores.Add(float.Parse(valorCelda));
+					valores.Add(double.Parse(valorCelda));
 				}
 			}
 			valores.Sort();
@@ -223,9 +223,41 @@ namespace Proyecto_Mineria_de_Datos
 			return moda;
 		}
 		
-		public float calcularDesviacionEstandar(string encabezadoAtributo)
+		public double calcularDesviacionEstandar(string encabezadoAtributo)
 		{
-			float desviacionEstandar = 0;
+			double promedio = calcularMedia(encabezadoAtributo);
+			int n = 0;
+			
+			double desviacionEstandar = 0;
+
+			//aqui obtiene el index para el atributo en la lista de encabezados
+			int c = encabezados.IndexOf(encabezadoAtributo);
+			//ese mismo index sirve para sacar la posicion de columna de donde se saccan datos
+			int cantInstancias= calcularCantidadInstancias();
+			
+			double valorElevado = 0;
+			
+			string valorCelda;
+			
+			for(int f = 0; f < cantInstancias; f++)
+			{
+				valorCelda = dtConjuntoDatos.Rows[f][c].ToString();
+				if(valorCelda != "" && valorCelda != valorNulo)
+				{
+					double x = double.Parse(valorCelda);
+					double a = x - promedio;
+					valorElevado = Math.Pow( a, 2 );
+
+					desviacionEstandar += valorElevado;
+						
+					n++;
+				}
+			}
+			
+			desviacionEstandar /= n;
+			
+			desviacionEstandar = Math.Sqrt(desviacionEstandar);
+			
 			return desviacionEstandar;
 		}
 		
