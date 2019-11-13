@@ -10,6 +10,8 @@
     <AssemblyName>Proyecto Mineria de Datos</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
+    <ApplicationIcon>Resources\iconoMineria.ico</ApplicationIcon>
+    <NoWin32Manifest>False</NoWin32Manifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -54,6 +56,11 @@
     <Compile Include="AcercaDeForm.Designer.cs">
       <DependentUpon>AcercaDeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AnalisisEstadisticoUnivariableForm.cs" />
+    <Compile Include="AnalisisEstadisticoUnivariableForm.Designer.cs">
+      <DependentUpon>AnalisisEstadisticoUnivariableForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConjuntoDeDatosExtendido.cs" />
     <Compile Include="entradaDeDatos.cs" />
     <Compile Include="formatoCSV.cs" />
     <Compile Include="formatoDATA.cs" />
@@ -83,6 +90,9 @@
   <ItemGroup>
     <EmbeddedResource Include="AcercaDeForm.resx">
       <DependentUpon>AcercaDeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AnalisisEstadisticoUnivariableForm.resx">
+      <DependentUpon>AnalisisEstadisticoUnivariableForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

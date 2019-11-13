@@ -19,29 +19,22 @@ namespace Proyecto_Mineria_de_Datos
 	public class entradaDeDatos
 	{
 		public string nombreConjuntoDatos;
-		public int cantidadInstancias;
-		public int cantidadAtributos;
-		public int numeroValoresFaltantes;
-		public float proporcionValoresFaltantes;
 		DataTable dt;
+		
+		ConjuntoDeDatosExtendido cdde;
 			
 		public entradaDeDatos()
 		{
 			nombreConjuntoDatos = "";
-			cantidadInstancias = 0;
-			cantidadAtributos = 0;
-			numeroValoresFaltantes = 0;
-			proporcionValoresFaltantes = 0;
 			dt = new DataTable();
+			cdde = new ConjuntoDeDatosExtendido();
 		}
 		
-		public DataTable abrirArchivo()
+		public ConjuntoDeDatosExtendido abrirArchivo()
 		{
-			//String nombreArchivo = "";
 			String extension = "";
 			String ruta = "";
-            //String contenido = "";
-            //DataTable dt = new DataTable();
+			
             try
             {
                 OpenFileDialog oFD = new OpenFileDialog();
@@ -55,13 +48,10 @@ namespace Proyecto_Mineria_de_Datos
                 		ruta = oFD.FileName;
                 		//ruta = System.IO.File.ReadAllText(oFD.FileName);
                 		extension = System.IO.Path.GetExtension(oFD.FileName);
-                		//str = System.IO.File.
-
-                         //dataGrid1.Text = System.IO.File.ReadAllText(oFD.FileName);
-                         
-                         if(extension == ".CSV" || extension == ".csv"  )
-                         {
-                         	formatoCSV fCSV = new formatoCSV();
+ 
+                        if(extension == ".CSV" || extension == ".csv"  )
+                        {
+                       		formatoCSV fCSV = new formatoCSV();
                          	
                          	dt = fCSV.abrirCSV(ruta);
                          	nombreConjuntoDatos = System.IO.Path.GetFileNameWithoutExtension(oFD.FileName);
@@ -74,7 +64,20 @@ namespace Proyecto_Mineria_de_Datos
                          	dt = fDATA.dtDATA;
                          	nombreConjuntoDatos= fDATA.relation;
                          	
-                         }                         
+                         	//estos van adentro porque solo el data posee estos datos
+                         	
+                         	cdde.comentarios = fDATA.comentarios;
+                         	cdde.encabezados = fDATA.encabezados;
+                         	cdde.tiposDatos = fDATA.tiposDatos;
+                         	cdde.dominios = fDATA.dominios;
+                         	cdde.valorNulo = fDATA.missingValue;
+                         	cdde.atributosNumeric = fDATA.atributosNumeric;
+                         	cdde.atributosNominal = fDATA.atributosNominal;                         	
+                         }
+
+                         //Estos se ponen afuera por que el csv y el data comparten ambos atributos
+                         cdde.nombreConjuntoDatos = nombreConjuntoDatos;
+                         cdde.dtConjuntoDatos = dt;
                   	}
                 }
             }
@@ -83,37 +86,8 @@ namespace Proyecto_Mineria_de_Datos
                 MessageBox.Show(ex.ToString());
             }
             
-            cantidadInstancias = dt.Rows.Count;
-            cantidadAtributos = dt.Columns.Count;
-            calcularValoresFaltantes();
-            calcularProporcionValoresFaltantes();
-            
-            return dt;
+            return cdde;
 		}
-		
-		public void calcularValoresFaltantes()
-		{
-			for(int i = 0; i < cantidadInstancias; i++)
-			{
-				for(int j = 0; j < cantidadAtributos; j ++)
-				{
-					if(dt.Rows[i][j] == "")
-					{
-						numeroValoresFaltantes ++;
-					}
-				}
-			}
-		}
-		
-		public void calcularProporcionValoresFaltantes()
-		{
-			float numValoresTotales = cantidadInstancias * cantidadAtributos;
-			
-			proporcionValoresFaltantes = numValoresTotales / 100;
-			
-			proporcionValoresFaltantes *= numeroValoresFaltantes;
-			
-		}
-		
+
 	}
 }

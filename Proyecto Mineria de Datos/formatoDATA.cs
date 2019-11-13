@@ -41,15 +41,21 @@ namespace Proyecto_Mineria_de_Datos
 		//string[] attribute;
 		
 		//Variables que en realidad son los campos  de informacion de attribute
-		List<String> encabezados;
-		List<String> tiposDatos;
-		List<String> dominios;
+		public List<String> encabezados;
+		public List<String> tiposDatos;
+		public List<String> dominios;
 		
 		//@missingValue: Variable global que se utilizará cuando haya valores nulos.
-		string missingValue;
+		public string missingValue;
 		
 		//Base de Datos
 		public DataTable dtDATA;
+		
+		
+		//Para simplificar el trabajo de analisis estadistico dividi los atributos en
+		// numerico y categorico, son los mismos qu eya existen pero separados
+		public List<String> atributosNumeric;
+		public List<String> atributosNominal;
 		
 		public formatoDATA()
 		{
@@ -64,6 +70,8 @@ namespace Proyecto_Mineria_de_Datos
 			
 			dtDATA = new DataTable();
 			
+			this.atributosNumeric = new List<string>();
+			this.atributosNominal = new List<string>();
 		}
 		
 		public void abrirDATA(string ruta)
@@ -115,7 +123,7 @@ namespace Proyecto_Mineria_de_Datos
 						
 						//sacar lineas restantes
 						
-						//Estrayendo datos
+						//Estrayendo datos y metiendolos al datatable
 						i++;
 						while (i < lineas.Length)
 						{
@@ -129,14 +137,12 @@ namespace Proyecto_Mineria_de_Datos
 							}
 							i++;
 							dtDATA.Rows.Add(dr);
-						}
+						}						
 						break;
-						
-						
 					}
-
 					i++;
 				}
+				remplazarCamposVaciosConValorFaltante();
 			}
 		}
 		
@@ -167,7 +173,46 @@ namespace Proyecto_Mineria_de_Datos
 				
 				i++;
 			}
+			separarNumericNominal();
 			
 		}
+		
+		// aqui separamos los atributos numericos y los categoricos
+		// solo se hace con los encabezados
+		private void separarNumericNominal()
+		{
+			int i = 0; //Es un contador para saber que encabezado meter en alguna categoria
+			foreach(string tipo in tiposDatos)
+			{
+				if(tipo == "numeric" )
+				{
+					atributosNumeric.Add(encabezados[i]);
+				}
+				else if(tipo == "nominal")
+				{
+					atributosNominal.Add(encabezados[i]);
+				}
+			}
+		}
+		
+		//Busca los campos que no tengan datos y les ingresa el simbolo 
+		// de valor faltante dado en el archivo DATA
+		private void remplazarCamposVaciosConValorFaltante()
+		{
+			for(int i = 0; i < dtDATA.Rows.Count; i++)
+			{
+				for(int j = 0; j < dtDATA.Columns.Count; j++)
+				{
+					if(dtDATA.Rows[i][j].ToString() == "")
+					{
+						dtDATA.Rows[i][j] = missingValue;
+					}
+				}
+			}
+		}
+		
+		
+		//public 
+		
 	}
 }

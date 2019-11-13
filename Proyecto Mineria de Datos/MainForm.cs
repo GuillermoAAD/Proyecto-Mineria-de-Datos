@@ -20,6 +20,9 @@ namespace Proyecto_Mineria_de_Datos
 	/// </summary>
 	public partial class MainForm : Form
 	{
+		
+		ConjuntoDeDatosExtendido cdde;// 
+		
 		public MainForm()
 		{
 			//
@@ -28,7 +31,7 @@ namespace Proyecto_Mineria_de_Datos
 			// Esta parte es para el SplashScreen
 			Thread t=new Thread(new ThreadStart(StartForm));
 			t.Start();
-			Thread.Sleep(7000);
+			Thread.Sleep(5000);
 			
 			InitializeComponent();
 			
@@ -37,6 +40,8 @@ namespace Proyecto_Mineria_de_Datos
 			
 			this.Show();
 			this.Activate();
+			
+			cdde = new ConjuntoDeDatosExtendido();
 			
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
@@ -71,9 +76,7 @@ namespace Proyecto_Mineria_de_Datos
 		void CargarArchivoToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			entradaDeDatos edd = new entradaDeDatos();
-			//dataGridView1.
 			
-			//if (label1.Text != "No hay datos")
 			if (dataGridView1.Rows.Count != 0)
 			{
 				if ( MessageBox.Show ( "Hay un conjunto de datos en memoria,\n" +
@@ -83,25 +86,32 @@ namespace Proyecto_Mineria_de_Datos
 					//reinicializar todas las variables
 					
 					//Abre el nuevo archivo y carga en el dataGridView
-					//label1.Text = edd.abrirArchivo();
 					dataGridView1.DataSource = null;
-					dataGridView1.DataSource = edd.abrirArchivo();
+					//dataGridView1.DataSource = edd.abrirArchivo();
+					cdde = edd.abrirArchivo();
+					dataGridView1.DataSource = cdde.dtConjuntoDatos;
 				}
 			}
 			else{
-				dataGridView1.DataSource = edd.abrirArchivo();
+				//dataGridView1.DataSource = edd.abrirArchivo();
+				cdde = edd.abrirArchivo();
+					dataGridView1.DataSource = cdde.dtConjuntoDatos;
 			}
 			
-			labelNombreConjuntoDatos.Text = edd.nombreConjuntoDatos;
+			//labelNombreConjuntoDatos.Text = edd.nombreConjuntoDatos;
+			labelNombreConjuntoDatos.Text = cdde.nombreConjuntoDatos;
 			
-			labelCantidadInstancias.Text = edd.cantidadInstancias.ToString();
+			//labelCantidadInstancias.Text = edd.cantidadInstancias.ToString();
+			labelCantidadInstancias.Text = cdde.calcularCantidadInstancias().ToString();
 			
-			labelCantidadAtributos.Text = edd.cantidadAtributos.ToString();
+			//labelCantidadAtributos.Text = edd.cantidadAtributos.ToString();
+			labelCantidadAtributos.Text = cdde.calcularCantidadAtributos().ToString();
 			
-			labelNumeroValoresFaltantes.Text = edd.numeroValoresFaltantes.ToString();
+			//labelNumeroValoresFaltantes.Text = edd.numeroValoresFaltantes.ToString();
+			labelNumeroValoresFaltantes.Text = cdde.calcularValoresFaltantes().ToString();
 			
 			//string cadena = edd.proporcionValoresFaltantes.ToString() + "a";
-			labelProporcionValoresFaltantes.Text = edd.proporcionValoresFaltantes.ToString() + "%";
+			labelProporcionValoresFaltantes.Text = cdde.calcularProporcionValoresFaltantes().ToString() + "%";
 			
 
 			
@@ -111,13 +121,20 @@ namespace Proyecto_Mineria_de_Datos
 				dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();
 			}
 			//Esto valida el que se habiliten los botones de guardar solo cuando se cargue un archivo exitosamente
+			//Y tambien los menus de aanalisis estadistico, limpieza de datos y aprendizaje maquina
 			if(dataGridView1.Rows.Count==0){
 				guardarToolStripMenuItem.Enabled=false;
 				guardarComoToolStripMenuItem.Enabled=false;
+				análisisEstadísticoToolStripMenuItem.Enabled = false;
+				limpiezaDeDatosToolStripMenuItem.Enabled = false;
+				aprendizajeMáquinaToolStripMenuItem.Enabled = false;
 			}
 			else{
 				guardarToolStripMenuItem.Enabled=true;
 				guardarComoToolStripMenuItem.Enabled=true;
+				análisisEstadísticoToolStripMenuItem.Enabled = true;
+				limpiezaDeDatosToolStripMenuItem.Enabled = true;
+				aprendizajeMáquinaToolStripMenuItem.Enabled = true;
 			}
 		}
 		void GuardarToolStripMenuItemClick(object sender, EventArgs e)
@@ -156,6 +173,15 @@ namespace Proyecto_Mineria_de_Datos
     		{
         		e.Cancel = false;
     		}
+		}
+		
+		void UnivariableToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			AnalisisEstadisticoUnivariableForm aeu = new AnalisisEstadisticoUnivariableForm(cdde);
+			//Se inicializa el conjunto de datos que va a haber en el analisis 
+			//estadistico Univariable con el conjunto de este form, para poder 
+			//trabajar con los mismos datos
+			aeu.Show();
 		}
 		
 	}
