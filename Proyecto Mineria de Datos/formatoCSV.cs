@@ -9,6 +9,7 @@
 using System;
 using System.Windows.Forms;
 using System.Data;
+using System.IO;
 
 namespace Proyecto_Mineria_de_Datos
 {
@@ -66,6 +67,68 @@ namespace Proyecto_Mineria_de_Datos
 				
 			}
 			return dtCSV;
+		}
+		public void guardarCSV(DataGridView dataGridView1)
+		{
+			SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+			saveFileDialog1.Filter = "csv files (*.csv)|*.csv";
+
+            if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK
+                && saveFileDialog1.FileName.Length > 0)
+            {
+				//test to see if the DataGridView has any rows
+				DataGridView gridIn = new DataGridView();
+				gridIn = dataGridView1;
+			    if (dataGridView1.RowCount > 0)
+			    {			           
+			       DataGridViewRow dr = new DataGridViewRow();			    
+			       FileInfo t = new FileInfo(saveFileDialog1.FileName);
+                   StreamWriter swOut = t.CreateText();
+			 
+			       //write header rows to csv
+			       for (int i = 0; i <= gridIn.Columns.Count - 1; i++)
+			       {
+			          if (i > 0)
+			          {
+			             swOut.Write(",");
+			          }
+			          swOut.Write(gridIn.Columns[i].HeaderText);
+			       }
+			 
+			       swOut.WriteLine();
+			 
+			       //write DataGridView rows to csv
+			       //------------------------------------			    
+			       for (int j = 0; j <= gridIn.Rows.Count - 2; j++)
+			       {
+			          if (j > 0)
+			          {
+			          swOut.WriteLine();
+			          }
+			 
+			          dr = gridIn.Rows[j];
+			          //----------------------------			       			     
+			          for (int i = 0; i <= gridIn.Columns.Count - 1; i++)
+			          {
+			             if (i > 0)
+			             {
+			                swOut.Write(",");
+			             }						             		           
+			             string valor = dr.Cells[i].EditedFormattedValue.ToString();
+			             //replace comma's with spaces
+			             valor = valor.Replace(',', ' ');
+			             //replace embedded newlines with spaces
+			             valor = valor.Replace(Environment.NewLine, " ");
+			 
+			             swOut.Write(valor);
+			          }
+			       }
+			       swOut.Close();					
+			    }
+			}
+			else{
+				MessageBox.Show("No se pudo crear el archivo. Intente de Nuevo");
+			}
 		}
 	}
 }

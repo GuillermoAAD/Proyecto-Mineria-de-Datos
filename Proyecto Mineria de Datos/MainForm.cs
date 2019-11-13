@@ -13,7 +13,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
 namespace Proyecto_Mineria_de_Datos
 {
 	/// <summary>
@@ -111,10 +110,20 @@ namespace Proyecto_Mineria_de_Datos
 			{
 				dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();
 			}
+			//Esto valida el que se habiliten los botones de guardar solo cuando se cargue un archivo exitosamente
+			if(dataGridView1.Rows.Count==0){
+				guardarToolStripMenuItem.Enabled=false;
+				guardarComoToolStripMenuItem.Enabled=false;
+			}
+			else{
+				guardarToolStripMenuItem.Enabled=true;
+				guardarComoToolStripMenuItem.Enabled=true;
+			}
 		}
 		void GuardarToolStripMenuItemClick(object sender, EventArgs e)
 		{
-	
+			formatoCSV guardar = new formatoCSV();
+			guardar.guardarCSV(dataGridView1);
 		}
 		
 		void GuardarComoToolStripMenuItemClick(object sender, EventArgs e)

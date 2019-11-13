@@ -74,8 +74,7 @@ namespace Proyecto_Mineria_de_Datos
                          	dt = fDATA.dtDATA;
                          	nombreConjuntoDatos= fDATA.relation;
                          	
-                         }
-                         
+                         }                         
                   	}
                 }
             }

@@ -17,8 +17,8 @@ namespace Proyecto_Mineria_de_Datos
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem entradaDeDatosToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem cargarArchivoToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem guardarToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem guardarComoToolStripMenuItem;
+		public System.Windows.Forms.ToolStripMenuItem guardarToolStripMenuItem;
+		public System.Windows.Forms.ToolStripMenuItem guardarComoToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem análisisEstadísticoToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem univariableToolStripMenuItem;
@@ -90,10 +90,10 @@ namespace Proyecto_Mineria_de_Datos
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.entradaDeDatosToolStripMenuItem,
-			this.análisisEstadísticoToolStripMenuItem,
-			this.limpiezaDeDatosToolStripMenuItem,
-			this.aprendizajeMáquinaToolStripMenuItem});
+									this.entradaDeDatosToolStripMenuItem,
+									this.análisisEstadísticoToolStripMenuItem,
+									this.limpiezaDeDatosToolStripMenuItem,
+									this.aprendizajeMáquinaToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(892, 24);
@@ -103,81 +103,83 @@ namespace Proyecto_Mineria_de_Datos
 			// entradaDeDatosToolStripMenuItem
 			// 
 			this.entradaDeDatosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.cargarArchivoToolStripMenuItem,
-			this.guardarToolStripMenuItem,
-			this.guardarComoToolStripMenuItem,
-			this.acercaDeToolStripMenuItem,
-			this.salirToolStripMenuItem});
+									this.cargarArchivoToolStripMenuItem,
+									this.guardarToolStripMenuItem,
+									this.guardarComoToolStripMenuItem,
+									this.acercaDeToolStripMenuItem,
+									this.salirToolStripMenuItem});
 			this.entradaDeDatosToolStripMenuItem.Name = "entradaDeDatosToolStripMenuItem";
-			this.entradaDeDatosToolStripMenuItem.Size = new System.Drawing.Size(102, 20);
+			this.entradaDeDatosToolStripMenuItem.Size = new System.Drawing.Size(107, 20);
 			this.entradaDeDatosToolStripMenuItem.Text = "Entrada de datos";
 			// 
 			// cargarArchivoToolStripMenuItem
 			// 
 			this.cargarArchivoToolStripMenuItem.Name = "cargarArchivoToolStripMenuItem";
-			this.cargarArchivoToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+			this.cargarArchivoToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
 			this.cargarArchivoToolStripMenuItem.Text = "Cargar archivo";
 			this.cargarArchivoToolStripMenuItem.Click += new System.EventHandler(this.CargarArchivoToolStripMenuItemClick);
 			// 
 			// guardarToolStripMenuItem
 			// 
+			this.guardarToolStripMenuItem.Enabled = false;
 			this.guardarToolStripMenuItem.Name = "guardarToolStripMenuItem";
-			this.guardarToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+			this.guardarToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
 			this.guardarToolStripMenuItem.Text = "Guardar";
 			this.guardarToolStripMenuItem.Click += new System.EventHandler(this.GuardarToolStripMenuItemClick);
 			// 
 			// guardarComoToolStripMenuItem
 			// 
+			this.guardarComoToolStripMenuItem.Enabled = false;
 			this.guardarComoToolStripMenuItem.Name = "guardarComoToolStripMenuItem";
-			this.guardarComoToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+			this.guardarComoToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
 			this.guardarComoToolStripMenuItem.Text = "Guardar como...";
 			this.guardarComoToolStripMenuItem.Click += new System.EventHandler(this.GuardarComoToolStripMenuItemClick);
 			// 
 			// acercaDeToolStripMenuItem
 			// 
 			this.acercaDeToolStripMenuItem.Name = "acercaDeToolStripMenuItem";
-			this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+			this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
 			this.acercaDeToolStripMenuItem.Text = "Acerca de...";
 			this.acercaDeToolStripMenuItem.Click += new System.EventHandler(this.AcercaDeToolStripMenuItemClick);
 			// 
 			// salirToolStripMenuItem
 			// 
 			this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-			this.salirToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+			this.salirToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
 			this.salirToolStripMenuItem.Text = "Salir";
 			this.salirToolStripMenuItem.Click += new System.EventHandler(this.SalirToolStripMenuItemClick);
 			// 
 			// análisisEstadísticoToolStripMenuItem
 			// 
 			this.análisisEstadísticoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.univariableToolStripMenuItem,
-			this.bivariableToolStripMenuItem});
+									this.univariableToolStripMenuItem,
+									this.bivariableToolStripMenuItem});
 			this.análisisEstadísticoToolStripMenuItem.Name = "análisisEstadísticoToolStripMenuItem";
-			this.análisisEstadísticoToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
+			this.análisisEstadísticoToolStripMenuItem.Size = new System.Drawing.Size(121, 20);
 			this.análisisEstadísticoToolStripMenuItem.Text = " Análisis Estadístico";
 			// 
 			// univariableToolStripMenuItem
 			// 
 			this.univariableToolStripMenuItem.Name = "univariableToolStripMenuItem";
-			this.univariableToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.univariableToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
 			this.univariableToolStripMenuItem.Text = "Univariable";
 			// 
 			// bivariableToolStripMenuItem
 			// 
 			this.bivariableToolStripMenuItem.Name = "bivariableToolStripMenuItem";
-			this.bivariableToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.bivariableToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
 			this.bivariableToolStripMenuItem.Text = "Bivariable";
 			// 
 			// limpiezaDeDatosToolStripMenuItem
 			// 
 			this.limpiezaDeDatosToolStripMenuItem.Name = "limpiezaDeDatosToolStripMenuItem";
-			this.limpiezaDeDatosToolStripMenuItem.Size = new System.Drawing.Size(104, 20);
+			this.limpiezaDeDatosToolStripMenuItem.Size = new System.Drawing.Size(114, 20);
 			this.limpiezaDeDatosToolStripMenuItem.Text = "Limpieza de datos";
 			// 
 			// aprendizajeMáquinaToolStripMenuItem
 			// 
 			this.aprendizajeMáquinaToolStripMenuItem.Name = "aprendizajeMáquinaToolStripMenuItem";
-			this.aprendizajeMáquinaToolStripMenuItem.Size = new System.Drawing.Size(119, 20);
+			this.aprendizajeMáquinaToolStripMenuItem.Size = new System.Drawing.Size(131, 20);
 			this.aprendizajeMáquinaToolStripMenuItem.Text = "Aprendizaje máquina";
 			// 
 			// dataGridView1
@@ -303,7 +305,6 @@ namespace Proyecto_Mineria_de_Datos
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
-
 		}
 	}
 }
