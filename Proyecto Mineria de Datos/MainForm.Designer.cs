@@ -162,14 +162,14 @@ namespace Proyecto_Mineria_de_Datos
 			// univariableToolStripMenuItem
 			// 
 			this.univariableToolStripMenuItem.Name = "univariableToolStripMenuItem";
-			this.univariableToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.univariableToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
 			this.univariableToolStripMenuItem.Text = "Univariable";
 			this.univariableToolStripMenuItem.Click += new System.EventHandler(this.UnivariableToolStripMenuItemClick);
 			// 
 			// bivariableToolStripMenuItem
 			// 
 			this.bivariableToolStripMenuItem.Name = "bivariableToolStripMenuItem";
-			this.bivariableToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.bivariableToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
 			this.bivariableToolStripMenuItem.Text = "Bivariable";
 			// 
 			// limpiezaDeDatosToolStripMenuItem
@@ -260,7 +260,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label8.Location = new System.Drawing.Point(19, 231);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(249, 24);
+			this.label8.Size = new System.Drawing.Size(249, 27);
 			this.label8.TabIndex = 10;
 			this.label8.Text = "Proporcion de valores faltantes\r\nrespecto a los valores totales:";
 			// 
@@ -286,18 +286,18 @@ namespace Proyecto_Mineria_de_Datos
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
 			this.ClientSize = new System.Drawing.Size(892, 573);
-			this.Controls.Add(this.labelProporcionValoresFaltantes);
-			this.Controls.Add(this.labelNumeroValoresFaltantes);
 			this.Controls.Add(this.label8);
-			this.Controls.Add(this.labelCantidadAtributos);
 			this.Controls.Add(this.label6);
-			this.Controls.Add(this.labelCantidadInstancias);
 			this.Controls.Add(this.label4);
-			this.Controls.Add(this.labelNombreConjuntoDatos);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.dataGridView1);
 			this.Controls.Add(this.menuStrip1);
+			this.Controls.Add(this.labelProporcionValoresFaltantes);
+			this.Controls.Add(this.labelNumeroValoresFaltantes);
+			this.Controls.Add(this.labelCantidadAtributos);
+			this.Controls.Add(this.labelCantidadInstancias);
+			this.Controls.Add(this.labelNombreConjuntoDatos);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "MainForm";

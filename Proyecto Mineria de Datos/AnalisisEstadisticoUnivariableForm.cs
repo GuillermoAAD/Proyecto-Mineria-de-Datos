@@ -9,6 +9,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Data;
 
 namespace Proyecto_Mineria_de_Datos
 {
@@ -55,32 +56,19 @@ namespace Proyecto_Mineria_de_Datos
 				//pondra visible las cosas que se relacionen
 				calculoDeNumericos(encabezado);
 				mostrarDatosNumericos();
-				
-				
-				
-				
 			}
 			else if(tipoDato == "nominal")//probablemente se deban agregar ordinal, bool, etc,
 			{
 				//hace calculos de categorico y 
 				//pondra visible las cosas que se relacionen
-				
-				calculoDeCategoricos();
+				calculoDeCategoricos(encabezado);
 				mostrarDatosCategoricos();
-				
 			}
-			else
-			{
-				NOTA.Text = "No funciona";
-			}
-			//else que diga que el tipo de dato no es valiod?
-	
 		}
 		
 		//Saber si el tipo de dato es numerico o categorico
 		private	string saberTipoDeDato(string nombreAtributo)
 		{
-			
 			//va acomparar el atributo elegido en el comboBox con la lista de tipos
 			
 			//aqui obtiene el index para el atributo en la lista de encabezados
@@ -96,16 +84,16 @@ namespace Proyecto_Mineria_de_Datos
 		
 		private void calculoDeNumericos(string encabezado)
 		{
-			labelMedia.Text = cdd.calcularMedia(encabezado).ToString();
-			labelMediana.Text = cdd.calcularMediana(encabezado).ToString();
-			labelModa.Text = cdd.calcularModa(encabezado).ToString();
-			labelDesviacionEstandar.Text = cdd.calcularDesviacionEstandar(encabezado).ToString();
-
+			labelMedia.Text = cdd.calcularMedia(encabezado).ToString("0.00");
+			labelMediana.Text = cdd.calcularMediana(encabezado).ToString("0.00");
+			labelModa.Text = cdd.calcularModa(encabezado).ToString("0.00");
+			labelDesviacionEstandar.Text = cdd.calcularDesviacionEstandar(encabezado).ToString("0.00");
 		}
 		
-		private void calculoDeCategoricos()
+		private void calculoDeCategoricos(string encabezado)
 		{
-			
+			dataGridViewTablaDeFrecuencias.DataSource = null;
+			dataGridViewTablaDeFrecuencias.DataSource = cdd.calcularTablaFrecuencias(encabezado);
 		}
 		
 		private void mostrarDatosNumericos()
@@ -138,12 +126,14 @@ namespace Proyecto_Mineria_de_Datos
 		private void mostrarDatosCategoricos()
 		{
 			ocultarDatosNumericos();
-			
+			label7.Visible = true;
+			dataGridViewTablaDeFrecuencias.Visible = true;
 		}
 		
 		private void ocultarDatosCategoricos()
 		{
-			
+			label7.Visible=false;
+			dataGridViewTablaDeFrecuencias.Visible = false;
 		}
 
 	}

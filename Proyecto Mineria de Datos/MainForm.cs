@@ -111,7 +111,7 @@ namespace Proyecto_Mineria_de_Datos
 			labelNumeroValoresFaltantes.Text = cdde.calcularValoresFaltantes().ToString();
 			
 			//string cadena = edd.proporcionValoresFaltantes.ToString() + "a";
-			labelProporcionValoresFaltantes.Text = cdde.calcularProporcionValoresFaltantes().ToString() + "%";
+			labelProporcionValoresFaltantes.Text = cdde.calcularProporcionValoresFaltantes().ToString("0.00") + "%";
 			
 
 			
@@ -157,7 +157,8 @@ namespace Proyecto_Mineria_de_Datos
 		
 		void SalirToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			alertaSalir();
+			this.Close();
+			//alertaSalir();
 		}
 		
 		private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

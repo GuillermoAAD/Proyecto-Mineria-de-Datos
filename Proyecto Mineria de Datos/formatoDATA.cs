@@ -162,19 +162,33 @@ namespace Proyecto_Mineria_de_Datos
 		//Extrae los encabezados de los atributos para ponerlos en las columnas del datatable
 		private void extraerInfoCamposAtributo()
 		{
-			int i = 0;
 			foreach(string infoAtributo in attribute )
 			{
+				//ignora espacios en blacno
 				string[] campos = infoAtributo.Split(' ');
-				
+
 				encabezados.Add(campos[0]);
 				tiposDatos.Add(campos[1]);
-				dominios.Add(campos[2]);
 				
-				i++;
+				//Esta parte extrae toda la parte de los dominios y los metera a la lista
+				//ejemplo: en dominios[i] = "(tourist | first class)"
+				
+				string dominioCompleto = "";
+				int posInicioDominio = 0;
+				if(infoAtributo.IndexOf('(') != -1)
+				{
+					posInicioDominio = infoAtributo.IndexOf('(');
+				}
+				else if(infoAtributo.IndexOf('[') != -1)
+				{
+					posInicioDominio = infoAtributo.IndexOf('[');
+				}
+
+				dominioCompleto = infoAtributo.Substring(posInicioDominio);
+
+				dominios.Add(dominioCompleto);
 			}
 			separarNumericNominal();
-			
 		}
 		
 		// aqui separamos los atributos numericos y los categoricos
@@ -211,8 +225,6 @@ namespace Proyecto_Mineria_de_Datos
 			}
 		}
 		
-		
-		//public 
-		
+
 	}
 }

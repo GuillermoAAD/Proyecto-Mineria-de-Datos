@@ -25,7 +25,8 @@ namespace Proyecto_Mineria_de_Datos
 		private System.Windows.Forms.Label labelMediana;
 		private System.Windows.Forms.Label labelDesviacionEstandar;
 		private System.Windows.Forms.Label labelModa;
-		private System.Windows.Forms.Label NOTA;
+		private System.Windows.Forms.DataGridView dataGridViewTablaDeFrecuencias;
+		private System.Windows.Forms.Label label7;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -60,15 +61,17 @@ namespace Proyecto_Mineria_de_Datos
 			this.labelMediana = new System.Windows.Forms.Label();
 			this.labelDesviacionEstandar = new System.Windows.Forms.Label();
 			this.labelModa = new System.Windows.Forms.Label();
-			this.NOTA = new System.Windows.Forms.Label();
+			this.dataGridViewTablaDeFrecuencias = new System.Windows.Forms.DataGridView();
+			this.label7 = new System.Windows.Forms.Label();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridViewTablaDeFrecuencias)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// comboBox1
 			// 
 			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Location = new System.Drawing.Point(12, 25);
+			this.comboBox1.Location = new System.Drawing.Point(283, 16);
 			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(121, 21);
+			this.comboBox1.Size = new System.Drawing.Size(293, 21);
 			this.comboBox1.TabIndex = 0;
 			this.comboBox1.Text = "Elija un atributo";
 			this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.ComboBox1SelectedIndexChanged);
@@ -77,7 +80,7 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.Location = new System.Drawing.Point(12, 9);
+			this.label1.Location = new System.Drawing.Point(12, 19);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(252, 13);
 			this.label1.TabIndex = 1;
@@ -131,7 +134,7 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			this.label6.AutoSize = true;
 			this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label6.Location = new System.Drawing.Point(362, 28);
+			this.label6.Location = new System.Drawing.Point(394, 59);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(53, 13);
 			this.label6.TabIndex = 6;
@@ -174,14 +177,30 @@ namespace Proyecto_Mineria_de_Datos
 			this.labelModa.Text = "0";
 			this.labelModa.Visible = false;
 			// 
-			// NOTA
+			// dataGridViewTablaDeFrecuencias
 			// 
-			this.NOTA.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.NOTA.Location = new System.Drawing.Point(324, 116);
-			this.NOTA.Name = "NOTA";
-			this.NOTA.Size = new System.Drawing.Size(100, 23);
-			this.NOTA.TabIndex = 11;
-			this.NOTA.Text = "NOTA";
+			this.dataGridViewTablaDeFrecuencias.AllowUserToAddRows = false;
+			this.dataGridViewTablaDeFrecuencias.AllowUserToDeleteRows = false;
+			this.dataGridViewTablaDeFrecuencias.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.dataGridViewTablaDeFrecuencias.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dataGridViewTablaDeFrecuencias.Location = new System.Drawing.Point(13, 86);
+			this.dataGridViewTablaDeFrecuencias.Name = "dataGridViewTablaDeFrecuencias";
+			this.dataGridViewTablaDeFrecuencias.RowHeadersVisible = false;
+			this.dataGridViewTablaDeFrecuencias.Size = new System.Drawing.Size(567, 175);
+			this.dataGridViewTablaDeFrecuencias.TabIndex = 12;
+			this.dataGridViewTablaDeFrecuencias.Visible = false;
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label7.Location = new System.Drawing.Point(228, 59);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(131, 13);
+			this.label7.TabIndex = 13;
+			this.label7.Text = "Tabla de frecuencias:";
+			this.label7.Visible = false;
 			// 
 			// AnalisisEstadisticoUnivariableForm
 			// 
@@ -189,7 +208,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
 			this.ClientSize = new System.Drawing.Size(592, 273);
-			this.Controls.Add(this.NOTA);
+			this.Controls.Add(this.label7);
 			this.Controls.Add(this.labelDesviacionEstandar);
 			this.Controls.Add(this.labelModa);
 			this.Controls.Add(this.labelMediana);
@@ -201,10 +220,12 @@ namespace Proyecto_Mineria_de_Datos
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.comboBox1);
+			this.Controls.Add(this.dataGridViewTablaDeFrecuencias);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "AnalisisEstadisticoUnivariableForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Análisis Estadístico Univariable";
+			((System.ComponentModel.ISupportInitialize)(this.dataGridViewTablaDeFrecuencias)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
