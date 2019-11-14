@@ -9,6 +9,7 @@
 using System;
 using System.Windows.Forms;
 using System.Data;
+using System.Collections.Generic;
 
 
 namespace Proyecto_Mineria_de_Datos
@@ -55,6 +56,43 @@ namespace Proyecto_Mineria_de_Datos
                          	
                          	dt = fCSV.abrirCSV(ruta);
                          	nombreConjuntoDatos = System.IO.Path.GetFileNameWithoutExtension(oFD.FileName);
+                         	
+                         	int c = 0;
+                         	//cdde.encabezados = dt.Columns.;
+                         	
+                         	List<string> domExtraidos = new List<string>();
+                         	
+                         	foreach(DataColumn column in dt.Columns)
+           					{
+                         		cdde.encabezados.Add(column.ColumnName);
+                         		cdde.tiposDatos.Add("nominal");
+                         		
+                         		//cdde.dominios.Add("(");
+                         		domExtraidos.Add("(");
+                         		//esto va a extraer todos los campos, y los toma como el dominio
+                         		// es propenso a poner valores repetidos en dominios, esos se  eliminan
+                         		//en el conjuntoDeDatoExtendido
+                         		for(int f = 0; f < dt.Rows.Count ; f++)
+                         		{
+                         			if(dt.Rows[f][c].ToString() != "")
+                         			{
+                         				//cdde.dominios[c] +=  dt.Rows[f][c].ToString();
+                         				domExtraidos[c] +=  dt.Rows[f][c].ToString();
+                         				
+                         				if(f < dt.Rows.Count - 1)
+                         				{
+                         					//cdde.dominios[c] += " | ";
+                         					domExtraidos[c] += " | ";
+                         				}
+                         			}
+                         		}                         		
+                         		//cdde.dominios[c] += ")";
+                         		domExtraidos[c] += ")";
+                         		
+                         		c++;
+				          	}
+                         	cdde.dominios = cdde.eliminarDominiosDuplicados(domExtraidos);
+                         	//cdde.eliminarDominiosDuplicados(domExtraidos);
                          }
                          else if(extension == ".DATA" || extension == ".data"  )
                          {
@@ -76,8 +114,10 @@ namespace Proyecto_Mineria_de_Datos
                          }
 
                          //Estos se ponen afuera por que el csv y el data comparten ambos atributos
-                         cdde.nombreConjuntoDatos = nombreConjuntoDatos;
+                         cdde.nombreConjuntoDatos = nombreConjuntoDatos;                         
                          cdde.dtConjuntoDatos = dt;
+                         //cdde.eliminarDominiosDuplicados();
+
                   	}
                 }
             }

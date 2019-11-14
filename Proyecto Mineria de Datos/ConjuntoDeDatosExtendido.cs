@@ -95,7 +95,7 @@ namespace Proyecto_Mineria_de_Datos
 			int numeroValoresFaltantes = calcularValoresFaltantes();
 			
 			double numValoresTotales = cantidadInstancias * cantidadAtributos;
-			double proporcionValoresFaltantes;
+			double proporcionValoresFaltantes = 0;
 			
 			
 			proporcionValoresFaltantes = numeroValoresFaltantes * 100;
@@ -290,8 +290,9 @@ namespace Proyecto_Mineria_de_Datos
 				
 				
 				int frecuenciaPalabra = contarFrecuenciaPalabraColumna(dominio, valoresDeAtributos);
+				int numNulos = contarValoresNulosEnColumna(valoresDeAtributos);
 				
-				double porcentaje = calcularPorcentajeFrencuencia(frecuenciaPalabra);
+				double porcentaje = calcularPorcentajeFrencuencia(frecuenciaPalabra, numNulos);
 			
 				dr[1] = frecuenciaPalabra;
 				dr[2] = porcentaje.ToString("0.00");
@@ -339,11 +340,95 @@ namespace Proyecto_Mineria_de_Datos
 			return dominiosDeUnAtributo;
 		}
 		
+		
+		//Separa todos los dominios Correspondientes a una columna
+		public List<string> separarDominios(string domExtraidos)
+		{
+			string dominiosAtrib = domExtraidos;
+						
+			List<string> dominiosDeUnAtributo = new List<string>();
+			
+			dominiosAtrib = dominiosAtrib.Replace("(","");
+			dominiosAtrib = dominiosAtrib.Replace(")","");
+			
+			string[] dominiosSinSeparador = dominiosAtrib.Split('|');
+			
+			string dominioSinEspaciosExtras = "";
+			
+			for(int i = 0; i < dominiosSinSeparador.Length; i++)
+			{
+				dominioSinEspaciosExtras = dominiosSinSeparador[i];
+				if(dominioSinEspaciosExtras[0] == ' ')
+				{
+					dominioSinEspaciosExtras = dominioSinEspaciosExtras.TrimStart(' ');
+				}
+				
+				if(dominioSinEspaciosExtras[dominioSinEspaciosExtras.Length-1] == ' ')
+				{
+					dominioSinEspaciosExtras = dominioSinEspaciosExtras.TrimEnd(' ');
+				}
+				
+				dominiosDeUnAtributo.Add(dominioSinEspaciosExtras);
+			}
+			
+			return dominiosDeUnAtributo;
+		}
+		
+		//En el caso de manejo de archivos csv, se llegan a obtener duplicados  para los
+		//dominios, este funcion los elimina para que sea mas facil ver la informacion
+		public List<string> eliminarDominiosDuplicados(List<string> domExtraidos)
+		{
+			
+			List<string> dominiosDeAtributo = new List<string>();
+			
+			//Lista con los dominios sin duplicado
+			List<string> dominiosSinDuplicado= new List<string>();
+			
+			//EstaCadena Guardara l anueva expresion regular sin duplicados
+			string expRegDom = "";
+			
+			for(int c = 0; c < domExtraidos.Count; c++)
+			{
+				dominiosDeAtributo = separarDominios(domExtraidos[c]);
+				dominiosDeAtributo.Sort();
+				
+				expRegDom = "(";
+				
+				//Recorre todos los dominios de un atributo para meterlos al string
+				for(int i = 0; i < dominiosDeAtributo.Count -1; i++)
+				{
+					//Si el dominio en la pos actual es distinto al siguiente se agrega al string
+					if(dominiosDeAtributo[i] != dominiosDeAtributo[i+1])
+					{
+						//Para saber si i es <= ala penultima posicion
+						//Si se cumple se agrega el string y la barra divisora(ya que aun queda el valor final)
+						if( i <= dominiosDeAtributo.Count - 1)
+	                    {
+							expRegDom += dominiosDeAtributo[i];
+	                    	expRegDom += " | ";
+	                    }
+					}
+					
+					//Con esto sabemo si la posicion siguiente seria la ultima
+					//si es asi se ingresa al string (Al ser el ultimo, esto se cumple una sola vez)
+					if(i+1 == dominiosDeAtributo.Count - 1)
+					{
+						expRegDom += dominiosDeAtributo[i+1];
+					}
+				}
+				
+				expRegDom += ")";
+				
+				dominiosSinDuplicado.Add(expRegDom);					
+			}
+
+			return dominiosSinDuplicado;
+		}
+		
 		//Regresa una lista con todos los campos para un atributo dado
 		public List<string> obtenerValoresParaAtributo(string encabezadoAtributo)
 		{
 			List<string> valoresDeUnAtributo = new List<string>();
-			
 			
 			//aqui obtiene el index para el atributo en la lista de encabezados
 			int c = encabezados.IndexOf(encabezadoAtributo);
@@ -355,7 +440,6 @@ namespace Proyecto_Mineria_de_Datos
 			{
 				valoresDeUnAtributo.Add(dtConjuntoDatos.Rows[f][c].ToString());
 			}
-			
 			
 			return valoresDeUnAtributo;
 		}
@@ -378,12 +462,28 @@ namespace Proyecto_Mineria_de_Datos
 		}
 		
 		//Calcula el procentaje de fecuancia de una palabra
-		public Double calcularPorcentajeFrencuencia(int frecuencia)
+		public Double calcularPorcentajeFrencuencia(int frecuencia, int numNulos)
 		{
 			double numValoresTotales = calcularCantidadInstancias();
-			double porcentaje = (frecuencia * 100) / numValoresTotales;
-			
+			double porcentaje = (frecuencia * 100) / (numValoresTotales - numNulos) ;
 			return porcentaje;
+		}
+		
+		//Cuenta el numero de veces que se repite un valor nulo en una lista de strings
+		// recibe la lista
+		public int contarValoresNulosEnColumna(List<string> listaStrings)
+		{
+			int contador = 0;
+			
+			for(int i = 0; i < listaStrings.Count; i++)
+			{
+				if(listaStrings[i] == "" || listaStrings[i] == valorNulo)
+				{
+					contador++;
+				}
+			}
+			
+			return contador;
 		}
 		
 		

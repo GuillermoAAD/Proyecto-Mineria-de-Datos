@@ -79,11 +79,14 @@ namespace Proyecto_Mineria_de_Datos
 			
 			if (dataGridView1.Rows.Count != 0)
 			{
-				if ( MessageBox.Show ( "Hay un conjunto de datos en memoria,\n" +
-				                      "¿Desea guardar cambios y cargar uno nuevo?", "Salir", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 ) == System.Windows.Forms.DialogResult.Yes )
+				if ( MessageBox.Show ( "Hay un conjunto de datos en memoria.\n" +
+				                       "Si carga un nuevo conjuto de datos se perderan los cambios no guardados.\n" +
+				                       "¿Desea cargar uno nuevo sin guardar cambios?", "Cargar archivo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1 ) == System.Windows.Forms.DialogResult.Yes )
  				{
 					//agregar codigo para guardar
+					
 					//reinicializar todas las variables
+					cdde = new ConjuntoDeDatosExtendido();
 					
 					//Abre el nuevo archivo y carga en el dataGridView
 					dataGridView1.DataSource = null;

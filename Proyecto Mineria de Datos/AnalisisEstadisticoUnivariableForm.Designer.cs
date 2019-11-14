@@ -181,11 +181,13 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			this.dataGridViewTablaDeFrecuencias.AllowUserToAddRows = false;
 			this.dataGridViewTablaDeFrecuencias.AllowUserToDeleteRows = false;
-			this.dataGridViewTablaDeFrecuencias.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.dataGridViewTablaDeFrecuencias.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
 			this.dataGridViewTablaDeFrecuencias.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridViewTablaDeFrecuencias.Location = new System.Drawing.Point(13, 86);
 			this.dataGridViewTablaDeFrecuencias.Name = "dataGridViewTablaDeFrecuencias";
+			this.dataGridViewTablaDeFrecuencias.ReadOnly = true;
 			this.dataGridViewTablaDeFrecuencias.RowHeadersVisible = false;
 			this.dataGridViewTablaDeFrecuencias.Size = new System.Drawing.Size(567, 175);
 			this.dataGridViewTablaDeFrecuencias.TabIndex = 12;
