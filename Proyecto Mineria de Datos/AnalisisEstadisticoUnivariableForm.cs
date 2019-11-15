@@ -10,6 +10,9 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Data;
+using System.Windows.Forms.DataVisualization.Charting;
+using System.Collections.Generic;
+
 
 namespace Proyecto_Mineria_de_Datos
 {
@@ -88,6 +91,17 @@ namespace Proyecto_Mineria_de_Datos
 			labelMediana.Text = cdd.calcularMediana(encabezado).ToString("0.00");
 			labelModa.Text = cdd.calcularModa(encabezado).ToString("0.00");
 			labelDesviacionEstandar.Text = cdd.calcularDesviacionEstandar(encabezado).ToString("0.00");
+			
+			
+			labelMin.Text = obtenerMin(encabezado).ToString();
+			labelMax.Text = obtenerMax(encabezado).ToString();
+			double[] cuartiles = obtenerCuartiles(encabezado);
+			
+			labelCuartil1.Text = cuartiles[0].ToString();
+			labelCuartil3.Text = cuartiles[2].ToString();
+			
+			//esto llena el boxplot
+			calcularBoxplot();
 		}
 		
 		private void calculoDeCategoricos(string encabezado)
@@ -108,6 +122,17 @@ namespace Proyecto_Mineria_de_Datos
 			label5.Visible = true;
 			labelDesviacionEstandar.Visible = true;
 			label6.Visible = true;
+			chartBoxplot.Visible =true;
+			
+			//datos relacionados al boxplot
+			label15.Visible = true;
+			labelMin.Visible = true;
+			label11.Visible = true;
+			labelMax.Visible = true;
+			label13.Visible = true;
+			labelCuartil1.Visible = true;
+			label12.Visible = true;
+			labelCuartil3.Visible = true;
 		}
 		
 		private void ocultarDatosNumericos()
@@ -121,6 +146,17 @@ namespace Proyecto_Mineria_de_Datos
 			label5.Visible = false;
 			labelDesviacionEstandar.Visible = false;
 			label6.Visible = false;
+			chartBoxplot.Visible = false;
+			
+			//datos relacionados al boxplot
+			label15.Visible = false;
+			labelMin.Visible = false;
+			label11.Visible = false;
+			labelMax.Visible = false;
+			label13.Visible = false;
+			labelCuartil1.Visible = false;
+			label12.Visible = false;
+			labelCuartil3.Visible = false;
 		}
 		
 		private void mostrarDatosCategoricos()
@@ -135,6 +171,186 @@ namespace Proyecto_Mineria_de_Datos
 			label7.Visible=false;
 			dataGridViewTablaDeFrecuencias.Visible = false;
 		}
+		
+		private void calcularBoxplot()
+		{
+			string nombreAtrib = comboBox1.Text;
+			double min = obtenerMin(nombreAtrib);
+			double max = obtenerMax(nombreAtrib);
+			double media = cdd.calcularMedia(nombreAtrib);
+			double mediana = cdd.calcularMediana(nombreAtrib);
+			double moda = cdd.calcularModa(nombreAtrib);
+			
+			//double rango = max - min;
+			
+			double[] cuartiles = obtenerCuartiles(nombreAtrib);
+			double cuartil1 = cuartiles[0];
+			double cuartil2 = cuartiles[1];
+			double cuartil3 = cuartiles[2];
+			
+			
+			chartBoxplot.Series.Clear();
+			chartBoxplot.Series.Add(nombreAtrib);
 
+			//Se elige el tipo de grafico, en este caso boxplot
+			chartBoxplot.Series[nombreAtrib].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.BoxPlot;
+			
+			//aqui se ingresan los valores que necesita para el boxplot
+			//Son en el siguiente orden
+			// min, max, 
+			//chartBoxplot.Series[nombreAtrib].Points.AddXY(0, 3, 8, 4, 7,4);
+			//chartBoxplot.Series[nombreAtrib].Points.AddXY(min, max, cuartil1, cuartil3, media, mediana);
+			
+			chartBoxplot.Series[nombreAtrib].Points.AddXY(0, min, max, cuartil1, cuartil3, media, cuartil2);
+		}
+		
+		public double obtenerMin(string nombreAtrib)
+		{
+			double min = 0;
+			
+			//aqui obtiene el index para el atributo en la lista de encabezados
+			int c = cdd.encabezados.IndexOf(nombreAtrib);
+			//ese mismo index sirve para sacar la posicion de columna de donde se saccan datos
+			
+			int cantInstancias= cdd.calcularCantidadInstancias();
+			
+			string valorCelda = "";
+			
+			List<double> valores = new List<double>();
+			
+			for(int f = 0; f < cantInstancias; f++)
+			{
+				valorCelda = cdd.dtConjuntoDatos.Rows[f][c].ToString();
+				if(valorCelda != "" && valorCelda != cdd.valorNulo)
+				{
+					valores.Add(double.Parse(valorCelda));
+				}
+			}
+			
+			valores.Sort();
+			
+			min = valores[0];
+			
+			return min;
+		}
+		
+		public double obtenerMax(string nombreAtrib)
+		{
+			double max = 0;
+			
+			//aqui obtiene el index para el atributo en la lista de encabezados
+			int c = cdd.encabezados.IndexOf(nombreAtrib);
+			//ese mismo index sirve para sacar la posicion de columna de donde se saccan datos
+			
+			int cantInstancias= cdd.calcularCantidadInstancias();
+			
+			string valorCelda = "";
+			
+			List<double> valores = new List<double>();
+			
+			for(int f = 0; f < cantInstancias; f++)
+			{
+				valorCelda = cdd.dtConjuntoDatos.Rows[f][c].ToString();
+				if(valorCelda != "" && valorCelda != cdd.valorNulo)
+				{
+					valores.Add(double.Parse(valorCelda));
+				}
+			}
+			
+			valores.Sort();
+			
+			max = valores[valores.Count -1];
+			
+			return max;
+		}
+		
+		
+		//el metodo usado para obtener cuaritles es el de Mendenhall y Sincich
+		public double[] obtenerCuartiles(string nombreAtrib)
+		{
+			
+			double[] cuartiles = new double[3];
+			
+			//aqui obtiene el index para el atributo en la lista de encabezados
+			int c = cdd.encabezados.IndexOf(nombreAtrib);
+			//ese mismo index sirve para sacar la posicion de columna de donde se saccan datos
+			
+			int cantInstancias= cdd.calcularCantidadInstancias();
+			
+			string valorCelda = "";
+			
+			List<double> valores = new List<double>();
+			
+			for(int f = 0; f < cantInstancias; f++)
+			{
+				valorCelda = cdd.dtConjuntoDatos.Rows[f][c].ToString();
+				if(valorCelda != "" && valorCelda != cdd.valorNulo)
+				{
+					valores.Add(double.Parse(valorCelda));
+				}
+			}
+			
+			valores.Sort();
+			
+			int n = valores.Count;
+			int valorEntero = 0;
+			double valorDecimal = 0;
+			double valorCuartil =0;
+			
+			cuartiles[0] = (n+1)/4;
+			valorCuartil = cuartiles[0];
+			
+			cuartiles[1] = cdd.calcularMediana(nombreAtrib);
+			cuartiles[2] = 3 * cuartiles[0];
+			
+			//Se revisa si el cuartil es entero
+			if((cuartiles[0] % 1).ToString() == (0).ToString())
+			{
+				//extraigo el valor del cuartil 1
+				valorEntero = int.Parse(cuartiles[0].ToString());
+				//busco el valor en la posicion de la formula
+				//cuartil y la meto al valor de cuartil
+				cuartiles[0] = valores[valorEntero];
+			}
+			else //entonces si tiene decimales
+			{
+				valorDecimal = cuartiles[0] % 1;
+				valorEntero = int.Parse((cuartiles[0] - valorDecimal).ToString());
+				
+				//cuartiles[0] = valores[valorEntero] + valorDecimal * (valores[valorEntero+1] - valores[valorEntero]);
+				//cuartiles[0] = (valorEntero * valorCuartil);
+				//cuartiles[0] += (cuartiles[0] * (valorDecimal * valorCuartil) );
+				
+				
+				cuartiles[0] = valores[valorEntero + 1];
+			}
+			
+			//se remplaza el valor obtenido con el valor de los 
+			//datosen la posicion obtenidoa por el cuartil
+			
+			valorCuartil = cuartiles[2];
+			if((cuartiles[2] % 1).ToString() == (0).ToString())
+			{
+				//extraigo el valor del cuartil 1
+				valorEntero = int.Parse(cuartiles[2].ToString());
+				//busco el valor en la posicion de la formula
+				//cuartil y la meto al valor de cuartil
+				cuartiles[2] = valores[valorEntero];
+			}
+			else //entonces si tiene decimales
+			{
+				valorDecimal = cuartiles[2] % 1;
+				valorEntero = int.Parse((cuartiles[2] - valorDecimal).ToString());
+				
+				//cuartiles[2] = valores[valorEntero] + valorDecimal * (valores[valorEntero+1] - valores[valorEntero]);
+				//cuartiles[2] = (valorEntero * valorCuartil);
+				//cuartiles[2] += (cuartiles[2] * (valorDecimal * valorCuartil) );
+				
+				cuartiles[0] = valores[valorEntero];
+			}
+			
+			return cuartiles;
+		}
+		
 	}
 }
