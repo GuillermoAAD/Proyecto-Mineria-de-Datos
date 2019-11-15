@@ -68,21 +68,15 @@ namespace Proyecto_Mineria_de_Datos
 			}
 			return dtCSV;
 		}
-		public void guardarCSV(DataGridView dataGridView1)
+		public void guardarCSV(DataGridView dataGridView1, string ruta)
 		{
-			SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-			saveFileDialog1.Filter = "csv files (*.csv)|*.csv";
-
-            if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK
-                && saveFileDialog1.FileName.Length > 0)
-            {
 				//test to see if the DataGridView has any rows
 				DataGridView gridIn = new DataGridView();
 				gridIn = dataGridView1;
 			    if (dataGridView1.RowCount > 0)
 			    {			           
 			       DataGridViewRow dr = new DataGridViewRow();			    
-			       FileInfo t = new FileInfo(saveFileDialog1.FileName);
+			       FileInfo t = new FileInfo(ruta);
                    StreamWriter swOut = t.CreateText();
 			 
 			       //write header rows to csv
@@ -125,10 +119,7 @@ namespace Proyecto_Mineria_de_Datos
 			       }
 			       swOut.Close();					
 			    }
-			}
-			else{
-				MessageBox.Show("No se pudo crear el archivo. Intente de Nuevo");
-			}
+			}			
 		}
-	}
+	
 }

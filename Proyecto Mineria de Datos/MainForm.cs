@@ -22,6 +22,8 @@ namespace Proyecto_Mineria_de_Datos
 	{
 		
 		ConjuntoDeDatosExtendido cdde;// 
+		public string ruta;
+		public string extension;
 		
 		public MainForm()
 		{
@@ -93,12 +95,16 @@ namespace Proyecto_Mineria_de_Datos
 					//dataGridView1.DataSource = edd.abrirArchivo();
 					cdde = edd.abrirArchivo();
 					dataGridView1.DataSource = cdde.dtConjuntoDatos;
+					ruta = edd.rRuta();
+					extension = edd.rExt();
 				}
 			}
 			else{
 				//dataGridView1.DataSource = edd.abrirArchivo();
 				cdde = edd.abrirArchivo();
 					dataGridView1.DataSource = cdde.dtConjuntoDatos;
+				ruta = edd.rRuta();
+				extension = edd.rExt();
 			}
 			
 			//labelNombreConjuntoDatos.Text = edd.nombreConjuntoDatos;
@@ -142,13 +148,45 @@ namespace Proyecto_Mineria_de_Datos
 		}
 		void GuardarToolStripMenuItemClick(object sender, EventArgs e)
 		{
+			if(extension == ".CSV" || extension == ".csv"  )
+            {
 			formatoCSV guardar = new formatoCSV();
-			guardar.guardarCSV(dataGridView1);
+			guardar.guardarCSV(dataGridView1, ruta);
+			}
+			else if(extension == ".DATA" || extension == ".data"  )
+			{
+				formatoDATA guardar = new formatoDATA();
+				guardar.guardarDATA(cdde, ruta, dataGridView1);
+			}
 		}
 		
 		void GuardarComoToolStripMenuItemClick(object sender, EventArgs e)
 		{
-	
+			SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+			saveFileDialog1.Filter = "Todas los archivos permitidos (*.csv;*.data)|*.CSV;*.DATA" +
+                	"|Archivos CSV (*.csv)|*.CSV" +
+                	"|Archivos DATA (*.data)|*.DATA";		
+            if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK
+                && saveFileDialog1.FileName.Length > 0)	
+			{ 				
+				extension = System.IO.Path.GetExtension(saveFileDialog1.FileName);				
+				if(extension == ".CSV" || extension == ".csv")
+				{
+					formatoCSV guardar = new formatoCSV();
+					ruta = saveFileDialog1.FileName;
+					guardar.guardarCSV(dataGridView1,ruta);					
+				}
+				else if(extension == ".DATA" || extension == ".data")
+				{
+					ruta = saveFileDialog1.FileName;
+					formatoDATA guardar = new formatoDATA();
+					guardar.guardarDATA(cdde, ruta, dataGridView1);
+				}
+			}
+			else
+				{
+					MessageBox.Show("No se pudo crear el archivo. Intente de Nuevo");
+				}
 		}
 		
 		//Abre un form con informacion general acerca del programa

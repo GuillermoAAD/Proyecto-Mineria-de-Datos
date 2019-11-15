@@ -39,3 +39,4 @@ C:\Users\Axel\Documents\SharpDevelopProjects\Proyecto-Mineria-de-Datos-master NO
 C:\Users\Axel\Documents\SharpDevelopProjects\Proyecto-Mineria-de-Datos-master NO BITMAPS\Proyecto Mineria de Datos\obj\Debug\Proyecto Mineria de Datos.exe
 C:\Users\Axel\Documents\SharpDevelopProjects\Proyecto-Mineria-de-Datos-master NO BITMAPS\Proyecto Mineria de Datos\obj\Debug\Proyecto Mineria de Datos.pdb
 C:\Users\Chu\Documents\SharpDevelop Projects\Proyecto Mineria de Datos\Proyecto Mineria de Datos\obj\Debug\Proyecto_Mineria_de_Datos.AnalisisEstadisticoUnivariableForm.resources
+C:\Users\Axel\Documents\SharpDevelopProjects\Proyecto-Mineria-de-Datos-master\Proyecto Mineria de Datos\obj\Debug\Proyecto_Mineria_de_Datos.AnalisisEstadisticoUnivariableForm.resources

@@ -20,6 +20,8 @@ namespace Proyecto_Mineria_de_Datos
 	public class entradaDeDatos
 	{
 		public string nombreConjuntoDatos;
+		public string ruta = "";
+		public string extension = "";
 		DataTable dt;
 		
 		ConjuntoDeDatosExtendido cdde;
@@ -33,8 +35,8 @@ namespace Proyecto_Mineria_de_Datos
 		
 		public ConjuntoDeDatosExtendido abrirArchivo()
 		{
-			String extension = "";
-			String ruta = "";
+			//String extension = "";
+			//String ruta = "";
 			
             try
             {
@@ -92,7 +94,7 @@ namespace Proyecto_Mineria_de_Datos
                          		c++;
 				          	}
                          	cdde.dominios = cdde.eliminarDominiosDuplicados(domExtraidos);
-                         	//cdde.eliminarDominiosDuplicados(domExtraidos);
+                         	//cdde.eliminarDominiosDuplicados(domExtraidos);                         	
                          }
                          else if(extension == ".DATA" || extension == ".data"  )
                          {
@@ -127,6 +129,14 @@ namespace Proyecto_Mineria_de_Datos
             }
             
             return cdde;
+		}
+		public string rRuta()
+		{
+			return ruta;	
+		}
+		public string rExt()
+		{
+			return extension;
 		}
 
 	}

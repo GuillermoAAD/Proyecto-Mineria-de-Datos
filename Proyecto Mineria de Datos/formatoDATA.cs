@@ -10,6 +10,7 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Proyecto_Mineria_de_Datos
 {
@@ -224,7 +225,65 @@ namespace Proyecto_Mineria_de_Datos
 				}
 			}
 		}
-		
-
+		public void guardarDATA(ConjuntoDeDatosExtendido cdde, string ruta, DataGridView dataGridDiew1)
+		{			
+			int i=0;
+			DataGridViewRow dr = new DataGridViewRow();
+			FileInfo t = new FileInfo(ruta);
+            StreamWriter swOut = t.CreateText();         
+            swOut.Write("%% ");
+            swOut.Write(cdde.comentarios);
+            swOut.WriteLine();
+            swOut.Write("@relation ");
+            swOut.Write(cdde.nombreConjuntoDatos);
+            swOut.WriteLine();           
+            while(i<dataGridDiew1.Columns.Count)
+            {
+            	swOut.Write("@attribute ");
+            	swOut.Write(dataGridDiew1.Columns[i].HeaderText);
+            	swOut.Write(" ");
+            	//swOut.Write(cdde.dominios[i]) Tipo de dato
+            	swOut.Write(" ");
+            	swOut.Write(cdde.dominios[i]);
+            	swOut.WriteLine();            
+            	i++;
+            }
+            swOut.Write("@missingValue ");
+            swOut.Write(cdde.valorNulo);
+            swOut.WriteLine();
+            swOut.Write("@data ");
+            swOut.WriteLine();
+            for (int j = 0; j <= dataGridDiew1.Rows.Count - 2; j++)
+		       {
+		          if (j > 0)
+		          {
+		          swOut.WriteLine();
+		          }
+		 
+		          dr = dataGridDiew1.Rows[j];
+		          //----------------------------			       			     
+		          for (int k = 0; k <= dataGridDiew1.Columns.Count - 1; k++)
+		          {
+		             if (k > 0)
+		             {
+		                swOut.Write(",");
+		             }						             		           
+		             string valor = dr.Cells[k].EditedFormattedValue.ToString();
+		             //replace comma's with spaces
+		             valor = valor.Replace(',', ' ');
+		             //replace embedded newlines with spaces
+		             valor = valor.Replace(Environment.NewLine, " ");
+		             if(valor==cdde.valorNulo || valor=="")
+		             {
+		             	swOut.Write("");
+		             }
+		             else
+		             {		             	
+		             	swOut.Write(valor);
+		             }		             
+		          }
+		       }
+            swOut.Close();
+		}
 	}
 }
