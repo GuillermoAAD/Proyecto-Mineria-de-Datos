@@ -2,7 +2,7 @@
 %% 1949-1960.
 @relation airline_passengers
 @attribute passenger_numbers numeric [0-9]+
-@attribute type nominal (tourist | first class)
+@attribute type nominal (tourist | first class | other)
 @missingValue ?
 @data
 112,tourist

@@ -60,7 +60,7 @@ namespace Proyecto_Mineria_de_Datos
 				calculoDeNumericos(encabezado);
 				mostrarDatosNumericos();
 			}
-			else if(tipoDato == "nominal")//probablemente se deban agregar ordinal, bool, etc,
+			else if(tipoDato == "nominal" || tipoDato == "ordinal")//probablemente se deban agregar ordinal, bool, etc,
 			{
 				//hace calculos de categorico y 
 				//pondra visible las cosas que se relacionen

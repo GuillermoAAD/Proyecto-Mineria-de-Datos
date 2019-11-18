@@ -242,7 +242,7 @@ namespace Proyecto_Mineria_de_Datos
             	swOut.Write("@attribute ");
             	swOut.Write(dataGridDiew1.Columns[i].HeaderText);
             	swOut.Write(" ");
-            	//swOut.Write(cdde.dominios[i]) Tipo de dato
+            	swOut.Write(cdde.tiposDatos[i]);
             	swOut.Write(" ");
             	swOut.Write(cdde.dominios[i]);
             	swOut.WriteLine();            

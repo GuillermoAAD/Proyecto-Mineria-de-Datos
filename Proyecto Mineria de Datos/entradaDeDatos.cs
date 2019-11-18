@@ -45,12 +45,13 @@ namespace Proyecto_Mineria_de_Datos
                 	"|Archivos CSV (*.csv)|*.CSV" +
                 	"|Archivos DATA (*.data)|*.DATA";
                 if (oFD.ShowDialog() == DialogResult.OK)
-                {
+                {                	
                 	if (System.IO.File.Exists(oFD.FileName))
                   	{
                 		ruta = oFD.FileName;
                 		//ruta = System.IO.File.ReadAllText(oFD.FileName);
                 		extension = System.IO.Path.GetExtension(oFD.FileName);
+                		//atributoCB.clear();
  
                         if(extension == ".CSV" || extension == ".csv"  )
                         {

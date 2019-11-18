@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data;
 
 namespace Proyecto_Mineria_de_Datos
 {
@@ -24,7 +25,7 @@ namespace Proyecto_Mineria_de_Datos
 		ConjuntoDeDatosExtendido cdde;// 
 		public string ruta;
 		public string extension;
-		
+		public string tipoActual;		
 		public MainForm()
 		{
 			//
@@ -43,7 +44,10 @@ namespace Proyecto_Mineria_de_Datos
 			this.Show();
 			this.Activate();
 			
-			cdde = new ConjuntoDeDatosExtendido();
+			cdde = new ConjuntoDeDatosExtendido();					
+			tipoCB.Items.Add("numeric");
+			tipoCB.Items.Add("nominal");
+			tipoCB.Items.Add("ordinal");			
 			
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
@@ -77,7 +81,7 @@ namespace Proyecto_Mineria_de_Datos
 		
 		void CargarArchivoToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			entradaDeDatos edd = new entradaDeDatos();
+			entradaDeDatos edd = new entradaDeDatos();			
 			
 			if (dataGridView1.Rows.Count != 0)
 			{
@@ -88,21 +92,20 @@ namespace Proyecto_Mineria_de_Datos
 					//agregar codigo para guardar
 					
 					//reinicializar todas las variables
-					cdde = new ConjuntoDeDatosExtendido();
-					
+					cdde = new ConjuntoDeDatosExtendido();					
 					//Abre el nuevo archivo y carga en el dataGridView
-					dataGridView1.DataSource = null;
+					dataGridView1.DataSource = null;					
 					//dataGridView1.DataSource = edd.abrirArchivo();
 					cdde = edd.abrirArchivo();
-					dataGridView1.DataSource = cdde.dtConjuntoDatos;
+					dataGridView1.DataSource = cdde.dtConjuntoDatos;					
 					ruta = edd.rRuta();
 					extension = edd.rExt();
 				}
 			}
 			else{
-				//dataGridView1.DataSource = edd.abrirArchivo();
+				//dataGridView1.DataSource = edd.abrirArchivo();				
 				cdde = edd.abrirArchivo();
-					dataGridView1.DataSource = cdde.dtConjuntoDatos;
+				dataGridView1.DataSource = cdde.dtConjuntoDatos;
 				ruta = edd.rRuta();
 				extension = edd.rExt();
 			}
@@ -122,8 +125,19 @@ namespace Proyecto_Mineria_de_Datos
 			//string cadena = edd.proporcionValoresFaltantes.ToString() + "a";
 			labelProporcionValoresFaltantes.Text = cdde.calcularProporcionValoresFaltantes().ToString("0.00") + "%";
 			
-
-			
+			comentarioTXT.Text = cdde.comentarios;			
+			//Esto agrega los items al combobox de atributos
+			atributoCB.Items.Clear();
+			for(int contador = 0; contador < dataGridView1.Columns.Count; contador++)
+			{
+				atributoCB.Items.Add(cdde.encabezados[contador]);
+			}
+			//Esto valida que no truene el programa en caso de que se cancele la carga de un archivo xd
+			if(cdde.encabezados.Count > 0)
+			{
+				atributoCB.SelectedIndex = 0;
+				dominioTB.Text = cdde.dominios[0];
+			}						
 			//esto agrega el numero de fila como encabezado de filas
 			for(int i = 0; i<dataGridView1.Rows.Count; i++)
 			{
@@ -137,6 +151,12 @@ namespace Proyecto_Mineria_de_Datos
 				análisisEstadísticoToolStripMenuItem.Enabled = false;
 				limpiezaDeDatosToolStripMenuItem.Enabled = false;
 				aprendizajeMáquinaToolStripMenuItem.Enabled = false;
+				comentarioTXT.Enabled = false;
+				atributoCB.Enabled = false;
+				tipoCB.Enabled = false;
+				dominioTB.Enabled = false;
+				actualizarBTN.Enabled = false;
+				restablecerBTN.Enabled = false;
 			}
 			else{
 				guardarToolStripMenuItem.Enabled=true;
@@ -144,6 +164,12 @@ namespace Proyecto_Mineria_de_Datos
 				análisisEstadísticoToolStripMenuItem.Enabled = true;
 				limpiezaDeDatosToolStripMenuItem.Enabled = true;
 				aprendizajeMáquinaToolStripMenuItem.Enabled = true;
+				comentarioTXT.Enabled = true;
+				atributoCB.Enabled = true;
+				tipoCB.Enabled = true;
+				dominioTB.Enabled = true;				
+				actualizarBTN.Enabled = true;
+				restablecerBTN.Enabled = true;
 			}
 		}
 		void GuardarToolStripMenuItemClick(object sender, EventArgs e)
@@ -224,6 +250,49 @@ namespace Proyecto_Mineria_de_Datos
 			//estadistico Univariable con el conjunto de este form, para poder 
 			//trabajar con los mismos datos
 			aeu.Show();
+		}
+		void AtributoCBSelectedIndexChanged(object sender, EventArgs e)
+		{
+			//va acomparar el atributo elegido en el comboBox con la lista de tipos
+			string atributo = atributoCB.SelectedItem.ToString();
+			//aqui obtiene el index para el atributo en la lista de encabezados
+			int i = cdde.encabezados.IndexOf(atributo);
+			//ese mismo index sirve para sacar el tipo de dato de la lista de tiposDatos
+			
+			string tipoDato;
+			
+			tipoDato = cdde.tiposDatos[i];
+			tipoActual = tipoDato;
+			//debugL.Text = tipoDato;
+			tipoCB.SelectedItem = tipoDato;
+			dominioTB.Text = cdde.dominios[i];
+		}
+		void TipoCBSelectedIndexChanged(object sender, EventArgs e)
+		{			
+			//va acomparar el atributo elegido en el comboBox con la lista de tipos
+			string atributo = atributoCB.SelectedItem.ToString();
+			//aqui obtiene el index para el atributo en la lista de encabezados
+			int i = cdde.encabezados.IndexOf(atributo);
+			string nuevoTipo;
+			nuevoTipo = tipoCB.SelectedItem.ToString();
+			cdde.tiposDatos[i] = nuevoTipo;			
+		}
+		void ActualizarBTNClick(object sender, EventArgs e)
+		{
+			//va acomparar el atributo elegido en el comboBox con la lista de tipos
+			string atributo = atributoCB.SelectedItem.ToString();
+			//aqui obtiene el index para el atributo en la lista de encabezados
+			int i = cdde.encabezados.IndexOf(atributo);
+			//ese mismo index sirve para sacar el tipo de dato de la lista de tiposDatos
+			cdde.dominios[i] = dominioTB.Text.ToString();
+		}
+		void RestablecerBTNClick(object sender, EventArgs e)
+		{
+	
+		}
+		void ComentarioTXTTextChanged(object sender, EventArgs e)
+		{
+			cdde.comentarios = comentarioTXT.Text.ToString();
 		}
 		
 	}

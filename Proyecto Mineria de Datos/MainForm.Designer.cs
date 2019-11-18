@@ -37,6 +37,17 @@ namespace Proyecto_Mineria_de_Datos
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Label labelNumeroValoresFaltantes;
 		private System.Windows.Forms.Label labelProporcionValoresFaltantes;
+		private System.Windows.Forms.TextBox comentarioTXT;
+		private System.Windows.Forms.Label comentarioLa;
+		public System.Windows.Forms.ComboBox atributoCB;
+		private System.Windows.Forms.Label atributoL;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.ComboBox tipoCB;
+		private System.Windows.Forms.Label debugL;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.TextBox dominioTB;
+		private System.Windows.Forms.Button actualizarBTN;
+		private System.Windows.Forms.Button restablecerBTN;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -83,6 +94,17 @@ namespace Proyecto_Mineria_de_Datos
 			this.label8 = new System.Windows.Forms.Label();
 			this.labelNumeroValoresFaltantes = new System.Windows.Forms.Label();
 			this.labelProporcionValoresFaltantes = new System.Windows.Forms.Label();
+			this.comentarioTXT = new System.Windows.Forms.TextBox();
+			this.comentarioLa = new System.Windows.Forms.Label();
+			this.atributoCB = new System.Windows.Forms.ComboBox();
+			this.atributoL = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
+			this.tipoCB = new System.Windows.Forms.ComboBox();
+			this.debugL = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.dominioTB = new System.Windows.Forms.TextBox();
+			this.actualizarBTN = new System.Windows.Forms.Button();
+			this.restablecerBTN = new System.Windows.Forms.Button();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
@@ -109,13 +131,13 @@ namespace Proyecto_Mineria_de_Datos
 			this.acercaDeToolStripMenuItem,
 			this.salirToolStripMenuItem});
 			this.entradaDeDatosToolStripMenuItem.Name = "entradaDeDatosToolStripMenuItem";
-			this.entradaDeDatosToolStripMenuItem.Size = new System.Drawing.Size(102, 20);
+			this.entradaDeDatosToolStripMenuItem.Size = new System.Drawing.Size(107, 20);
 			this.entradaDeDatosToolStripMenuItem.Text = "Entrada de datos";
 			// 
 			// cargarArchivoToolStripMenuItem
 			// 
 			this.cargarArchivoToolStripMenuItem.Name = "cargarArchivoToolStripMenuItem";
-			this.cargarArchivoToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+			this.cargarArchivoToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
 			this.cargarArchivoToolStripMenuItem.Text = "Cargar archivo";
 			this.cargarArchivoToolStripMenuItem.Click += new System.EventHandler(this.CargarArchivoToolStripMenuItemClick);
 			// 
@@ -123,7 +145,7 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			this.guardarToolStripMenuItem.Enabled = false;
 			this.guardarToolStripMenuItem.Name = "guardarToolStripMenuItem";
-			this.guardarToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+			this.guardarToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
 			this.guardarToolStripMenuItem.Text = "Guardar";
 			this.guardarToolStripMenuItem.Click += new System.EventHandler(this.GuardarToolStripMenuItemClick);
 			// 
@@ -131,21 +153,21 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			this.guardarComoToolStripMenuItem.Enabled = false;
 			this.guardarComoToolStripMenuItem.Name = "guardarComoToolStripMenuItem";
-			this.guardarComoToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+			this.guardarComoToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
 			this.guardarComoToolStripMenuItem.Text = "Guardar como...";
 			this.guardarComoToolStripMenuItem.Click += new System.EventHandler(this.GuardarComoToolStripMenuItemClick);
 			// 
 			// acercaDeToolStripMenuItem
 			// 
 			this.acercaDeToolStripMenuItem.Name = "acercaDeToolStripMenuItem";
-			this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+			this.acercaDeToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
 			this.acercaDeToolStripMenuItem.Text = "Acerca de...";
 			this.acercaDeToolStripMenuItem.Click += new System.EventHandler(this.AcercaDeToolStripMenuItemClick);
 			// 
 			// salirToolStripMenuItem
 			// 
 			this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-			this.salirToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+			this.salirToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
 			this.salirToolStripMenuItem.Text = "Salir";
 			this.salirToolStripMenuItem.Click += new System.EventHandler(this.SalirToolStripMenuItemClick);
 			// 
@@ -156,34 +178,34 @@ namespace Proyecto_Mineria_de_Datos
 			this.bivariableToolStripMenuItem});
 			this.análisisEstadísticoToolStripMenuItem.Enabled = false;
 			this.análisisEstadísticoToolStripMenuItem.Name = "análisisEstadísticoToolStripMenuItem";
-			this.análisisEstadísticoToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
+			this.análisisEstadísticoToolStripMenuItem.Size = new System.Drawing.Size(121, 20);
 			this.análisisEstadísticoToolStripMenuItem.Text = " Análisis Estadístico";
 			// 
 			// univariableToolStripMenuItem
 			// 
 			this.univariableToolStripMenuItem.Name = "univariableToolStripMenuItem";
-			this.univariableToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.univariableToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
 			this.univariableToolStripMenuItem.Text = "Univariable";
 			this.univariableToolStripMenuItem.Click += new System.EventHandler(this.UnivariableToolStripMenuItemClick);
 			// 
 			// bivariableToolStripMenuItem
 			// 
 			this.bivariableToolStripMenuItem.Name = "bivariableToolStripMenuItem";
-			this.bivariableToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+			this.bivariableToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
 			this.bivariableToolStripMenuItem.Text = "Bivariable";
 			// 
 			// limpiezaDeDatosToolStripMenuItem
 			// 
 			this.limpiezaDeDatosToolStripMenuItem.Enabled = false;
 			this.limpiezaDeDatosToolStripMenuItem.Name = "limpiezaDeDatosToolStripMenuItem";
-			this.limpiezaDeDatosToolStripMenuItem.Size = new System.Drawing.Size(104, 20);
+			this.limpiezaDeDatosToolStripMenuItem.Size = new System.Drawing.Size(114, 20);
 			this.limpiezaDeDatosToolStripMenuItem.Text = "Limpieza de datos";
 			// 
 			// aprendizajeMáquinaToolStripMenuItem
 			// 
 			this.aprendizajeMáquinaToolStripMenuItem.Enabled = false;
 			this.aprendizajeMáquinaToolStripMenuItem.Name = "aprendizajeMáquinaToolStripMenuItem";
-			this.aprendizajeMáquinaToolStripMenuItem.Size = new System.Drawing.Size(119, 20);
+			this.aprendizajeMáquinaToolStripMenuItem.Size = new System.Drawing.Size(131, 20);
 			this.aprendizajeMáquinaToolStripMenuItem.Text = "Aprendizaje máquina";
 			// 
 			// dataGridView1
@@ -282,12 +304,129 @@ namespace Proyecto_Mineria_de_Datos
 			this.labelProporcionValoresFaltantes.TabIndex = 12;
 			this.labelProporcionValoresFaltantes.Text = "0%";
 			// 
+			// comentarioTXT
+			// 
+			this.comentarioTXT.Enabled = false;
+			this.comentarioTXT.Location = new System.Drawing.Point(20, 309);
+			this.comentarioTXT.Multiline = true;
+			this.comentarioTXT.Name = "comentarioTXT";
+			this.comentarioTXT.Size = new System.Drawing.Size(248, 47);
+			this.comentarioTXT.TabIndex = 13;
+			this.comentarioTXT.TextChanged += new System.EventHandler(this.ComentarioTXTTextChanged);
+			// 
+			// comentarioLa
+			// 
+			this.comentarioLa.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.comentarioLa.Location = new System.Drawing.Point(20, 291);
+			this.comentarioLa.Name = "comentarioLa";
+			this.comentarioLa.Size = new System.Drawing.Size(220, 15);
+			this.comentarioLa.TabIndex = 14;
+			this.comentarioLa.Text = "Comentario:";
+			// 
+			// atributoCB
+			// 
+			this.atributoCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.atributoCB.Enabled = false;
+			this.atributoCB.FormattingEnabled = true;
+			this.atributoCB.Location = new System.Drawing.Point(20, 382);
+			this.atributoCB.Name = "atributoCB";
+			this.atributoCB.Size = new System.Drawing.Size(248, 21);
+			this.atributoCB.TabIndex = 15;
+			this.atributoCB.SelectedIndexChanged += new System.EventHandler(this.AtributoCBSelectedIndexChanged);
+			// 
+			// atributoL
+			// 
+			this.atributoL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.atributoL.Location = new System.Drawing.Point(20, 364);
+			this.atributoL.Name = "atributoL";
+			this.atributoL.Size = new System.Drawing.Size(220, 15);
+			this.atributoL.TabIndex = 16;
+			this.atributoL.Text = "Atributo:";
+			// 
+			// label3
+			// 
+			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label3.Location = new System.Drawing.Point(20, 415);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(220, 15);
+			this.label3.TabIndex = 17;
+			this.label3.Text = "Tipo:";
+			// 
+			// tipoCB
+			// 
+			this.tipoCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.tipoCB.Enabled = false;
+			this.tipoCB.FormattingEnabled = true;
+			this.tipoCB.Location = new System.Drawing.Point(20, 433);
+			this.tipoCB.Name = "tipoCB";
+			this.tipoCB.Size = new System.Drawing.Size(248, 21);
+			this.tipoCB.TabIndex = 18;
+			this.tipoCB.SelectedIndexChanged += new System.EventHandler(this.TipoCBSelectedIndexChanged);
+			// 
+			// debugL
+			// 
+			this.debugL.Location = new System.Drawing.Point(19, 538);
+			this.debugL.Name = "debugL";
+			this.debugL.Size = new System.Drawing.Size(100, 23);
+			this.debugL.TabIndex = 19;
+			// 
+			// label5
+			// 
+			this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label5.Location = new System.Drawing.Point(20, 467);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(220, 15);
+			this.label5.TabIndex = 20;
+			this.label5.Text = "Dominio:";
+			// 
+			// dominioTB
+			// 
+			this.dominioTB.Enabled = false;
+			this.dominioTB.Location = new System.Drawing.Point(20, 485);
+			this.dominioTB.Multiline = true;
+			this.dominioTB.Name = "dominioTB";
+			this.dominioTB.Size = new System.Drawing.Size(248, 47);
+			this.dominioTB.TabIndex = 21;
+			// 
+			// actualizarBTN
+			// 
+			this.actualizarBTN.Enabled = false;
+			this.actualizarBTN.Location = new System.Drawing.Point(136, 533);
+			this.actualizarBTN.Name = "actualizarBTN";
+			this.actualizarBTN.Size = new System.Drawing.Size(61, 23);
+			this.actualizarBTN.TabIndex = 22;
+			this.actualizarBTN.Text = "Actualizar";
+			this.actualizarBTN.UseVisualStyleBackColor = true;
+			this.actualizarBTN.Click += new System.EventHandler(this.ActualizarBTNClick);
+			// 
+			// restablecerBTN
+			// 
+			this.restablecerBTN.Enabled = false;
+			this.restablecerBTN.Location = new System.Drawing.Point(196, 533);
+			this.restablecerBTN.Name = "restablecerBTN";
+			this.restablecerBTN.Size = new System.Drawing.Size(72, 23);
+			this.restablecerBTN.TabIndex = 23;
+			this.restablecerBTN.Text = "Restablecer";
+			this.restablecerBTN.UseVisualStyleBackColor = true;
+			this.restablecerBTN.Click += new System.EventHandler(this.RestablecerBTNClick);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
 			this.ClientSize = new System.Drawing.Size(892, 573);
+			this.Controls.Add(this.restablecerBTN);
+			this.Controls.Add(this.actualizarBTN);
+			this.Controls.Add(this.dominioTB);
+			this.Controls.Add(this.label5);
+			this.Controls.Add(this.debugL);
+			this.Controls.Add(this.tipoCB);
+			this.Controls.Add(this.label3);
+			this.Controls.Add(this.atributoL);
+			this.Controls.Add(this.atributoCB);
+			this.Controls.Add(this.comentarioLa);
+			this.Controls.Add(this.comentarioTXT);
 			this.Controls.Add(this.label8);
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.label4);

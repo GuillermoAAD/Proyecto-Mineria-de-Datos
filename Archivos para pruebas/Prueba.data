@@ -1,0 +1,12 @@
+%% Prueba de conversion de .csv a .data v2 xdxd
+@relation Prueba
+@attribute Nombre nominal (Axel | Cesar | Jaylene | Memos | Nieves)
+@attribute Edad numeric (19 | 21 | 25 | 29)
+@attribute Codigo nominal (1 | 2 | 3 | 4 | 5)
+@missingValue 
+@data 
+Axel,21,1
+Memos,29,2
+Nieves,19,3
+Cesar,25,4
+Jaylene,29,5
