@@ -77,7 +77,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.comboBox1.FormattingEnabled = true;
 			this.comboBox1.Location = new System.Drawing.Point(12, 50);
 			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(250, 21);
+			this.comboBox1.Size = new System.Drawing.Size(264, 21);
 			this.comboBox1.TabIndex = 3;
 			this.comboBox1.Text = "Elija un atributo";
 			this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.ComboBox1SelectedIndexChanged);
@@ -87,7 +87,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.comboBox2.FormattingEnabled = true;
 			this.comboBox2.Location = new System.Drawing.Point(12, 77);
 			this.comboBox2.Name = "comboBox2";
-			this.comboBox2.Size = new System.Drawing.Size(250, 21);
+			this.comboBox2.Size = new System.Drawing.Size(264, 21);
 			this.comboBox2.TabIndex = 4;
 			this.comboBox2.Text = "Elija un atributo";
 			this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.ComboBox2SelectedIndexChanged);
@@ -95,12 +95,12 @@ namespace Proyecto_Mineria_de_Datos
 			// labelOperacionNoValida
 			// 
 			this.labelOperacionNoValida.AutoSize = true;
-			this.labelOperacionNoValida.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelOperacionNoValida.Location = new System.Drawing.Point(12, 280);
+			this.labelOperacionNoValida.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelOperacionNoValida.Location = new System.Drawing.Point(27, 131);
 			this.labelOperacionNoValida.Name = "labelOperacionNoValida";
-			this.labelOperacionNoValida.Size = new System.Drawing.Size(565, 17);
+			this.labelOperacionNoValida.Size = new System.Drawing.Size(232, 26);
 			this.labelOperacionNoValida.TabIndex = 5;
-			this.labelOperacionNoValida.Text = "No se puede hacer análisis estadístico bivariable de Categórico vs Numérico";
+			this.labelOperacionNoValida.Text = "No se puede hacer análisis estadístico \r\nbivariable de Categórico vs Numérico";
 			this.labelOperacionNoValida.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.labelOperacionNoValida.Visible = false;
 			// 
@@ -126,7 +126,7 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			// labelChiCuadrada
 			// 
-			this.labelChiCuadrada.Location = new System.Drawing.Point(10, 176);
+			this.labelChiCuadrada.Location = new System.Drawing.Point(10, 134);
 			this.labelChiCuadrada.Name = "labelChiCuadrada";
 			this.labelChiCuadrada.Size = new System.Drawing.Size(100, 23);
 			this.labelChiCuadrada.TabIndex = 9;
@@ -137,7 +137,7 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(10, 157);
+			this.label3.Location = new System.Drawing.Point(10, 115);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(87, 13);
 			this.label3.TabIndex = 8;
@@ -146,7 +146,7 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			// labelTschuprow
 			// 
-			this.labelTschuprow.Location = new System.Drawing.Point(10, 218);
+			this.labelTschuprow.Location = new System.Drawing.Point(10, 176);
 			this.labelTschuprow.Name = "labelTschuprow";
 			this.labelTschuprow.Size = new System.Drawing.Size(100, 23);
 			this.labelTschuprow.TabIndex = 11;
@@ -157,7 +157,7 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			this.label4.AutoSize = true;
 			this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label4.Location = new System.Drawing.Point(10, 199);
+			this.label4.Location = new System.Drawing.Point(10, 157);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(254, 13);
 			this.label4.TabIndex = 10;
@@ -178,18 +178,16 @@ namespace Proyecto_Mineria_de_Datos
 			this.dataGridView1.Name = "dataGridView1";
 			this.dataGridView1.ReadOnly = true;
 			this.dataGridView1.RowHeadersVisible = false;
-			this.dataGridView1.Size = new System.Drawing.Size(290, 216);
+			this.dataGridView1.Size = new System.Drawing.Size(0, 0);
 			this.dataGridView1.TabIndex = 12;
+			this.dataGridView1.Visible = false;
 			// 
 			// AnalisisEstadisticoBivariableForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.AutoSize = true;
-			this.ClientSize = new System.Drawing.Size(592, 416);
+			this.ClientSize = new System.Drawing.Size(289, 199);
 			this.Controls.Add(this.dataGridView1);
-			this.Controls.Add(this.labelTschuprow);
-			this.Controls.Add(this.label4);
 			this.Controls.Add(this.labelChiCuadrada);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.labelPearson);
@@ -198,6 +196,8 @@ namespace Proyecto_Mineria_de_Datos
 			this.Controls.Add(this.comboBox2);
 			this.Controls.Add(this.comboBox1);
 			this.Controls.Add(this.label1);
+			this.Controls.Add(this.label4);
+			this.Controls.Add(this.labelTschuprow);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "AnalisisEstadisticoBivariableForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

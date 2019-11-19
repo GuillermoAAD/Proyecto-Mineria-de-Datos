@@ -519,6 +519,16 @@ namespace Proyecto_Mineria_de_Datos
 			return tipoDato;
 		}
 		
+		//Especialmente util en los categoricos
+		//regresa cuantos posibles valores puede tener un atributo
+		public int obtenerCantidadDeDominios(string nombreAtributo)
+		{
+			List<string> dominiosAtrib = obtenerDominios(nombreAtributo);
+			
+			int cantidadDominios = dominiosAtrib.Count;
+			
+			return cantidadDominios;
+		}
 		
 		//esto retornara una lista con las posiciones de aquellos campos
 		//del datable que no cumplan con el dominio dado por su atributo

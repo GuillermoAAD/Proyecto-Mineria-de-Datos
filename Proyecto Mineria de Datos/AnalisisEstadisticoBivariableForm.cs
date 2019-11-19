@@ -84,6 +84,8 @@ namespace Proyecto_Mineria_de_Datos
 				}
 				else//si no se muestra un mensaje de que no se puede realizar la operacion
 				{
+					ocultarDatosNumericos();
+					ocultarDatosCategoricos();
 					labelOperacionNoValida.Visible = true;
 				}
 			}
@@ -133,6 +135,8 @@ namespace Proyecto_Mineria_de_Datos
 				}
 				else//si no se muestra un mensaje de que no se puede realizar la operacion
 				{
+					ocultarDatosNumericos();
+					ocultarDatosCategoricos();
 					labelOperacionNoValida.Visible = true;
 				}
 			}
@@ -159,8 +163,15 @@ namespace Proyecto_Mineria_de_Datos
 		private void calculoDeCategoricos(string encabezado1, string encabezado2)
 		{
 			dataGridView1.DataSource = null;
+			
+			double chiCuadrada = calcularChiCuadrada(encabezado1, encabezado2);
 			labelChiCuadrada.Text = calcularChiCuadrada(encabezado1, encabezado2).ToString("0.000");
-			//labelTschuprow.Text = calcularTschuprow(encabezado1, encabezado2).ToString("0.000");
+			
+			//Hago esto aqui por que tschuprow necesita estos valores
+			DataTable tablaContingencia = calcularTablaContingencia(encabezado1, encabezado2);
+			int n = calcularNumeroTuplas(tablaContingencia);
+			
+			labelTschuprow.Text = calcularTschuprow(chiCuadrada, n, encabezado1, encabezado2).ToString("0.000");
 		}
 		
 		private void mostrarDatosNumericos()
@@ -184,6 +195,8 @@ namespace Proyecto_Mineria_de_Datos
 			labelChiCuadrada.Visible = true;
 			label4.Visible = true;
 			labelTschuprow.Visible = true;
+			
+			//dataGridView1 = true;
 		}
 		
 		private void ocultarDatosCategoricos()
@@ -192,6 +205,8 @@ namespace Proyecto_Mineria_de_Datos
 			labelChiCuadrada.Visible = false;
 			label4.Visible = false;
 			labelTschuprow.Visible = false;
+			
+			//dataGridView1.Visible = false;
 		}
 		
 		private double calcularPearson(string encabezado1, string encabezado2)
@@ -316,16 +331,29 @@ namespace Proyecto_Mineria_de_Datos
 		
 		private double calcularChiCuadrada(string encabezado1, string encabezado2)
 		{
-			double chiCuad = 2;
-			
-			
+			double chiCuadrada = 0;
+
 			DataTable tablaContingencia = calcularTablaContingencia(encabezado1, encabezado2);
-			dataGridView1.DataSource = tablaContingencia;
+			//dataGridView1.DataSource = tablaContingencia;
 			
+			//o = frecuencia observada
+			//e = frecuencia esperada
+			//n = numero de tuplas
 			
+			List<int> o = calcularFrecuenciaObservada(tablaContingencia);
+			List<double> e = calcularFrecuenciaEsperada(tablaContingencia);
+			int n =calcularNumeroTuplas(tablaContingencia);
 			
+			//Sumatoria de ((o - e)^2 / o)
 			
-			return chiCuad;
+			//idealmente las listas frecuencia Observada y la esperada deberian de tener
+			//la misma cantidad de valores, por lo que se pide el tamano de cualquiera
+			for(int i = 0; i < o.Count; i++)
+			{
+				chiCuadrada += Math.Pow((o[i] - e[i]), 2) / e[i];
+			}
+			
+			return chiCuadrada;
 		}
 		
 		private DataTable calcularTablaContingencia(string encabezado1, string encabezado2)
@@ -436,7 +464,6 @@ namespace Proyecto_Mineria_de_Datos
 						
 				}
 				//Esto lo imprime en la posicion que requiero
-					//tablaContingencia.Rows[dominios1.Count][c] =  totalFila;
 				tablaContingencia.Rows[dominios2.Count][c] = totalCol;
 			}
 			
@@ -447,126 +474,101 @@ namespace Proyecto_Mineria_de_Datos
 				totalDeTotales += int.Parse(tablaContingencia.Rows[f]["Total"].ToString());
 			}
 			//Esto lo imprime en la posicion que requiero
-			//tablaContingencia.Rows[dominios1.Count][c] =  totalFila;
 			tablaContingencia.Rows[dominios2.Count]["Total"] = totalDeTotales;
-			
-			
-		
-			
-			/*
-			int e =0;
-			foreach(string b in valores1)
-				{
-				MessageBox.Show(b + " " + valores2[e], "N",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
-				e++;
-				}
-			
-			MessageBox.Show("FIN" , "N",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
-
-			//valores1.Sort();
-			//valores2.Sort();
-			
-			
-			
-			//Este contador almacena la cuenta de las apariciones de atributo 1 en el 2
-			int contador;
-			
-			// guarda el numaro de columna actual
-			int contadorCol;
-			
-			for(int f = 0; f < valores2.Count-2; f++)
-			{
-				contador = 0;
-				
-				contadorCol=0;
-				
-				for(int i = 0; i < valores1.Count -1; i++)
-				{
-					
-					
-					
-				// SI FUNCIONA
-				//foreach(string b in valoresAtrib1)
-				//{
-				MessageBox.Show(valores1.Count.ToString() + " " + valores2.Count.ToString(), "N",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
-					contadorCol++;
-				//}
-				*/
-			
-					/*
-					
-					//La c no es de la columna, se uitliza para recorrer la lista
-					
-					//Si el valor actual es igual al siguiente se incrementa el contador
-					//Pero esto funciona hasta el penultimo
-					if(valores1[i] == valores1[i + 1])
-					{
-						contador++;
-						
-						//MessageBox.Show("son iguales ", "N",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
-					}
-					else //Entonces los valores son diferentes
-					{
-						//MessageBox.Show("son diferentes ", "N",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
-						//incrementa el contador;
-						contador++;
-						
-						//guarda el valor de contador en la tabla de contingencia en la posicion 
-						//correspondiente
-						
-						//c+1 por que en la pos 0 estan los valores posibles
-						//para el atributo2
-						tablaContingencia.Rows[f][contadorCol] = contador;
-						
-						//Reinicia el contador a 0
-						contador = 0;
-						
-						//Se incrementa el contador columna, ya que ahora deberia de estar en otra
-						
-						contadorCol++;
-					}
-					
-					//Para  saber si la posicion siguiente es la ultima
-					//esto deberia activarse una sola vez por ciclo, ya que es el ultimo valor
-					if(i+1 == valores1.Count - 1)
-					{
-						MessageBox.Show("es el ultimo  ", "N",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
-						//incremento contador
-						contador++;
-						
-						//guarda el valor de contador en la tabla de contingencia en la posicion 
-						//correspondiente
-						
-						//c+1 por que en la pos 0 estan los valores posibles
-						//para el atributo2
-						tablaContingencia.Rows[f][contadorCol] = contador;
-					}
-					*/
-				//}
-			//}
-			
-			
-			/*
-			foreach(string dominio in dominiosDeUnAtributo)
-			{
-				DataRow dr = tablaDeFrecuencias.NewRow();
-				dr[0] = dominio;
-				
-				
-				int frecuenciaPalabra = contarFrecuenciaPalabraColumna(dominio, valoresDeAtributos);
-				int numNulos = contarValoresNulosEnColumna(valoresDeAtributos);
-				
-				double porcentaje = calcularPorcentajeFrencuencia(frecuenciaPalabra, numNulos);
-			
-				dr[1] = frecuenciaPalabra;
-				dr[2] = porcentaje.ToString("0.00");
-				tablaDeFrecuencias.Rows.Add(dr);
-			}
-			*/
 
 			return tablaContingencia;
 		}
 		
+		//Recibe la tabla de contingencia
+		//y retorna una lista con las frecuencias esperadas ordenadas primero por fila y 
+		//luego por columna
+		private List<double> calcularFrecuenciaEsperada(DataTable tablaContingencia)
+		{
+			List<double> valoresEsperados = new List<double>();
+			
+			//Extraigo los totales de la filas y las columnas  
+			List<double> totalesCol = new List<double>();
+			List<double> totalesFil = new List<double>();
+
+			int ultimaFila = tablaContingencia.Rows.Count - 1;
+			int ultimaCol = tablaContingencia.Columns.Count - 1;
+			
+			int n = calcularNumeroTuplas(tablaContingencia);
+			
+			//extrae totales filas(los de a lado en la tabla de contingencia)
+			for(int i = 0; i < tablaContingencia.Rows.Count-1; i++)
+			{
+				totalesFil.Add(double.Parse(tablaContingencia.Rows[i][ultimaCol].ToString()));
+			}
+			
+			//extrae totales columnas(los de abajo en la tabla de contingencia)
+			for(int i = 1; i < tablaContingencia.Columns.Count-1; i++)
+			{
+				totalesCol.Add(double.Parse(tablaContingencia.Rows[ultimaFila][i].ToString()));
+			}
+		
+			
+			//ahora calculo la fecuencia esperada
+			//recorro los totales de filas y dentro  los de columnas
+			for(int f = 0; f < totalesFil.Count; f++)
+			{
+				for(int c = 0; c < totalesCol.Count; c++)
+				{
+					valoresEsperados.Add( (totalesFil[f] * totalesCol[c]) / n);
+				}
+			}
+			//foreach(double a in valoresEsperados)
+			//{
+			//	MessageBox.Show(a.ToString());
+			//}
+			return valoresEsperados;
+		}
+		
+		private List<int> calcularFrecuenciaObservada(DataTable tablaContingencia)
+		{
+			List<int> valoresObservados = new List<int>();
+			
+			for(int f = 0; f < tablaContingencia.Rows.Count-1; f++)
+			{
+				for(int c = 1; c < tablaContingencia.Columns.Count-1; c++)
+				{
+					valoresObservados.Add(int.Parse(tablaContingencia.Rows[f][c].ToString()));
+				}
+			}
+			
+			return valoresObservados;
+		}
+		
+		//Se hace esta por que se puede dar el caso de que haya valores faltantes
+		//entonces saca el total de totales de la tablaContingencia
+		private int calcularNumeroTuplas(DataTable tablaContingencia)
+		{
+			int ultimaFila = tablaContingencia.Rows.Count - 1;
+			int ultimaCol = tablaContingencia.Columns.Count - 1;
+			
+			int n = int.Parse(tablaContingencia.Rows[ultimaFila][ultimaCol].ToString());
+
+			return n;
+		}
+		
+		private double calcularTschuprow(double chiCuadrada, int n, string encabezado1, string encabezado2)
+		{
+			double tschuprow = 0;
+			//primero extraigo el indice
+			int r = cdd.obtenerCantidadDeDominios(encabezado1);
+			int c = cdd.obtenerCantidadDeDominios(encabezado2);
+			
+			//MessageBox.Show(r.ToString() + " " + c.ToString() );
+			
+			//la parte de abajo de la formula
+			double dividendo = (c - 1) * (r - 1);
+			
+			dividendo = n * Math.Sqrt(dividendo);
+	
+			tschuprow = Math.Sqrt(chiCuadrada / dividendo);
+			
+			return tschuprow;
+		}
 
 	}
 }
