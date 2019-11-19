@@ -251,6 +251,16 @@ namespace Proyecto_Mineria_de_Datos
 			//trabajar con los mismos datos
 			aeu.Show();
 		}
+		
+		void BivariableToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			AnalisisEstadisticoBivariableForm aeb = new AnalisisEstadisticoBivariableForm(cdde);
+			//Se inicializa el conjunto de datos que va a haber en el analisis 
+			//estadistico Univariable con el conjunto de este form, para poder 
+			//trabajar con los mismos datos
+			aeb.Show();
+		}
+		
 		void AtributoCBSelectedIndexChanged(object sender, EventArgs e)
 		{
 			//va acomparar el atributo elegido en el comboBox con la lista de tipos
@@ -294,6 +304,7 @@ namespace Proyecto_Mineria_de_Datos
 		{
 			cdde.comentarios = comentarioTXT.Text.ToString();
 		}
+		
 		
 	}
 }

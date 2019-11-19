@@ -487,6 +487,39 @@ namespace Proyecto_Mineria_de_Datos
 		}
 		
 		
+		//Saber si el tipo de dato es numerico o categorico
+		public string saberTipoDeDato(string nombreAtributo)
+		{
+			//va acomparar el atributo obtenido por parametro
+			//(el cual deberia obtenerse de un comboBox con la lista de tipos
+			//aunque esto puede cambiar conforme crece el programa)
+			
+			//aqui obtiene el index para el atributo en la lista de encabezados
+			int i = encabezados.IndexOf(nombreAtributo);
+			//ese mismo index sirve para sacar el tipo de dato de la lista de tiposDatos
+			
+			string tipoDato;
+			
+			tipoDato = tiposDatos[i];
+			
+			
+			//aqui en este punto divido los tipos de datos en 2
+			//categoricos: nominal, ordinal, boleano
+			//numericos: numeric, fecha
+			
+			if(tipoDato == "nominal" || tipoDato == "ordinal" || tipoDato == "boleano")
+			{
+				tipoDato = "categorico";
+			}
+			else if(tipoDato == "numeric" || tipoDato == "fecha")
+			{
+				tipoDato = "numerico";
+			}
+			
+			return tipoDato;
+		}
+		
+		
 		//esto retornara una lista con las posiciones de aquellos campos
 		//del datable que no cumplan con el dominio dado por su atributo
 		public List<string> validarCamposConDominioTotal(string encabezadoAtributo)

@@ -51,16 +51,19 @@ namespace Proyecto_Mineria_de_Datos
 		void ComboBox1SelectedIndexChanged(object sender, EventArgs e)
 		{
 			string encabezado = comboBox1.Text;
-			string tipoDato = saberTipoDeDato(encabezado);
+			//string tipoDato = saberTipoDeDato(encabezado);
+			string tipoDato = cdd.saberTipoDeDato(encabezado);
 			
-			if(tipoDato == "numeric")//probablemente se agregue fecha...
+			//if(tipoDato == "numeric")//probablemente se agregue fecha...
+			if(tipoDato == "numerico")//probablemente se agregue fecha...
 			{
 				//hace calculos de numerico y 
 				//pondra visible las cosas que se relacionen
 				calculoDeNumericos(encabezado);
 				mostrarDatosNumericos();
 			}
-			else if(tipoDato == "nominal" || tipoDato == "ordinal")//probablemente se deban agregar ordinal, bool, etc,
+			//else if(tipoDato == "nominal" || tipoDato == "ordinal")//probablemente se deban agregar ordinal, bool, etc,
+			else if(tipoDato == "categorico")
 			{
 				//hace calculos de categorico y 
 				//pondra visible las cosas que se relacionen
@@ -70,6 +73,7 @@ namespace Proyecto_Mineria_de_Datos
 		}
 		
 		//Saber si el tipo de dato es numerico o categorico
+		/*
 		private	string saberTipoDeDato(string nombreAtributo)
 		{
 			//va acomparar el atributo elegido en el comboBox con la lista de tipos
@@ -84,6 +88,7 @@ namespace Proyecto_Mineria_de_Datos
 			
 			return tipoDato;
 		}
+		*/
 		
 		private void calculoDeNumericos(string encabezado)
 		{

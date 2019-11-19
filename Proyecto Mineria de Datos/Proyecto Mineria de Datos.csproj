@@ -57,6 +57,10 @@
     <Compile Include="AcercaDeForm.Designer.cs">
       <DependentUpon>AcercaDeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AnalisisEstadisticoBivariableForm.cs" />
+    <Compile Include="AnalisisEstadisticoBivariableForm.Designer.cs">
+      <DependentUpon>AnalisisEstadisticoBivariableForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AnalisisEstadisticoUnivariableForm.cs" />
     <Compile Include="AnalisisEstadisticoUnivariableForm.Designer.cs">
       <DependentUpon>AnalisisEstadisticoUnivariableForm.cs</DependentUpon>
@@ -91,6 +95,9 @@
   <ItemGroup>
     <EmbeddedResource Include="AcercaDeForm.resx">
       <DependentUpon>AcercaDeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AnalisisEstadisticoBivariableForm.resx">
+      <DependentUpon>AnalisisEstadisticoBivariableForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AnalisisEstadisticoUnivariableForm.resx">
       <DependentUpon>AnalisisEstadisticoUnivariableForm.cs</DependentUpon>
