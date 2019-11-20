@@ -65,10 +65,18 @@
     <Compile Include="AnalisisEstadisticoUnivariableForm.Designer.cs">
       <DependentUpon>AnalisisEstadisticoUnivariableForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AprendizajeMaquinaForm.cs" />
+    <Compile Include="AprendizajeMaquinaForm.Designer.cs">
+      <DependentUpon>AprendizajeMaquinaForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConjuntoDeDatosExtendido.cs" />
     <Compile Include="entradaDeDatos.cs" />
     <Compile Include="formatoCSV.cs" />
     <Compile Include="formatoDATA.cs" />
+    <Compile Include="LimpiezaDeDatosForm.cs" />
+    <Compile Include="LimpiezaDeDatosForm.Designer.cs">
+      <DependentUpon>LimpiezaDeDatosForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -101,6 +109,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AnalisisEstadisticoUnivariableForm.resx">
       <DependentUpon>AnalisisEstadisticoUnivariableForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AprendizajeMaquinaForm.resx">
+      <DependentUpon>AprendizajeMaquinaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LimpiezaDeDatosForm.resx">
+      <DependentUpon>LimpiezaDeDatosForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

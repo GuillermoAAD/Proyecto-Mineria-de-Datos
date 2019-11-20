@@ -261,6 +261,20 @@ namespace Proyecto_Mineria_de_Datos
 			aeb.Show();
 		}
 		
+		void LimpiezaDeDatosToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			LimpiezaDeDatosForm ld = new LimpiezaDeDatosForm();
+			
+			ld.Show();
+		}
+		
+		void AprendizajeMáquinaToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			AprendizajeMaquinaForm am = new AprendizajeMaquinaForm();
+			
+			am.Show();	
+		}
+		
 		void AtributoCBSelectedIndexChanged(object sender, EventArgs e)
 		{
 			//va acomparar el atributo elegido en el comboBox con la lista de tipos
@@ -304,6 +318,7 @@ namespace Proyecto_Mineria_de_Datos
 		{
 			cdde.comentarios = comentarioTXT.Text.ToString();
 		}
+		
 		
 		
 	}

@@ -184,14 +184,14 @@ namespace Proyecto_Mineria_de_Datos
 			// univariableToolStripMenuItem
 			// 
 			this.univariableToolStripMenuItem.Name = "univariableToolStripMenuItem";
-			this.univariableToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.univariableToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
 			this.univariableToolStripMenuItem.Text = "Univariable";
 			this.univariableToolStripMenuItem.Click += new System.EventHandler(this.UnivariableToolStripMenuItemClick);
 			// 
 			// bivariableToolStripMenuItem
 			// 
 			this.bivariableToolStripMenuItem.Name = "bivariableToolStripMenuItem";
-			this.bivariableToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.bivariableToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
 			this.bivariableToolStripMenuItem.Text = "Bivariable";
 			this.bivariableToolStripMenuItem.Click += new System.EventHandler(this.BivariableToolStripMenuItemClick);
 			// 
@@ -201,6 +201,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.limpiezaDeDatosToolStripMenuItem.Name = "limpiezaDeDatosToolStripMenuItem";
 			this.limpiezaDeDatosToolStripMenuItem.Size = new System.Drawing.Size(104, 20);
 			this.limpiezaDeDatosToolStripMenuItem.Text = "Limpieza de datos";
+			this.limpiezaDeDatosToolStripMenuItem.Click += new System.EventHandler(this.LimpiezaDeDatosToolStripMenuItemClick);
 			// 
 			// aprendizajeMáquinaToolStripMenuItem
 			// 
@@ -208,6 +209,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.aprendizajeMáquinaToolStripMenuItem.Name = "aprendizajeMáquinaToolStripMenuItem";
 			this.aprendizajeMáquinaToolStripMenuItem.Size = new System.Drawing.Size(119, 20);
 			this.aprendizajeMáquinaToolStripMenuItem.Text = "Aprendizaje máquina";
+			this.aprendizajeMáquinaToolStripMenuItem.Click += new System.EventHandler(this.AprendizajeMáquinaToolStripMenuItemClick);
 			// 
 			// dataGridView1
 			// 
