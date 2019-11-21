@@ -1,2 +1,0 @@
-Para realizar pruebas del programa utilizamos los archivos ejemplo.DATA y tabla.csv, 
-contenidos en esta carpeta.
