@@ -44,6 +44,9 @@ namespace Proyecto_Mineria_de_Datos
 		//Base de Datos (Aqui se encuentran los datos con los que se va a trabajar)
 		public DataTable dtConjuntoDatos;
 		
+		//Esta variable guarda el atributo que sera considerado como clase
+		public string clase;
+		
 		public ConjuntoDeDatosExtendido()
 		{
 			this.nombreConjuntoDatos = "";
@@ -55,6 +58,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.atributosNumeric = new List<string>();
 			this.atributosNominal = new List<string>();
 			this.dtConjuntoDatos = new DataTable();
+			this.clase = "";
 		}
 		
 		public int calcularCantidadInstancias()
@@ -506,7 +510,7 @@ namespace Proyecto_Mineria_de_Datos
 			//categoricos: nominal, ordinal, boleano
 			//numericos: numeric, fecha
 			
-			if(tipoDato == "nominal" || tipoDato == "ordinal" || tipoDato == "boleano")
+			if(tipoDato == "nominal" || tipoDato == "ordinal" || tipoDato == "boleano" || tipoDato == "class")
 			{
 				tipoDato = "categorico";
 			}
@@ -580,6 +584,150 @@ namespace Proyecto_Mineria_de_Datos
 			}
 
 			return valoresNoEsperados;
+		}
+		
+		//Esto me regresa el atributo clase
+		public string obtenerClase(){
+			
+			//Si la variable clase esta vacia, buscara con la lista de encabezados y tipos
+			//la clase del conjunto
+			
+			if(clase == "")
+			{
+				int index = tiposDatos.IndexOf("class");
+				
+				//Si encontro el tipo class entonces busca el encabezado que le corresponde
+				if(index != -1)
+				{
+					clase = encabezados[index];
+				}
+			}
+			
+			//Si la variable estaba vacia y aun asi no la encuentra entonces 
+			//regresa un valor vacio ""
+				
+			return clase;
+		}
+		
+		//Devuelve una tabla que compara 2 atributos
+		public DataTable calcularTablaContingencia(string encabezado1, string encabezado2)
+		{
+			//aqui obtiene el index para el atributo en la lista de encabezados
+			int c1 = encabezados.IndexOf(encabezado1);
+			int c2 = encabezados.IndexOf(encabezado2);
+			//ese mismo index sirve para sacar la posicion de columna de donde se sacan datos
+			
+			int cantInstancias = calcularCantidadInstancias();
+			
+			DataTable tablaContingencia= new DataTable();
+			
+			//en la tabla de contingencia
+			//las columnas seran del atributo 1
+			//y las filas del atributo 2
+			
+			//dominios para el atributo1
+			List<string> dominios1 = obtenerDominios(encabezado1);
+			List<string> dominios2 = obtenerDominios(encabezado2);
+			
+			//agrega una columna que es odnde estaran los valores posibles para el atributo2
+			tablaContingencia.Columns.Add(new DataColumn(" "));
+			
+			//Agrega los dominios al datatable
+			foreach(string dom1 in dominios1)
+			{
+				tablaContingencia.Columns.Add(new DataColumn(dom1));
+			}
+			//agrega la columna total al final
+			tablaContingencia.Columns.Add(new DataColumn("Total"));
+			
+			//esto agrega los valores del segundo atributo como "encabezado" de filas
+			foreach(string dom2 in dominios2)
+			{
+				DataRow dr = tablaContingencia.NewRow();
+				dr[0] = dom2;
+				foreach(string dom1 in dominios1)
+				{
+					//agrega cero enlas posiciones de conteo
+					dr[dom1] = 0;
+				}
+				tablaContingencia.Rows.Add(dr);
+			}
+			tablaContingencia.Rows.Add("Total");
+			
+			//Ahora obtengo los valores que hay en cada celda para cada atributo
+			//En el orden que estan, estan relacionados por sus posiciones
+			List<string> valores1 = obtenerValoresParaAtributo(encabezado1);
+			List<string> valores2 = obtenerValoresParaAtributo(encabezado2);
+			
+
+			//Recorro cada posicion del data table y muesto las cabeceras de columna y fila
+			
+			
+			for (int f = 0; f < dominios2.Count; f++)
+			{
+				for (int c = 1; c <= dominios1.Count; c++)
+				{
+
+					// checar si la cabecera de columna y fila son iguales a los valores
+					// de atributos
+					//Para hacerlo recorre todos los valores y los compara con la pos actual
+					for(int i = 0; i < valores1.Count; i++)
+					{
+						if(valores1[i] == tablaContingencia.Columns[c].ColumnName &&
+						   valores2[i] == tablaContingencia.Rows[f][0].ToString())
+						{
+							int contador = int.Parse(tablaContingencia.Rows[f][c].ToString());
+							contador++;
+							tablaContingencia.Rows[f][c] = contador.ToString();
+						}
+					}
+
+				}
+			}
+			
+			
+			int totalFila = 0;
+			int totalCol = 0;
+			int totalDeTotales = 0;
+			
+			
+			//sumar los totales de fila y agregarlos a la datatable
+			for (int f = 0; f < dominios2.Count; f++)
+			{
+				totalCol = 0;
+				totalFila = 0;
+				for (int c = 1; c <= dominios1.Count; c++)
+				{
+					totalFila += int.Parse(tablaContingencia.Rows[f][c].ToString());
+						
+				}
+				//Esto lo imprime en la posicion que requiero
+				tablaContingencia.Rows[f]["Total"] = totalFila;
+			}
+			
+			for (int c = 1; c <= dominios1.Count; c++)
+			{
+				totalCol = 0;
+				totalFila = 0;
+				for (int f = 0; f < dominios2.Count; f++)
+				{
+					totalCol += int.Parse(tablaContingencia.Rows[f][c].ToString());
+						
+				}
+				//Esto lo imprime en la posicion que requiero
+				tablaContingencia.Rows[dominios2.Count][c] = totalCol;
+			}
+			
+			//Sumando total de totales
+	
+			for (int f = 0; f < dominios2.Count; f++)
+			{
+				totalDeTotales += int.Parse(tablaContingencia.Rows[f]["Total"].ToString());
+			}
+			//Esto lo imprime en la posicion que requiero
+			tablaContingencia.Rows[dominios2.Count]["Total"] = totalDeTotales;
+
+			return tablaContingencia;
 		}
 		
 	}

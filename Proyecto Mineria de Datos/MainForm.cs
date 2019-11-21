@@ -25,24 +25,29 @@ namespace Proyecto_Mineria_de_Datos
 		ConjuntoDeDatosExtendido cdde;// 
 		public string ruta;
 		public string extension;
-		public string tipoActual;		
+		public string tipoActual;	
+		
 		public MainForm()
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
+			
+			
 			// Esta parte es para el SplashScreen
-			Thread t=new Thread(new ThreadStart(StartForm));
-			t.Start();
-			Thread.Sleep(5000);
+			//Thread t=new Thread(new ThreadStart(StartForm));
+			//t.Start();
+			//Thread.Sleep(5000);
 			
 			InitializeComponent();
 			
 			//Finaliza el thread del SplashScreen
-			t.Abort();
+			//t.Abort();
+			
 			
 			this.Show();
 			this.Activate();
+			
 			
 			cdde = new ConjuntoDeDatosExtendido();					
 			tipoCB.Items.Add("numeric");
@@ -126,7 +131,13 @@ namespace Proyecto_Mineria_de_Datos
 			//string cadena = edd.proporcionValoresFaltantes.ToString() + "a";
 			labelProporcionValoresFaltantes.Text = cdde.calcularProporcionValoresFaltantes().ToString("0.00") + "%";
 			
-			comentarioTXT.Text = cdde.comentarios;			
+			comentarioTXT.Text = cdde.comentarios;	
+			
+			//pinta de naranja los valores faltantes
+			resaltarValoresFaltantes();
+			//Esto evita que se seleccione la primer celda
+			dataGridView1.ClearSelection();
+
 			//Esto agrega los items al combobox de atributos
 			atributoCB.Items.Clear();
 			for(int contador = 0; contador < dataGridView1.Columns.Count; contador++)
@@ -258,10 +269,18 @@ namespace Proyecto_Mineria_de_Datos
 		
 		void AprendizajeMáquinaToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			AprendizajeMaquinaForm am = new AprendizajeMaquinaForm();
-			
-			am.Show();			
-			
+			//Revisa si existe una clase definida, si no, no puede realizar ninguna operacion
+			// y no abre el form de aprendizaje maquina
+ 			if( cdde.obtenerClase() != "")
+			{
+				AprendizajeMaquinaForm am = new AprendizajeMaquinaForm(cdde);
+				am.Show();
+			}
+			else
+			{
+				MessageBox.Show("No hay una clase definida\n por favor defina una.",
+				                "Clase no encontrada");
+			}
 		}
 		
 		void AtributoCBSelectedIndexChanged(object sender, EventArgs e)
@@ -319,6 +338,28 @@ namespace Proyecto_Mineria_de_Datos
 					dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();
 				}
 			}
-		}						
+			
+			//La agregue para que se actualicen los valores faltantes
+			resaltarValoresFaltantes();
+		}
+
+		//Pinta de naranja las celdas donde hay valores faltantes
+		//pudiendo estar vacia o explicitamente con el valor de valor faltante		
+		void resaltarValoresFaltantes()
+		{
+			string celda = "";
+			for(int i = 0; i < dataGridView1.Rows.Count-1; i++)
+			{
+				for(int j = 0; j < dataGridView1.Columns.Count; j++)
+				{
+					celda = dataGridView1.Rows[i].Cells[j].Value.ToString();
+					if( celda == "" || celda == cdde.valorNulo)
+					{
+						dataGridView1.Rows[i].Cells[j].Style.BackColor = System.Drawing.Color.Orange;
+					}
+				}
+			}
+
+		}		
 	}
 }
