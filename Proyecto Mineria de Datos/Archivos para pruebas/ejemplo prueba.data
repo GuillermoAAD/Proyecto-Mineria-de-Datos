@@ -1,0 +1,13 @@
+%% Prueba shingona
+@relation Prueba
+@attribute Nombre nominal (Axel | Cesar | Jaylene | Memos | Nieves)
+@attribute Edad numeric [0-9]+
+@attribute Codigo ordinal [0-9]+
+@missingValue 
+@data 
+Axel,21,1
+Memos,29,2
+Nieves,19,3
+Cesar,25,4
+Jaylene,29,5
+Anette,18,6
