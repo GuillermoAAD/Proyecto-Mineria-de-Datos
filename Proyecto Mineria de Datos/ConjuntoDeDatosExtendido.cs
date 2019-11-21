@@ -288,7 +288,6 @@ namespace Proyecto_Mineria_de_Datos
 				DataRow dr = tablaDeFrecuencias.NewRow();
 				dr[0] = dominio;
 				
-				
 				int frecuenciaPalabra = contarFrecuenciaPalabraColumna(dominio, valoresDeAtributos);
 				int numNulos = contarValoresNulosEnColumna(valoresDeAtributos);
 				

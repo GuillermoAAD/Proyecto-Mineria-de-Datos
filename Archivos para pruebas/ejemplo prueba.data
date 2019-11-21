@@ -1,17 +1,13 @@
-%% Monthly totals of international airline passengers (in thousands) for 1949-1960.  
-@relation airline_passengers  
-@attribute passenger_numbers [0-9]+  
-@attribute type (tourist | first class)  
-@missingValue ?  
+%% Prueba shingona
+@relation Prueba
+@attribute Nombre nominal (Axel | Cesar | Jaylene | Memos | Nieves)
+@attribute Edad numeric [0-9]+
+@attribute Codigo ordinal [0-9]+
+@missingValue 
 @data 
-112,tourist
-118,first class
-132,first class
-129,tourist
-,
-,tourist
-129,
-130,tourist
-120,
-130,first class
-,tourist
+Axel,21,1
+Memos,29,2
+Nieves,19,3
+Cesar,25,4
+Jaylene,29,5
+Anette,18,6

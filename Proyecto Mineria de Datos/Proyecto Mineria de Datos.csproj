@@ -73,9 +73,9 @@
     <Compile Include="entradaDeDatos.cs" />
     <Compile Include="formatoCSV.cs" />
     <Compile Include="formatoDATA.cs" />
-    <Compile Include="LimpiezaDeDatosForm.cs" />
-    <Compile Include="LimpiezaDeDatosForm.Designer.cs">
-      <DependentUpon>LimpiezaDeDatosForm.cs</DependentUpon>
+    <Compile Include="llenarValoresFaltantes.cs" />
+    <Compile Include="llenarValoresFaltantes.Designer.cs">
+      <DependentUpon>llenarValoresFaltantes.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">
@@ -113,8 +113,8 @@
     <EmbeddedResource Include="AprendizajeMaquinaForm.resx">
       <DependentUpon>AprendizajeMaquinaForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LimpiezaDeDatosForm.resx">
-      <DependentUpon>LimpiezaDeDatosForm.cs</DependentUpon>
+    <EmbeddedResource Include="llenarValoresFaltantes.resx">
+      <DependentUpon>llenarValoresFaltantes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

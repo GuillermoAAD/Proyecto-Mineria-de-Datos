@@ -43,3 +43,6 @@ C:\Users\Axel\Documents\SharpDevelopProjects\Proyecto-Mineria-de-Datos-master\Pr
 C:\Users\Chu\Documents\SharpDevelop Projects\Proyecto Mineria de Datos\Proyecto Mineria de Datos\obj\Debug\Proyecto_Mineria_de_Datos.AnalisisEstadisticoBivariableForm.resources
 C:\Users\Chu\Documents\SharpDevelop Projects\Proyecto Mineria de Datos\Proyecto Mineria de Datos\obj\Debug\Proyecto_Mineria_de_Datos.AprendizajeMaquinaForm.resources
 C:\Users\Chu\Documents\SharpDevelop Projects\Proyecto Mineria de Datos\Proyecto Mineria de Datos\obj\Debug\Proyecto_Mineria_de_Datos.LimpiezaDeDatosForm.resources
+C:\Users\Axel\Documents\SharpDevelopProjects\Proyecto-Mineria-de-Datos-master\Proyecto Mineria de Datos\obj\Debug\Proyecto_Mineria_de_Datos.AnalisisEstadisticoBivariableForm.resources
+C:\Users\Axel\Documents\SharpDevelopProjects\Proyecto-Mineria-de-Datos-master\Proyecto Mineria de Datos\obj\Debug\Proyecto_Mineria_de_Datos.AprendizajeMaquinaForm.resources
+C:\Users\Axel\Documents\SharpDevelopProjects\Proyecto-Mineria-de-Datos-master\Proyecto Mineria de Datos\obj\Debug\Proyecto_Mineria_de_Datos.llenarValoresFaltantes.resources

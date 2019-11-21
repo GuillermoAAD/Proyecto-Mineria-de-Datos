@@ -47,7 +47,8 @@ namespace Proyecto_Mineria_de_Datos
 			cdde = new ConjuntoDeDatosExtendido();					
 			tipoCB.Items.Add("numeric");
 			tipoCB.Items.Add("nominal");
-			tipoCB.Items.Add("ordinal");			
+			tipoCB.Items.Add("ordinal");
+			tipoCB.Items.Add("class");
 			
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
@@ -154,9 +155,7 @@ namespace Proyecto_Mineria_de_Datos
 				comentarioTXT.Enabled = false;
 				atributoCB.Enabled = false;
 				tipoCB.Enabled = false;
-				dominioTB.Enabled = false;
-				actualizarBTN.Enabled = false;
-				restablecerBTN.Enabled = false;
+				dominioTB.Enabled = false;				
 			}
 			else{
 				guardarToolStripMenuItem.Enabled=true;
@@ -167,9 +166,7 @@ namespace Proyecto_Mineria_de_Datos
 				comentarioTXT.Enabled = true;
 				atributoCB.Enabled = true;
 				tipoCB.Enabled = true;
-				dominioTB.Enabled = true;				
-				actualizarBTN.Enabled = true;
-				restablecerBTN.Enabled = true;
+				dominioTB.Enabled = true;								
 			}
 		}
 		void GuardarToolStripMenuItemClick(object sender, EventArgs e)
@@ -189,9 +186,7 @@ namespace Proyecto_Mineria_de_Datos
 		void GuardarComoToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-			saveFileDialog1.Filter = "Todas los archivos permitidos (*.csv;*.data)|*.CSV;*.DATA" +
-                	"|Archivos CSV (*.csv)|*.CSV" +
-                	"|Archivos DATA (*.data)|*.DATA";		
+			saveFileDialog1.Filter = "Archivos CSV (*.csv)|*.csv" + "|Archivos DATA (*.data)|*.data";		
             if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK
                 && saveFileDialog1.FileName.Length > 0)	
 			{ 				
@@ -211,7 +206,7 @@ namespace Proyecto_Mineria_de_Datos
 			}
 			else
 				{
-					MessageBox.Show("No se pudo crear el archivo. Intente de Nuevo");
+					MessageBox.Show("No se pudo crear el archivo. Intente de Nuevo", "Error al guardar", MessageBoxButtons.OK, MessageBoxIcon.Question);
 				}
 		}
 		
@@ -259,20 +254,14 @@ namespace Proyecto_Mineria_de_Datos
 			//estadistico Univariable con el conjunto de este form, para poder 
 			//trabajar con los mismos datos
 			aeb.Show();
-		}
-		
-		void LimpiezaDeDatosToolStripMenuItemClick(object sender, EventArgs e)
-		{
-			LimpiezaDeDatosForm ld = new LimpiezaDeDatosForm();
-			
-			ld.Show();
-		}
+		}		
 		
 		void AprendizajeMáquinaToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			AprendizajeMaquinaForm am = new AprendizajeMaquinaForm();
 			
-			am.Show();	
+			am.Show();			
+			
 		}
 		
 		void AtributoCBSelectedIndexChanged(object sender, EventArgs e)
@@ -300,8 +289,12 @@ namespace Proyecto_Mineria_de_Datos
 			string nuevoTipo;
 			nuevoTipo = tipoCB.SelectedItem.ToString();
 			cdde.tiposDatos[i] = nuevoTipo;			
+		}		
+		void ComentarioTXTTextChanged(object sender, EventArgs e)
+		{
+			cdde.comentarios = comentarioTXT.Text.ToString();
 		}
-		void ActualizarBTNClick(object sender, EventArgs e)
+		void DominioTBTextChanged(object sender, EventArgs e)
 		{
 			//va acomparar el atributo elegido en el comboBox con la lista de tipos
 			string atributo = atributoCB.SelectedItem.ToString();
@@ -310,16 +303,22 @@ namespace Proyecto_Mineria_de_Datos
 			//ese mismo index sirve para sacar el tipo de dato de la lista de tiposDatos
 			cdde.dominios[i] = dominioTB.Text.ToString();
 		}
-		void RestablecerBTNClick(object sender, EventArgs e)
+		void LlenarValoresFaltantesToolStripMenuItemClick(object sender, EventArgs e)
 		{
-	
-		}
-		void ComentarioTXTTextChanged(object sender, EventArgs e)
-		{
-			cdde.comentarios = comentarioTXT.Text.ToString();
-		}
-		
-		
-		
+			llenarValoresFaltantes lvf = new llenarValoresFaltantes(cdde);						
+			DialogResult res = lvf.ShowDialog();
+			if(res == DialogResult.OK)
+			{
+				cdde = new ConjuntoDeDatosExtendido();
+				cdde = lvf.cdd;
+				dataGridView1.DataSource = null;				
+				dataGridView1.DataSource = cdde.dtConjuntoDatos;					
+				//esto agrega el numero de fila como encabezado de filas
+				for(int i = 0; i<dataGridView1.Rows.Count; i++)
+				{
+					dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();
+				}
+			}
+		}						
 	}
 }
