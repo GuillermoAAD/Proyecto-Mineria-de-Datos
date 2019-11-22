@@ -71,6 +71,10 @@
     </Compile>
     <Compile Include="ConjuntoDeDatosExtendido.cs" />
     <Compile Include="entradaDeDatos.cs" />
+    <Compile Include="erroresTipograficos.cs" />
+    <Compile Include="erroresTipograficos.Designer.cs">
+      <DependentUpon>erroresTipograficos.cs</DependentUpon>
+    </Compile>
     <Compile Include="formatoCSV.cs" />
     <Compile Include="formatoDATA.cs" />
     <Compile Include="llenarValoresFaltantes.cs" />
@@ -112,6 +116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AprendizajeMaquinaForm.resx">
       <DependentUpon>AprendizajeMaquinaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="erroresTipograficos.resx">
+      <DependentUpon>erroresTipograficos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="llenarValoresFaltantes.resx">
       <DependentUpon>llenarValoresFaltantes.cs</DependentUpon>

@@ -360,6 +360,23 @@ namespace Proyecto_Mineria_de_Datos
 				}
 			}
 
+		}
+		void DetecciónToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			erroresTipograficos et = new erroresTipograficos(cdde);						
+			DialogResult res = et.ShowDialog();
+			if(res == DialogResult.OK)
+			{
+				cdde = new ConjuntoDeDatosExtendido();
+				cdde = et.cdd;
+				dataGridView1.DataSource = null;				
+				dataGridView1.DataSource = cdde.dtConjuntoDatos;					
+				//esto agrega el numero de fila como encabezado de filas
+				for(int i = 0; i<dataGridView1.Rows.Count; i++)
+				{
+					dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();
+				}
+			}
 		}		
 	}
 }
