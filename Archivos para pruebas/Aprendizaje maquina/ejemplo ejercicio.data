@@ -1,0 +1,22 @@
+%%    
+@relation lentes de contacto   
+@attribute Compra nominal (vhigh | med | low)  
+@attribute Mantenimiento ordinal (vhigh | med | low)  
+@attribute Puertas nominal (2 | 3 | 4)  
+@attribute Personas nominal (2 | 4 | more)   
+@attribute Clase class (unacc | acc | good)   
+@missingValue    
+@data 
+vhigh,vhigh,2,4,unacc
+vhigh,vhigh,3,2,unacc
+vhigh,med,2,more,acc
+med,low,3,more,good
+low,low,4,more,good
+vhigh,med,3,4,acc
+med,low,2,more,good
+vhigh,vhigh,4,more,unacc
+vhigh,med,3,4,acc
+low,low,4,more,good
+med,low,2,4,good
+vhigh,vhigh,3,2,unacc
+low,low,4,4,good

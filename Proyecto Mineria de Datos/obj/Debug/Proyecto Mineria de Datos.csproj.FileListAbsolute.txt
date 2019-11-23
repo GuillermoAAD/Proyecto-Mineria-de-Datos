@@ -62,3 +62,5 @@ C:\Users\Chu\Downloads\Proyecto-Mineria-de-Datos-master (1)\Proyecto-Mineria-de-
 C:\Users\Chu\Documents\SharpDevelop Projects\Proyecto Mineria de Datos\Proyecto Mineria de Datos\obj\Debug\Proyecto_Mineria_de_Datos.llenarValoresFaltantes.resources
 C:\Users\Axel\Documents\SharpDevelopProjects\Proyecto-Mineria-de-Datos-master\Proyecto Mineria de Datos\obj\Debug\Proyecto_Mineria_de_Datos.erroresTipograficos.resources
 C:\Users\Axel\Documents\SharpDevelopProjects\Proyecto-Mineria-de-Datos-master\Proyecto Mineria de Datos\obj\Debug\Proyecto_Mineria_de_Datos.buscarYReemplazar.resources
+C:\Users\Chu\Documents\SharpDevelop Projects\Proyecto Mineria de Datos\Proyecto Mineria de Datos\obj\Debug\Proyecto_Mineria_de_Datos.buscarYReemplazar.resources
+C:\Users\Chu\Documents\SharpDevelop Projects\Proyecto Mineria de Datos\Proyecto Mineria de Datos\obj\Debug\Proyecto_Mineria_de_Datos.erroresTipograficos.resources

@@ -271,16 +271,16 @@ namespace Proyecto_Mineria_de_Datos
 		{
 			//Revisa si existe una clase definida, si no, no puede realizar ninguna operacion
 			// y no abre el form de aprendizaje maquina
- 			if( cdde.obtenerClase() != "")
-			{
+ 			//if( cdde.obtenerClase() != "")
+			//{
 				AprendizajeMaquinaForm am = new AprendizajeMaquinaForm(cdde);
 				am.Show();
-			}
-			else
-			{
-				MessageBox.Show("No hay una clase definida\n por favor defina una.",
-				                "Clase no encontrada");
-			}
+			//}
+			//else
+			//{
+				//MessageBox.Show("No hay una clase definida\n por favor defina una.",
+				 //               "Clase no encontrada");
+			//}
 		}
 		
 		void AtributoCBSelectedIndexChanged(object sender, EventArgs e)
