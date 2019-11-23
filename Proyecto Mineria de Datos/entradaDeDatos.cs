@@ -41,9 +41,9 @@ namespace Proyecto_Mineria_de_Datos
             try
             {
                 OpenFileDialog oFD = new OpenFileDialog();
-                oFD.Filter =  "Todas los archivos permitidos (*.csv;*.data)|*.CSV;*.DATA" +
-                	"|Archivos CSV (*.csv)|*.CSV" +
-                	"|Archivos DATA (*.data)|*.DATA";
+                oFD.Filter =  "Todas los archivos permitidos (*.csv;*.data)|*.csv;*.data" +
+                	"|Archivos CSV (*.csv)|*.csv" +
+                	"|Archivos DATA (*.data)|*.data";
                 if (oFD.ShowDialog() == DialogResult.OK)
                 {                	
                 	if (System.IO.File.Exists(oFD.FileName))

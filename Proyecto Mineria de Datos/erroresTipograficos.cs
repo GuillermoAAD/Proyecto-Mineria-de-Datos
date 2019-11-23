@@ -41,16 +41,22 @@ namespace Proyecto_Mineria_de_Datos
 			//En caso de que existan elementos en el CB se posiciona en el indice 0
 			if(atributoCB.Items.Count > 0)
 			{
+				atributoCB.Enabled = true;
 				atributoCB.SelectedIndex = 0;
 			}
+			else
+			{
+				MessageBox.Show("No existe ningun tipo de dato categorico en el conjunto de datos", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
 		}
-		public void detectFueraDom(string encabezado)
-		{		
+		public void detectFueraDom(string atributo)
+		{
+			//bandera para mostrar ventana de si existia o no alguna instancia fuera de su dominio
+			bool correcto = true;
+			//Bandera para saber por instancia si esta dentro del dominio
 			bool esDominio;
-			//Guardamos en un string el atributo seleccionao
-			string atributo = atributoCB.SelectedItem.ToString();
 			//Localizamos su indice
-			int i = cdd.encabezados.IndexOf(encabezado);
+			int i = indice(atributo);
 			//Calculamos las instancias del datatable
 			int cantInstancias = cdd.calcularCantidadInstancias();
 			//Este sirve para almacenar de manera auxiliar cual ha sido el dominio con menor distancia
@@ -60,12 +66,12 @@ namespace Proyecto_Mineria_de_Datos
 			int distanciaNueva = 0;
 			//Necesario para obtener los dominios del atributo
 			List<string> dominios;
-			dominios = cdd.obtenerDominios(encabezado);
+			dominios = cdd.obtenerDominios(atributo);
 			//Desde 0 hasta el numero de instancias
 			for(int j = 0; j < cantInstancias; j++)
 			{
 				//Reinicializar bandera y distancia para cada atributo de la fila que se compare
-				esDominio = false;
+				esDominio = false;				
 				distanciaActual = 0;
 				dominioSelec = "";
 				//Se itera cuantos dominios haya
@@ -80,13 +86,17 @@ namespace Proyecto_Mineria_de_Datos
 				//Entra aquí en caso de que se detecte que el atributo de la fila j no es dominio
 				if(esDominio == false)
 				{
+					//Con esto nos damos cuenta de que existe al menos una instancia fuera de su dominio 
+					correcto = false;
 					//Se itera cuantos dominios haya
 					for(int l = 0; l < dominios.Count; l++)
 					{
 						//Se obtiene la distancia entre el atributo de la fila j y el dominio l
 						distanciaNueva = distanciaDeLevenshtein(cdd.dtConjuntoDatos.Rows[j][i].ToString(), dominios[l]);
 						//Esto es para debug
-						MessageBox.Show("Distancia nueva: " + distanciaNueva + "\nDistancia actual: " + distanciaActual + "\nDominio menor actual: " + dominioSelec, cdd.dtConjuntoDatos.Rows[j][i].ToString() + " -> " + dominios[l], MessageBoxButtons.OK, MessageBoxIcon.Information);
+						/*MessageBox.Show("Distancia nueva: " + distanciaNueva + "\nDistancia actual: " + distanciaActual 
+						                + "\nDominio menor actual: " + dominioSelec, cdd.dtConjuntoDatos.Rows[j][i].ToString() 
+						                + " -> " + dominios[l], MessageBoxButtons.OK, MessageBoxIcon.Information);*/
 						
 						//Entra aquí la primera vez que se itera pues no se ha obtenido niguna distancia aun
 						if(distanciaActual == 0)
@@ -109,6 +119,14 @@ namespace Proyecto_Mineria_de_Datos
 					//Finalmente se asigna el dominio de menor distancia encontrado en el datatable
 					cdd.dtConjuntoDatos.Rows[j][i] = dominioSelec;
 				}
+			}
+			if(correcto == true)
+			{
+				MessageBox.Show("No existe ninguna instancia fuera de dominio para el atributo: "+ atributoCB.SelectedItem.ToString(), "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+			else
+			{
+				MessageBox.Show("Correcíon de errores tipográficos de " + atributoCB.SelectedItem + " completada", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 		}
 		public int distanciaDeLevenshtein(string s, string t)
@@ -142,7 +160,15 @@ namespace Proyecto_Mineria_de_Datos
 		}
 		void AceptarBTNClick(object sender, EventArgs e)
 		{
-			detectFueraDom(atributoCB.SelectedItem.ToString());			
+			if(atributoCB.Items.Count > 0)
+			{
+				detectFueraDom(atributoCB.SelectedItem.ToString());			
+			}
+			
+		}
+		private int indice(string encabezado)
+		{
+			return cdd.encabezados.IndexOf(encabezado);
 		}
 	}
 }

@@ -142,7 +142,7 @@ namespace Proyecto_Mineria_de_Datos
 			atributoCB.Items.Clear();
 			for(int contador = 0; contador < dataGridView1.Columns.Count; contador++)
 			{
-				atributoCB.Items.Add(cdde.encabezados[contador]);
+				atributoCB.Items.Add(cdde.encabezados[contador]);				
 			}
 			//Esto valida que no truene el programa en caso de que se cancele la carga de un archivo xd
 			if(cdde.encabezados.Count > 0)
@@ -153,7 +153,7 @@ namespace Proyecto_Mineria_de_Datos
 			//esto agrega el numero de fila como encabezado de filas
 			for(int i = 0; i<dataGridView1.Rows.Count; i++)
 			{
-				dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();
+				dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();				
 			}
 			//Esto valida el que se habiliten los botones de guardar solo cuando se cargue un archivo exitosamente
 			//Y tambien los menus de aanalisis estadistico, limpieza de datos y aprendizaje maquina
@@ -369,6 +369,23 @@ namespace Proyecto_Mineria_de_Datos
 			{
 				cdde = new ConjuntoDeDatosExtendido();
 				cdde = et.cdd;
+				dataGridView1.DataSource = null;				
+				dataGridView1.DataSource = cdde.dtConjuntoDatos;					
+				//esto agrega el numero de fila como encabezado de filas
+				for(int i = 0; i<dataGridView1.Rows.Count; i++)
+				{
+					dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();					
+				}
+			}
+		}
+		void BuscarYReemplazarPorAtributoToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			buscarYReemplazar byr = new buscarYReemplazar(cdde);						
+			DialogResult res = byr.ShowDialog();
+			if(res == DialogResult.OK)
+			{
+				cdde = new ConjuntoDeDatosExtendido();
+				cdde = byr.cdd;
 				dataGridView1.DataSource = null;				
 				dataGridView1.DataSource = cdde.dtConjuntoDatos;					
 				//esto agrega el numero de fila como encabezado de filas

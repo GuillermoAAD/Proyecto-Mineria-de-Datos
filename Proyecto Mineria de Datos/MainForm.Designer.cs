@@ -245,6 +245,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.buscarYReemplazarPorAtributoToolStripMenuItem.Name = "buscarYReemplazarPorAtributoToolStripMenuItem";
 			this.buscarYReemplazarPorAtributoToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
 			this.buscarYReemplazarPorAtributoToolStripMenuItem.Text = "Buscar y reemplazar por atributo";
+			this.buscarYReemplazarPorAtributoToolStripMenuItem.Click += new System.EventHandler(this.BuscarYReemplazarPorAtributoToolStripMenuItemClick);
 			// 
 			// detecciónToolStripMenuItem
 			// 
@@ -281,6 +282,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView1.Location = new System.Drawing.Point(292, 24);
 			this.dataGridView1.Name = "dataGridView1";
+			this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
 			this.dataGridView1.Size = new System.Drawing.Size(600, 500);
 			this.dataGridView1.TabIndex = 1;
 			// 

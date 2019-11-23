@@ -40,19 +40,10 @@ namespace Proyecto_Mineria_de_Datos
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(erroresTipograficos));
-			this.atributoCB = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.aceptarBTN = new System.Windows.Forms.Button();
+			this.atributoCB = new System.Windows.Forms.ComboBox();
 			this.SuspendLayout();
-			// 
-			// atributoCB
-			// 
-			this.atributoCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.atributoCB.FormattingEnabled = true;
-			this.atributoCB.Location = new System.Drawing.Point(136, 12);
-			this.atributoCB.Name = "atributoCB";
-			this.atributoCB.Size = new System.Drawing.Size(191, 21);
-			this.atributoCB.TabIndex = 0;
 			// 
 			// label1
 			// 
@@ -75,6 +66,16 @@ namespace Proyecto_Mineria_de_Datos
 			this.aceptarBTN.UseVisualStyleBackColor = true;
 			this.aceptarBTN.Click += new System.EventHandler(this.AceptarBTNClick);
 			// 
+			// atributoCB
+			// 
+			this.atributoCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.atributoCB.Enabled = false;
+			this.atributoCB.FormattingEnabled = true;
+			this.atributoCB.Location = new System.Drawing.Point(136, 12);
+			this.atributoCB.Name = "atributoCB";
+			this.atributoCB.Size = new System.Drawing.Size(191, 21);
+			this.atributoCB.TabIndex = 0;
+			// 
 			// erroresTipograficos
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -86,6 +87,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "erroresTipograficos";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Detección de errores tipográficos";
 			this.ResumeLayout(false);
 			this.PerformLayout();

@@ -148,6 +148,7 @@ namespace Proyecto_Mineria_de_Datos
 		}
 		void AceptarBTNClick(object sender, EventArgs e)
 		{
+			bool existenFaltantes = false;
 			//Guardamos en un string el atributo seleccionao
 			string atributo = atributoCB.SelectedItem.ToString();
 			//Localizamos su indice
@@ -163,6 +164,7 @@ namespace Proyecto_Mineria_de_Datos
 				//Solo para los valores nulos
 				if(cdd.dtConjuntoDatos.Rows[j][i].ToString() == cdd.valorNulo)
 				{
+					existenFaltantes = true;
 					//If para saber que eligio el usuario
 					if(eleccion == "Media")
 					{
@@ -186,7 +188,15 @@ namespace Proyecto_Mineria_de_Datos
 						}						
 					}
 				}
-			}				
+			}
+			if(existenFaltantes == true)
+			{
+				MessageBox.Show("Llenado de valores faltantes para el atributo " + atributoCB.SelectedItem + " completado", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+			else
+			{
+				MessageBox.Show("No existe ningun valor faltante para el atributo " + atributoCB.SelectedItem, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
 		}
 		public void calcularModa(List<string> dominios, List<int> frecuenciaPalabras)
 		{

@@ -1,0 +1,20 @@
+%%   
+@relation examen1  
+@attribute Edad numeric (37 | 41 | 56 | 57 | 62 | 63 | 67)  
+@attribute Colesterol numeric (204 | 229 | 233 | 236 | 250 | 268 | 286 | 354)  
+@attribute Escolaridad nominal (Maestria | Preparatoria | Secundaria | Universidad)  
+@attribute Ingreso nominal (50k<x<=100k | x<=50k | x>100k)  
+@missingValue   
+@data 
+67,286,Universidad,x>100k
+67,229,Preescolar,x<=50k
+63,233,Preparatoria,x<=50k
+62,268,Secundaria,50k<x<=100k
+57,354,Universidad,x>100k
+56,236,Preparatoria,x>100k
+41,204,Maestria,x<=50k
+37,250,Universidad,50k<x<=100k
+4,150,Preescolar,x>100k
+20,200,Maestro,x<=50
+22,210,Secundo,x>100
+5,190,Preescolar,z<=50k
