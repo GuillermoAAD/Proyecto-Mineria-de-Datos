@@ -230,40 +230,41 @@ namespace Proyecto_Mineria_de_Datos
 			// llenarValoresFaltantesToolStripMenuItem
 			// 
 			this.llenarValoresFaltantesToolStripMenuItem.Name = "llenarValoresFaltantesToolStripMenuItem";
-			this.llenarValoresFaltantesToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+			this.llenarValoresFaltantesToolStripMenuItem.Size = new System.Drawing.Size(253, 22);
 			this.llenarValoresFaltantesToolStripMenuItem.Text = "Llenar valores faltantes";
 			this.llenarValoresFaltantesToolStripMenuItem.Click += new System.EventHandler(this.LlenarValoresFaltantesToolStripMenuItemClick);
 			// 
 			// correcciónDeOutliersToolStripMenuItem
 			// 
 			this.correcciónDeOutliersToolStripMenuItem.Name = "correcciónDeOutliersToolStripMenuItem";
-			this.correcciónDeOutliersToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
-			this.correcciónDeOutliersToolStripMenuItem.Text = "Corrección de outliers";
+			this.correcciónDeOutliersToolStripMenuItem.Size = new System.Drawing.Size(253, 22);
+			this.correcciónDeOutliersToolStripMenuItem.Text = "Detección y corrección de outliers";
+			this.correcciónDeOutliersToolStripMenuItem.Click += new System.EventHandler(this.CorrecciónDeOutliersToolStripMenuItemClick);
 			// 
 			// buscarYReemplazarPorAtributoToolStripMenuItem
 			// 
 			this.buscarYReemplazarPorAtributoToolStripMenuItem.Name = "buscarYReemplazarPorAtributoToolStripMenuItem";
-			this.buscarYReemplazarPorAtributoToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+			this.buscarYReemplazarPorAtributoToolStripMenuItem.Size = new System.Drawing.Size(253, 22);
 			this.buscarYReemplazarPorAtributoToolStripMenuItem.Text = "Buscar y reemplazar por atributo";
 			this.buscarYReemplazarPorAtributoToolStripMenuItem.Click += new System.EventHandler(this.BuscarYReemplazarPorAtributoToolStripMenuItemClick);
 			// 
 			// detecciónToolStripMenuItem
 			// 
 			this.detecciónToolStripMenuItem.Name = "detecciónToolStripMenuItem";
-			this.detecciónToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+			this.detecciónToolStripMenuItem.Size = new System.Drawing.Size(253, 22);
 			this.detecciónToolStripMenuItem.Text = "Detección de errores tipográficos";
 			this.detecciónToolStripMenuItem.Click += new System.EventHandler(this.DetecciónToolStripMenuItemClick);
 			// 
 			// muestreoDeDatosToolStripMenuItem
 			// 
 			this.muestreoDeDatosToolStripMenuItem.Name = "muestreoDeDatosToolStripMenuItem";
-			this.muestreoDeDatosToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+			this.muestreoDeDatosToolStripMenuItem.Size = new System.Drawing.Size(253, 22);
 			this.muestreoDeDatosToolStripMenuItem.Text = "Muestreo de datos";
 			// 
 			// transformaciónDeDatosToolStripMenuItem
 			// 
 			this.transformaciónDeDatosToolStripMenuItem.Name = "transformaciónDeDatosToolStripMenuItem";
-			this.transformaciónDeDatosToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
+			this.transformaciónDeDatosToolStripMenuItem.Size = new System.Drawing.Size(253, 22);
 			this.transformaciónDeDatosToolStripMenuItem.Text = "Transformación de datos";
 			// 
 			// aprendizajeMáquinaToolStripMenuItem

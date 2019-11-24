@@ -84,8 +84,9 @@ namespace Proyecto_Mineria_de_Datos
 			this.Controls.Add(this.aceptarBTN);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.atributoCB);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "erroresTipograficos";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Detección de errores tipográficos";

@@ -54,7 +54,6 @@ namespace Proyecto_Mineria_de_Datos
 	"rollado por:\r\n217294148 - Alcaraz Domínguez Guillermo Augusto\r\n213645116 - Melen" +
 	"dez Ramirez Axel Alejandro";
 			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			//this.label1.Click += new System.EventHandler(this.Label1Click);
 			// 
 			// pictureBox1
 			// 
@@ -74,6 +73,9 @@ namespace Proyecto_Mineria_de_Datos
 			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.label1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "AcercaDeForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Acerca de...";

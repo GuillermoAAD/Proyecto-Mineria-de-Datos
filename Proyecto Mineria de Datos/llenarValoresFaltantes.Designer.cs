@@ -204,8 +204,9 @@ namespace Proyecto_Mineria_de_Datos
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.atributoCB);
 			this.Controls.Add(this.label1);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "llenarValoresFaltantes";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Llenar valores faltantes por atributo";

@@ -224,8 +224,14 @@ namespace Proyecto_Mineria_de_Datos
 		//Abre un form con informacion general acerca del programa
 		void AcercaDeToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			AcercaDeForm ad = new AcercaDeForm();
-			ad.Show();
+			//AcercaDeForm ad = new AcercaDeForm();
+			//ad.Show();
+			AcercaDeForm ad = new AcercaDeForm();						
+			DialogResult res = ad.ShowDialog();
+			if(res == DialogResult.OK)
+			{
+				
+			}
 		}
 		
 		void SalirToolStripMenuItemClick(object sender, EventArgs e)
@@ -376,6 +382,8 @@ namespace Proyecto_Mineria_de_Datos
 				{
 					dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();					
 				}
+				//La agregue para que se actualicen los valores faltantes
+				resaltarValoresFaltantes();
 			}
 		}
 		void BuscarYReemplazarPorAtributoToolStripMenuItemClick(object sender, EventArgs e)
@@ -393,7 +401,28 @@ namespace Proyecto_Mineria_de_Datos
 				{
 					dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();
 				}
+				//La agregue para que se actualicen los valores faltantes
+				resaltarValoresFaltantes();
 			}
-		}		
+		}
+		void CorrecciónDeOutliersToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			detectOutliers dco = new detectOutliers(cdde);						
+			DialogResult res = dco.ShowDialog();
+			if(res == DialogResult.OK)
+			{
+				cdde = new ConjuntoDeDatosExtendido();
+				cdde = dco.cdd;
+				dataGridView1.DataSource = null;				
+				dataGridView1.DataSource = cdde.dtConjuntoDatos;					
+				//esto agrega el numero de fila como encabezado de filas
+				for(int i = 0; i<dataGridView1.Rows.Count; i++)
+				{
+					dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();
+				}
+				//La agregue para que se actualicen los valores faltantes
+				resaltarValoresFaltantes();
+			}
+		}
 	}
 }

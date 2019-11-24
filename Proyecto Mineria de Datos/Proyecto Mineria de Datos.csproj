@@ -74,6 +74,10 @@
       <DependentUpon>buscarYReemplazar.cs</DependentUpon>
     </Compile>
     <Compile Include="ConjuntoDeDatosExtendido.cs" />
+    <Compile Include="detectOutliers.cs" />
+    <Compile Include="detectOutliers.Designer.cs">
+      <DependentUpon>detectOutliers.cs</DependentUpon>
+    </Compile>
     <Compile Include="entradaDeDatos.cs" />
     <Compile Include="erroresTipograficos.cs" />
     <Compile Include="erroresTipograficos.Designer.cs">
@@ -123,6 +127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="buscarYReemplazar.resx">
       <DependentUpon>buscarYReemplazar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="detectOutliers.resx">
+      <DependentUpon>detectOutliers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="erroresTipograficos.resx">
       <DependentUpon>erroresTipograficos.cs</DependentUpon>
