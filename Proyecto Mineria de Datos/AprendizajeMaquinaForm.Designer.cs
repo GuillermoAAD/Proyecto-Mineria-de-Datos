@@ -33,12 +33,8 @@ namespace Proyecto_Mineria_de_Datos
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.RadioButton radioButton3;
 		private System.Windows.Forms.RadioButton radioButton4;
-		private System.Windows.Forms.DataGridView dataGridViewResultados;
-		private System.Windows.Forms.DataGridViewTextBoxColumn Modelo;
-		private System.Windows.Forms.DataGridViewTextBoxColumn Resultado;
-		private System.Windows.Forms.DataGridViewTextBoxColumn Exactitud;
-		private System.Windows.Forms.DataGridViewTextBoxColumn Sensibilidad;
-		private System.Windows.Forms.DataGridViewTextBoxColumn Especifidad;
+		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.Label label8;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -78,27 +74,23 @@ namespace Proyecto_Mineria_de_Datos
 			this.label5 = new System.Windows.Forms.Label();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.panel2 = new System.Windows.Forms.Panel();
-			this.label6 = new System.Windows.Forms.Label();
 			this.radioButton3 = new System.Windows.Forms.RadioButton();
 			this.radioButton4 = new System.Windows.Forms.RadioButton();
-			this.dataGridViewResultados = new System.Windows.Forms.DataGridView();
-			this.Modelo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Resultado = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Exactitud = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Sensibilidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Especifidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.label6 = new System.Windows.Forms.Label();
+			this.label7 = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultados)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// label1
 			// 
+			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.Location = new System.Drawing.Point(13, 80);
+			this.label1.Location = new System.Drawing.Point(35, 80);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(100, 19);
+			this.label1.Size = new System.Drawing.Size(50, 13);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Zero-R:";
 			this.label1.Visible = false;
@@ -111,7 +103,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.dataGridView1.AllowUserToResizeColumns = false;
 			this.dataGridView1.AllowUserToResizeRows = false;
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView1.Location = new System.Drawing.Point(418, 35);
+			this.dataGridView1.Location = new System.Drawing.Point(459, 80);
 			this.dataGridView1.Name = "dataGridView1";
 			this.dataGridView1.RowHeadersVisible = false;
 			this.dataGridView1.Size = new System.Drawing.Size(321, 180);
@@ -120,7 +112,7 @@ namespace Proyecto_Mineria_de_Datos
 			// labelZeroR
 			// 
 			this.labelZeroR.AutoSize = true;
-			this.labelZeroR.Location = new System.Drawing.Point(67, 80);
+			this.labelZeroR.Location = new System.Drawing.Point(90, 80);
 			this.labelZeroR.Name = "labelZeroR";
 			this.labelZeroR.Size = new System.Drawing.Size(79, 13);
 			this.labelZeroR.TabIndex = 2;
@@ -130,7 +122,7 @@ namespace Proyecto_Mineria_de_Datos
 			// labelOneR
 			// 
 			this.labelOneR.AutoSize = true;
-			this.labelOneR.Location = new System.Drawing.Point(67, 103);
+			this.labelOneR.Location = new System.Drawing.Point(90, 110);
 			this.labelOneR.Name = "labelOneR";
 			this.labelOneR.Size = new System.Drawing.Size(79, 13);
 			this.labelOneR.TabIndex = 4;
@@ -139,17 +131,18 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			// label2
 			// 
+			this.label2.AutoSize = true;
 			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label2.Location = new System.Drawing.Point(13, 103);
+			this.label2.Location = new System.Drawing.Point(35, 110);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(100, 19);
+			this.label2.Size = new System.Drawing.Size(47, 13);
 			this.label2.TabIndex = 3;
 			this.label2.Text = "One-R:";
 			this.label2.Visible = false;
 			// 
 			// button1
 			// 
-			this.button1.Location = new System.Drawing.Point(664, 325);
+			this.button1.Location = new System.Drawing.Point(459, 287);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(75, 23);
 			this.button1.TabIndex = 5;
@@ -160,19 +153,20 @@ namespace Proyecto_Mineria_de_Datos
 			// labelNaiveBayes
 			// 
 			this.labelNaiveBayes.AutoSize = true;
-			this.labelNaiveBayes.Location = new System.Drawing.Point(13, 277);
+			this.labelNaiveBayes.Location = new System.Drawing.Point(35, 345);
 			this.labelNaiveBayes.Name = "labelNaiveBayes";
-			this.labelNaiveBayes.Size = new System.Drawing.Size(79, 13);
+			this.labelNaiveBayes.Size = new System.Drawing.Size(123, 13);
 			this.labelNaiveBayes.TabIndex = 7;
-			this.labelNaiveBayes.Text = "\"No hay clase\"";
+			this.labelNaiveBayes.Text = "\"instancia no ingresada\"";
 			this.labelNaiveBayes.Visible = false;
 			// 
 			// label3
 			// 
+			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(12, 166);
+			this.label3.Location = new System.Drawing.Point(35, 240);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(100, 19);
+			this.label3.Size = new System.Drawing.Size(84, 13);
 			this.label3.TabIndex = 6;
 			this.label3.Text = "Naïve Bayes:";
 			this.label3.Visible = false;
@@ -180,7 +174,7 @@ namespace Proyecto_Mineria_de_Datos
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(12, 185);
+			this.label4.Location = new System.Drawing.Point(35, 260);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(373, 13);
 			this.label4.TabIndex = 8;
@@ -189,17 +183,17 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			// textBoxValores
 			// 
-			this.textBoxValores.Location = new System.Drawing.Point(13, 218);
+			this.textBoxValores.Location = new System.Drawing.Point(35, 289);
 			this.textBoxValores.Name = "textBoxValores";
-			this.textBoxValores.Size = new System.Drawing.Size(382, 20);
+			this.textBoxValores.Size = new System.Drawing.Size(372, 20);
 			this.textBoxValores.TabIndex = 9;
-			this.textBoxValores.Text = "sunny,cool,high,true";
+			this.textBoxValores.Text = "vhigh,low,4,more";
 			this.textBoxValores.Visible = false;
 			// 
 			// labelEncabezados
 			// 
 			this.labelEncabezados.AutoSize = true;
-			this.labelEncabezados.Location = new System.Drawing.Point(13, 202);
+			this.labelEncabezados.Location = new System.Drawing.Point(35, 273);
 			this.labelEncabezados.Name = "labelEncabezados";
 			this.labelEncabezados.Size = new System.Drawing.Size(133, 13);
 			this.labelEncabezados.TabIndex = 10;
@@ -208,9 +202,10 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			// radioButtonRegresion
 			// 
-			this.radioButtonRegresion.Location = new System.Drawing.Point(113, 23);
+			this.radioButtonRegresion.AutoSize = true;
+			this.radioButtonRegresion.Location = new System.Drawing.Point(121, 25);
 			this.radioButtonRegresion.Name = "radioButtonRegresion";
-			this.radioButtonRegresion.Size = new System.Drawing.Size(104, 24);
+			this.radioButtonRegresion.Size = new System.Drawing.Size(73, 17);
 			this.radioButtonRegresion.TabIndex = 12;
 			this.radioButtonRegresion.TabStop = true;
 			this.radioButtonRegresion.Text = "Regresión";
@@ -219,9 +214,10 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			// radioButtonClasificacion
 			// 
-			this.radioButtonClasificacion.Location = new System.Drawing.Point(113, 0);
+			this.radioButtonClasificacion.AutoSize = true;
+			this.radioButtonClasificacion.Location = new System.Drawing.Point(121, 3);
 			this.radioButtonClasificacion.Name = "radioButtonClasificacion";
-			this.radioButtonClasificacion.Size = new System.Drawing.Size(104, 24);
+			this.radioButtonClasificacion.Size = new System.Drawing.Size(84, 17);
 			this.radioButtonClasificacion.TabIndex = 11;
 			this.radioButtonClasificacion.TabStop = true;
 			this.radioButtonClasificacion.Text = "Clasificación";
@@ -230,118 +226,96 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			// label5
 			// 
-			this.label5.Location = new System.Drawing.Point(3, 6);
+			this.label5.AutoSize = true;
+			this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label5.Location = new System.Drawing.Point(3, 15);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(100, 23);
+			this.label5.Size = new System.Drawing.Size(112, 13);
 			this.label5.TabIndex = 14;
 			this.label5.Text = "El problema es de:";
 			// 
 			// panel1
 			// 
+			this.panel1.AutoSize = true;
 			this.panel1.Controls.Add(this.label5);
 			this.panel1.Controls.Add(this.radioButtonRegresion);
 			this.panel1.Controls.Add(this.radioButtonClasificacion);
-			this.panel1.Location = new System.Drawing.Point(13, 12);
+			this.panel1.Location = new System.Drawing.Point(10, 10);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(217, 52);
+			this.panel1.Size = new System.Drawing.Size(217, 46);
 			this.panel1.TabIndex = 17;
 			// 
 			// panel2
 			// 
-			this.panel2.Controls.Add(this.label6);
+			this.panel2.AutoSize = true;
 			this.panel2.Controls.Add(this.radioButton3);
 			this.panel2.Controls.Add(this.radioButton4);
-			this.panel2.Location = new System.Drawing.Point(178, 296);
+			this.panel2.Controls.Add(this.label6);
+			this.panel2.Location = new System.Drawing.Point(257, 10);
 			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(217, 52);
+			this.panel2.Size = new System.Drawing.Size(270, 53);
 			this.panel2.TabIndex = 19;
-			// 
-			// label6
-			// 
-			this.label6.Location = new System.Drawing.Point(3, 6);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(100, 23);
-			this.label6.TabIndex = 14;
-			this.label6.Text = "El problema es de:";
 			// 
 			// radioButton3
 			// 
-			this.radioButton3.Location = new System.Drawing.Point(113, 23);
+			this.radioButton3.AutoSize = true;
+			this.radioButton3.Location = new System.Drawing.Point(138, 27);
 			this.radioButton3.Name = "radioButton3";
-			this.radioButton3.Size = new System.Drawing.Size(104, 24);
+			this.radioButton3.Size = new System.Drawing.Size(128, 17);
 			this.radioButton3.TabIndex = 12;
 			this.radioButton3.TabStop = true;
-			this.radioButton3.Text = "Regresión";
+			this.radioButton3.Text = "K-fold cross-validation";
 			this.radioButton3.UseVisualStyleBackColor = true;
 			// 
 			// radioButton4
 			// 
-			this.radioButton4.Location = new System.Drawing.Point(113, 0);
+			this.radioButton4.AutoSize = true;
+			this.radioButton4.Location = new System.Drawing.Point(138, 5);
 			this.radioButton4.Name = "radioButton4";
-			this.radioButton4.Size = new System.Drawing.Size(104, 24);
+			this.radioButton4.Size = new System.Drawing.Size(65, 17);
 			this.radioButton4.TabIndex = 11;
 			this.radioButton4.TabStop = true;
-			this.radioButton4.Text = "Clasificación";
+			this.radioButton4.Text = "Hold-out";
 			this.radioButton4.UseVisualStyleBackColor = true;
 			// 
-			// dataGridViewResultados
+			// label6
 			// 
-			this.dataGridViewResultados.AllowUserToAddRows = false;
-			this.dataGridViewResultados.AllowUserToDeleteRows = false;
-			this.dataGridViewResultados.AllowUserToOrderColumns = true;
-			this.dataGridViewResultados.AllowUserToResizeColumns = false;
-			this.dataGridViewResultados.AllowUserToResizeRows = false;
-			this.dataGridViewResultados.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-			this.dataGridViewResultados.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-			this.dataGridViewResultados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridViewResultados.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-			this.Modelo,
-			this.Resultado,
-			this.Exactitud,
-			this.Sensibilidad,
-			this.Especifidad});
-			this.dataGridViewResultados.Location = new System.Drawing.Point(428, 239);
-			this.dataGridViewResultados.Name = "dataGridViewResultados";
-			this.dataGridViewResultados.RowHeadersVisible = false;
-			this.dataGridViewResultados.Size = new System.Drawing.Size(321, 86);
-			this.dataGridViewResultados.TabIndex = 20;
+			this.label6.AutoSize = true;
+			this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label6.Location = new System.Drawing.Point(3, 9);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(129, 26);
+			this.label6.TabIndex = 14;
+			this.label6.Text = "Metrica de validacion\r\nde desempeño:";
 			// 
-			// Modelo
+			// label7
 			// 
-			this.Modelo.HeaderText = "Modelo";
-			this.Modelo.Name = "Modelo";
-			this.Modelo.Width = 67;
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(14, 292);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(17, 13);
+			this.label7.TabIndex = 21;
+			this.label7.Text = "A:";
+			this.label7.Visible = false;
 			// 
-			// Resultado
+			// label8
 			// 
-			this.Resultado.HeaderText = "Resultado";
-			this.Resultado.Name = "Resultado";
-			this.Resultado.Width = 80;
-			// 
-			// Exactitud
-			// 
-			this.Exactitud.HeaderText = "Exactitud";
-			this.Exactitud.Name = "Exactitud";
-			this.Exactitud.Width = 76;
-			// 
-			// Sensibilidad
-			// 
-			this.Sensibilidad.HeaderText = "Sensibilidad";
-			this.Sensibilidad.Name = "Sensibilidad";
-			this.Sensibilidad.Width = 88;
-			// 
-			// Especifidad
-			// 
-			this.Especifidad.HeaderText = "Especifidad";
-			this.Especifidad.Name = "Especifidad";
-			this.Especifidad.Width = 87;
+			this.label8.AutoSize = true;
+			this.label8.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+			this.label8.Location = new System.Drawing.Point(35, 320);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(547, 13);
+			this.label8.TabIndex = 22;
+			this.label8.Text = "*Para evitar le problema de la frecuencia cero hemos sumado una unidad a cada val" +
+	"or en las tablas de frecuencia.";
 			// 
 			// AprendizajeMaquinaForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(751, 360);
-			this.Controls.Add(this.dataGridViewResultados);
+			this.ClientSize = new System.Drawing.Size(792, 573);
+			this.Controls.Add(this.label8);
+			this.Controls.Add(this.label7);
 			this.Controls.Add(this.panel2);
 			this.Controls.Add(this.labelEncabezados);
 			this.Controls.Add(this.textBoxValores);
@@ -360,8 +334,9 @@ namespace Proyecto_Mineria_de_Datos
 			this.Text = "Aprendizaje máquina";
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
 			this.panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.dataGridViewResultados)).EndInit();
+			this.panel2.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

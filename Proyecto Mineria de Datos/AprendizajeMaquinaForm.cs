@@ -100,7 +100,7 @@ namespace Proyecto_Mineria_de_Datos
 			//guarda los errores(en base a las reglas) para cada valor posible del atrib,, 
 			List<string> errores = new List<string>();
 			//guarda el valor del error total
-			string errorTotal2 = "";
+			//string errorTotal2 = "";
 			double errorTotal = 0;
 			
 			//valores para la pos actual
@@ -113,15 +113,12 @@ namespace Proyecto_Mineria_de_Datos
 			//guarda los errores(en base a las reglas) para cada valor posible del atrib,, 
 			List<string> erroresActual = new List<string>();
 			//guarda el valor del error total
-			string errorTotalActual2 = "";
+			//string errorTotalActual2 = "";
 			double errorTotalActual = 0;
 			
 			int divisorTotal = 0;
 			int dividendoTotal = 0;
 			
-			
-			
-
 			//Se calculan tablas de frecuancias de atributos vs clase
 			
 			for(int i = 0; i < cdd.encabezados.Count; i++) // este for me cambie entre atributos
@@ -278,14 +275,96 @@ namespace Proyecto_Mineria_de_Datos
 				oneR += valoresAtrib[i] + " -> " + valoresClass[i] + "\n";
 			}
 			
-			//labelOneR.Text = oneR;
 			return oneR;
 		}
 
 		
 		private void calcularNaiveBayes()
 		{
-			labelNaiveBayes.Text = textBoxValores.Text;
+			string naiveBayes = "";
+			List<double> probabilidadesValores = new List<double>();
+
+			string clase = cdd.obtenerClase();
+			
+			string [] valoresInstancia = separarValoresDeUnaInstancia(textBoxValores.Text);
+			
+			List<string> encabezadosCategoricos = obtenerEncabezadosCategoricos();
+			List<string> encabezadosNumericos = obtenerEncabezadosNumericos();
+			
+			
+			if(encabezadosCategoricos.Count > 0)//Si hay atributos categoricos
+			{
+				
+				//Se obtienen las frecuancias para los valores de la clase
+				DataTable tablaFrecClase = obtenerTablaFrecClase(clase);
+				
+				//Se obtiene la tabla verosimilitud para los valores de la clase
+				List<double> verosimilitudClase = obtenerVerosimilitudClase(tablaFrecClase);
+				
+				//Se calculan tablas de frecuancias de atributos vs clase
+				List<DataTable> tablasFrecAtribClas = obtenerTablasFrecAtribClas(clase);
+				
+				//Se calculan tablas de verosimilitud de atributos vs clase(e internamente las multiplica y 
+				//regresa el resultado de cada valor de la clase)
+				List<double> verosimilitudAtribClase = obtenerVerosimilitudAtribClase(tablasFrecAtribClas,verosimilitudClase, valoresInstancia);
+				
+				//devuelve la posicion de los encabezado numericos, para despues relacionarlo
+				//con los valores de la instancia y saber cual es numerico
+				//List<int> posicionesNumericos = obtenerPosNum();//borrar
+				
+				//multiplico lo de la verisimilutdi de atributos con la clase
+				for(int i = 0; i < verosimilitudAtribClase.Count; i++)
+				{
+					//si no es categorico lo ignora?
+					probabilidadesValores.Add(verosimilitudAtribClase[i] * verosimilitudClase[i]);
+				}
+			
+			}
+			
+			if(encabezadosNumericos.Count > 0)//Si hay atributos numericos
+			{
+				List<double> densidades = obtenerDensidades(valoresInstancia); //calculo todas las densidades
+
+				//multipplico la densidadTotal con lo qu eya hay en la probabilidad para cada valor de la clase
+				//multiplico lo de la verisimilutdi de atributos con la clase
+				
+				MessageBox.Show("countProbabilidades"+probabilidadesValores.Count.ToString()+
+				                "countDensidades"+densidades.Count.ToString());//borrar
+				for(int i = 0; i < probabilidadesValores.Count; i++)
+				{
+					probabilidadesValores[i] = probabilidadesValores[i] * densidades[i];
+				}
+			}
+			
+			List<double> probabilidadNormalizada = new List<double>();
+			
+			foreach(double pr in probabilidadesValores)
+			{
+				double prNorm = normalizar(pr, probabilidadesValores);
+				probabilidadNormalizada.Add(prNorm);
+			}
+			
+			
+			naiveBayes += "Probabilidad posterior:\n";
+			
+			List<string> dominiosClase = cdd.obtenerDominios(clase);
+			int cont = 0;
+			
+			foreach(string dominio in dominiosClase){
+				naiveBayes += "   Pr[" + dominio + "|A] = " + probabilidadesValores[cont].ToString("0.0000") + "\n";
+				cont++;
+			}
+			
+			naiveBayes += "Normalizacion:\n";
+			cont = 0;
+			foreach(string dominio in dominiosClase){
+				naiveBayes += "   P(\"" + dominio + "\") = " + probabilidadNormalizada[cont].ToString("0.000") + " = ";
+				naiveBayes += (probabilidadNormalizada[cont] * 100).ToString("0.00") + "%\n";
+				cont++;
+			}
+			
+
+			labelNaiveBayes.Text = naiveBayes;
 			
 		}
 		
@@ -303,15 +382,371 @@ namespace Proyecto_Mineria_de_Datos
 			return encabezadosString;
 		}
 		
+		private string[] separarValoresDeUnaInstancia(string instancia)
+		{
+			//Mete las palabras del string sacado del textbox en un arreglo y elimina las comas
+			
+			string[] valores = instancia.Split(',');
+			
+			return valores;
+		}
 		
-		///private bool revisarSiValorE
+		private DataTable obtenerTablaFrecClase(string clase){
+			
+			DataTable tablaFrecClase = cdd.calcularTablaFrecuencias(clase);
+
+			//esto elimina la ultima columna, porque no la necesito
+			tablaFrecClase.Columns.RemoveAt(tablaFrecClase.Columns.Count-1);
+			
+			dataGridView1.DataSource = tablaFrecClase;
+			
+			return tablaFrecClase;			
+		}
 		
+		private List<DataTable> obtenerTablasFrecAtribClas(string clase){
+			//Se calculan tablas de frecuancias de atributos vs clase
+			List<DataTable> tablasFrecAtribClas = new List<DataTable>();
+			
+			for(int i = 0; i < cdd.encabezados.Count-1; i++)
+			{
+				//Esto hace que ignore los atributos numericos
+				if(cdd.saberTipoDeDato(cdd.encabezados[i]) == "numerico")
+				{
+					//MessageBox.Show(cdd.saberTipoDeDato(cdd.encabezados[i]));
+					continue;
+				}
+				
+				tablasFrecAtribClas.Add(cdd.calcularTablaContingencia(clase, cdd.encabezados[i]));
+				
+				
+				int posUltimo = tablasFrecAtribClas.Count -1;
+				//esto elimina la ultima columna, porque no la necesito
+				tablasFrecAtribClas[posUltimo].Columns.RemoveAt(tablasFrecAtribClas[posUltimo].Columns.Count-1);
+					
+				//esto elimina la ultima fila, porque no la necesito
+				tablasFrecAtribClas[posUltimo].Rows.RemoveAt(tablasFrecAtribClas[posUltimo].Rows.Count-1);
+				
+				
+				
+				//a cada celda le sumo 1
+				for(int f = 0 ; f < tablasFrecAtribClas[posUltimo].Rows.Count; f++)
+				{
+					
+					//MessageBox.Show(tablasFrecAtribClas[i].Rows.Count.ToString());
+					for(int c = 1 ; c < tablasFrecAtribClas[posUltimo].Columns.Count; c++)
+					{
+						//MessageBox.Show("val:"+tablasFrecAtribClas[i].Rows[f][c]);
+						
+						int valorCelda = int.Parse(tablasFrecAtribClas[posUltimo].Rows[f][c].ToString()) + 1;
+						tablasFrecAtribClas[posUltimo].Rows[f][c] = valorCelda;
+						//MessageBox.Show("fila: "+f.ToString()+"col: "+c.ToString()+"val:"+valorCelda.ToString());
+					}
+				}
+				
+				dataGridView1.DataSource = tablasFrecAtribClas[posUltimo];
+				//MessageBox.Show("PAUSA");
+				
+			}
+			
+			return tablasFrecAtribClas;
+		}
+		
+		private List<double> obtenerVerosimilitudClase(DataTable tablaFrecClase)
+		{
+			List<double> verosimilitudClase = new List<double>();
+			
+			double divisor = 0;
+			double dividendo = 0;
+			
+			//esto elimina la primer columna, porque no la necesito
+			tablaFrecClase.Columns.RemoveAt(0);
+			
+			//primero busco el dividendo, sumando todas las frecuencias;
+			for(int i = 0; i < tablaFrecClase.Rows.Count; i++)
+			{
+				dividendo += double.Parse(tablaFrecClase.Rows[i][0].ToString());
+			}
+			
+			//busco el valor en la tabla de frecuencias y en la de verosimilitud agrego
+			for(int i = 0; i < tablaFrecClase.Rows.Count; i++)
+			{
+				divisor = double.Parse(tablaFrecClase.Rows[i][0].ToString());
+				verosimilitudClase.Add(divisor/dividendo);
+			}
+			
+			//foreach(double a in verosimilitudClase)
+			//{
+			//	MessageBox.Show(a.ToString());
+			//}
+
+			return verosimilitudClase;
+		}
+		
+		//private List<DataTable> obtenerVerosimilitudAtribClase(List<DataTable> tablasFrecAtribClas, List<double> verosimilitudClase, string [] valoresInstancia)
+		private List<double> obtenerVerosimilitudAtribClase(List<DataTable> tablasFrecAtribClas, List<double> verosimilitudClase, string [] valoresInstancia)
+		{
+			List<DataTable> verosimilitudAtribClase = new List<DataTable>();
+			
+			//guarda los resultados para cada valor de la clase, enla pos0 los del valor0, en la pos1 los del val1,etc.
+			List<double> resultados = new List<double>();
+			//Inicializo la lista con 0, y asi obtengo el espacio para cada valor
+			for(int i = 0; i < verosimilitudClase.Count ; i++)
+			{
+				//Como se va a ultiplicar mejor pongo 1 en lugar de 0;
+				resultados.Add(1);
+			}
+			
+			
+			//indica cuantos de valoresInstancia se han encontrado
+			//se incrementa cada vez que encuentrael valor en la tabla
+			//int contValInstancia = 0;
+			
+			//Primero
+			for(int i = 0; i < tablasFrecAtribClas.Count; i++)//Recorre lista de tablas
+			{
+				DataTable tablaActual = tablasFrecAtribClas[i];
+				
+				//if(contValInstancia == valoresInstancia.Length-1)
+				//{
+			//		break;
+				//}
+				
+				for(int f = 0; f < tablaActual.Rows.Count; f++)//recorre cada fila de una tabla
+				{
+					//MessageBox.Show(tablaActual.Rows[f][0] +"=="+ valoresInstancia[i]);//borrar
+						
+					//si el valor  es igual al de la instancia dada, obtiene la pos
+					if(tablaActual.Rows[f][0].ToString() == valoresInstancia[i])
+					{
+						
+						//contValInstancia++;
+						
+						
+						//MessageBox.Show(tablaActual.Rows[f][0] +"=="+ valoresInstancia[i]);//borrar
+						
+						for(int c = 1; c < tablaActual.Columns.Count; c++)//recorre cada columna de una tabla
+						{
+							double dividendo = 0;
+							//double dividendo = verosimilitudClase[c-1];
+							//MessageBox.Show(dividendo.ToString());
+							//primero busco el dividendo, sumando todas las frecuencias de la tabla actual;
+							for(int j = 0; j < tablaActual.Rows.Count; j++)
+							{
+								dividendo += double.Parse(tablaActual.Rows[j][c].ToString());
+							}
+							
+							double divisor = double.Parse(tablaActual.Rows[f][c].ToString());
+							resultados[c-1] *= divisor/dividendo;
+						}
+						
+						break;
+					}
+				}
+				
+			}
+			
+			foreach(double a in resultados)
+			{
+				//MessageBox.Show(a.ToString());
+			}
+				
+
+			return resultados;
+		}
+		
+		private double normalizar(double valor, List<double> valores){
+			double valorNormalizado = 0;
+			double dividendo = 0;
+			
+			foreach(double val in valores)
+			{
+				dividendo += val;
+			}
+
+			valorNormalizado = valor/dividendo;
+
+			return valorNormalizado;
+		}
+		
+		private double funcionDeDensidad(string valorAtrib, double x, double media)
+		{
+			//double media = cdd.calcularMedia(valorAtrib);
+			
+			double desvEstandar = cdd.calcularDesviacionEstandar(valorAtrib);
+			
+			double potencia = -1 * (Math.Pow(x-media, 2) / (2 * Math.Pow(desvEstandar, 2)));
+			
+			double funcionDensidad = (1 / (Math.Sqrt(2 * Math.PI) * desvEstandar)) * Math.Pow((Math.E), potencia);
+			//MessageBox.Show("encabezado" +encabezadoAtrib+ "\nvalor: " + x +
+			//                "\nmedia:"+media+"\ndesvEst:"+desvEstandar+"potencia:"+potencia+"\nDensidad:"+funcionDensidad);
+
+			return funcionDensidad;
+		}
+		
+		private List<double> obtenerDensidades(string[] valoresInstancia)
+		{
+			//calcula todas las densidades y retornando la lista
+			
+			//Es 1 porque se realiza multplicacion
+			//double densidadTotal = 1;
+			List<double> densidades = new List<double>();
+			
+			
+			string clase = cdd.obtenerClase();//nombre del atributo que sera la clase
+			int tamanio = cdd.obtenerValoresParaAtributo(clase).Count;
+			
+			//inicializao la lista de denisdades en 1 para apartar los espacios y los divisores y dividendos
+			//Es 1 porque se realiza multplicacion
+			//for(int i = 0; i < cdd.obtenerCantidadDeDominios(encabezado); i++)
+			//{
+			//	densidades.Add(1);
+			//}
+
+			
+			for(int i = 0; i < cdd.encabezados.Count; i++ )//Recorre toda la lista de encabezados
+			{
+				if(cdd.saberTipoDeDato(cdd.encabezados[i]) == "numerico")//si es numerico hace funcion de densidad
+				{
+					//calcula medias
+					List<double> medias = calcularMediasValorAtrib(cdd.encabezados[i]);
+					
+					densidades=medias;//borrar
+					
+					MessageBox.Show("count medias"+medias.Count.ToString()+
+					                "\ncountDens"+densidades.Count.ToString());//borrar
+					
+					//double densidadTemp = funcionDeDensidad(cdd.encabezados[i], double.Parse(valoresInstancia[i]));
+					//densidades.Add(densidadTemp);
+					//MessageBox.Show(densidadTemp.ToString());
+				}
+			}
+			
+			return densidades;
+		}
+		
+		private List<string> obtenerEncabezadosCategoricos()
+		{
+			List<string> encabezadosCategoricos = new List<string>();
+			
+			for(int i = 0; i < cdd.encabezados.Count; i++ )//Recorre toda la lista de encabezados
+			{
+				if(cdd.saberTipoDeDato(cdd.encabezados[i]) == "categorico")//si es categorico lo agrega a la lista
+				{
+					encabezadosCategoricos.Add(cdd.encabezados[i]);
+				}
+			}
+			
+			return encabezadosCategoricos;
+		}
+		
+		private List<string> obtenerEncabezadosNumericos()
+		{
+			List<string> encabezadosNumericos = new List<string>();
+			
+			for(int i = 0; i < cdd.encabezados.Count; i++ )//Recorre toda la lista de encabezados
+			{
+				if(cdd.saberTipoDeDato(cdd.encabezados[i]) == "numerico")//si es numerico lo agrega a la lista
+				{
+					encabezadosNumericos.Add(cdd.encabezados[i]);
+				}
+			}
+			
+			return encabezadosNumericos;
+		}
+		
+		private List<double> calcularMediasValorAtrib(string encabezado)
+		{
+			//calcula la media para todos los valores que hay de un valor de la clase
+			//ejemplo medias[0]  est ala media de todos los valores para yes
+			
+			List<double> medias = new List<double>();
+			
+			List<double> divisores = new List<double>();
+			List<double> dividendos = new List<double>();
+			
+			
+			string clase = cdd.obtenerClase();//nombre del atributo que sera la clase
+			List<string> valoresClase = cdd.obtenerValoresParaAtributo(clase);
+			List<String> domClase = cdd.obtenerDominios(clase);
+			
+			//inicializao la lista de medias en 0 para apartar los espacios y los divisores y dividendos
+			
+			
+			MessageBox.Show("countDominios:"+domClase.Count);//borrar
+			for(int i = 0; i < domClase.Count; i++)
+			{
+				medias.Add(0);
+				divisores.Add(0);
+				dividendos.Add(0);
+			}
+			
+			
+			
+			
+			List<string> valoresAtrib = cdd.obtenerValoresParaAtributo(encabezado);
+			
+			//Voy fila por fila revisando que clase tiene, y la agrego a la correspondiente
+			for(int i = 0; i < cdd.calcularCantidadInstancias(); i++)//revisa filas
+			{
+				//Revisa a que valor se le agregara
+				for(int j = 0; j < medias.Count; j++)//revisa valores de la clase
+				{
+					if(cdd.dtConjuntoDatos.Rows[i][clase].ToString() == valoresClase[i])//compara 
+					{
+						//MessageBox.Show(cdd.dtConjuntoDatos.Rows[i][clase].ToString()+"=="+valoresClase[i]+
+						//                "\n"+valoresAtrib[i].ToString());
+
+						dataGridView1.DataSource = cdd.dtConjuntoDatos;
+						divisores[j] += double.Parse( valoresAtrib[i].ToString() );
+						dividendos[j]++;
+						
+						medias[j] =  divisores[j] / dividendos[j];
+						
+						//MessageBox.Show(medias[j].ToString());
+					}
+				}
+				
+			}
+			
+			foreach(double media in medias)
+			{
+				MessageBox.Show("media:"+media);
+			}
+			
+			return medias;
+		}
+			
 		void Button1Click(object sender, EventArgs e)
 		{
-			
-			
-			
+			//if(textBoxValores.ToString() != "")
+			//{
+				//try
+				//{
+					
+					string[] valoreSeparadosInstancia = separarValoresDeUnaInstancia(textBoxValores.Text);
+					
+					//Con esto me aseguro de que ingrese bien los espacios
+					if(valoreSeparadosInstancia.Length == cdd.encabezados.Count -1)//-1 porque no cuento la clase
+					{
+						calcularNaiveBayes();
+					}
+					else
+					{
+						MessageBox.Show("Asegurese de ingresar correctamente la instancia:\n"+
+						                "-Solo la cantidad de valores solicitados.\n"+
+						                "-Para valores faltantes simplemente, no ingrese el valor\n" +
+						                " pero si la coma, ejemplo: valo1,,valor3\n");
+							
+					}
+					
+				//}
+				//catch(Exception ex)
+				//{
+				//	MessageBox.Show(ex.ToString());
+				//}
+			//}
 		}
+		
 		void RadioButtonClasificacionCheckedChanged(object sender, EventArgs e)
 		{
 			
@@ -337,7 +772,7 @@ namespace Proyecto_Mineria_de_Datos
 							labelOneR.Text = "No se puede calcular porque no todos los atributos son categoricos";
 						}
 					}
-					calcularNaiveBayes();
+					
 					
 					
 					mostrarDatosClasificacion();
@@ -350,10 +785,10 @@ namespace Proyecto_Mineria_de_Datos
 			}
 	
 		}
+		
 		void RadioButtonRegresionCheckedChanged(object sender, EventArgs e)
 		{
 			mostrarDatosRegresion();
-	
 		}
 		
 		void mostrarDatosClasificacion()
@@ -372,7 +807,7 @@ namespace Proyecto_Mineria_de_Datos
 			textBoxValores.Visible = true;
 			labelNaiveBayes.Visible = true;
 			
-			
+			label8.Visible = true;
 		}
 		
 		void ocultarDatosClasificacion()
@@ -388,6 +823,8 @@ namespace Proyecto_Mineria_de_Datos
 			labelEncabezados.Visible = false;
 			textBoxValores.Visible = false;
 			labelNaiveBayes.Visible = false;
+			
+			label8.Visible = false;
 		}
 		
 		void mostrarDatosRegresion()
