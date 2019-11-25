@@ -35,6 +35,11 @@ namespace Proyecto_Mineria_de_Datos
 		private System.Windows.Forms.RadioButton radioButton4;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.TextBox textBoxKfold;
+		private System.Windows.Forms.Label label9;
+		private System.Windows.Forms.Label label10;
+		private System.Windows.Forms.TextBox textBoxKconjuntoDisjuntos;
+		private System.Windows.Forms.Button button2;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -74,11 +79,16 @@ namespace Proyecto_Mineria_de_Datos
 			this.label5 = new System.Windows.Forms.Label();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.panel2 = new System.Windows.Forms.Panel();
+			this.textBoxKfold = new System.Windows.Forms.TextBox();
 			this.radioButton3 = new System.Windows.Forms.RadioButton();
 			this.radioButton4 = new System.Windows.Forms.RadioButton();
 			this.label6 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
+			this.label9 = new System.Windows.Forms.Label();
+			this.label10 = new System.Windows.Forms.Label();
+			this.textBoxKconjuntoDisjuntos = new System.Windows.Forms.TextBox();
+			this.button2 = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -103,10 +113,10 @@ namespace Proyecto_Mineria_de_Datos
 			this.dataGridView1.AllowUserToResizeColumns = false;
 			this.dataGridView1.AllowUserToResizeRows = false;
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView1.Location = new System.Drawing.Point(459, 80);
+			this.dataGridView1.Location = new System.Drawing.Point(536, 77);
 			this.dataGridView1.Name = "dataGridView1";
 			this.dataGridView1.RowHeadersVisible = false;
-			this.dataGridView1.Size = new System.Drawing.Size(321, 180);
+			this.dataGridView1.Size = new System.Drawing.Size(270, 180);
 			this.dataGridView1.TabIndex = 1;
 			// 
 			// labelZeroR
@@ -148,12 +158,13 @@ namespace Proyecto_Mineria_de_Datos
 			this.button1.TabIndex = 5;
 			this.button1.Text = "Calcular";
 			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Visible = false;
 			this.button1.Click += new System.EventHandler(this.Button1Click);
 			// 
 			// labelNaiveBayes
 			// 
 			this.labelNaiveBayes.AutoSize = true;
-			this.labelNaiveBayes.Location = new System.Drawing.Point(35, 345);
+			this.labelNaiveBayes.Location = new System.Drawing.Point(35, 350);
 			this.labelNaiveBayes.Name = "labelNaiveBayes";
 			this.labelNaiveBayes.Size = new System.Drawing.Size(123, 13);
 			this.labelNaiveBayes.TabIndex = 7;
@@ -248,17 +259,28 @@ namespace Proyecto_Mineria_de_Datos
 			// panel2
 			// 
 			this.panel2.AutoSize = true;
+			this.panel2.Controls.Add(this.textBoxKfold);
 			this.panel2.Controls.Add(this.radioButton3);
 			this.panel2.Controls.Add(this.radioButton4);
 			this.panel2.Controls.Add(this.label6);
 			this.panel2.Location = new System.Drawing.Point(257, 10);
 			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(270, 53);
+			this.panel2.Size = new System.Drawing.Size(437, 53);
 			this.panel2.TabIndex = 19;
+			// 
+			// textBoxKfold
+			// 
+			this.textBoxKfold.Enabled = false;
+			this.textBoxKfold.Location = new System.Drawing.Point(272, 27);
+			this.textBoxKfold.Name = "textBoxKfold";
+			this.textBoxKfold.Size = new System.Drawing.Size(60, 20);
+			this.textBoxKfold.TabIndex = 15;
+			this.textBoxKfold.Text = "1";
 			// 
 			// radioButton3
 			// 
 			this.radioButton3.AutoSize = true;
+			this.radioButton3.Checked = true;
 			this.radioButton3.Location = new System.Drawing.Point(138, 27);
 			this.radioButton3.Name = "radioButton3";
 			this.radioButton3.Size = new System.Drawing.Size(128, 17);
@@ -270,11 +292,11 @@ namespace Proyecto_Mineria_de_Datos
 			// radioButton4
 			// 
 			this.radioButton4.AutoSize = true;
+			this.radioButton4.Enabled = false;
 			this.radioButton4.Location = new System.Drawing.Point(138, 5);
 			this.radioButton4.Name = "radioButton4";
 			this.radioButton4.Size = new System.Drawing.Size(65, 17);
 			this.radioButton4.TabIndex = 11;
-			this.radioButton4.TabStop = true;
 			this.radioButton4.Text = "Hold-out";
 			this.radioButton4.UseVisualStyleBackColor = true;
 			// 
@@ -304,16 +326,61 @@ namespace Proyecto_Mineria_de_Datos
 			this.label8.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
 			this.label8.Location = new System.Drawing.Point(35, 320);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(547, 13);
+			this.label8.Size = new System.Drawing.Size(646, 26);
 			this.label8.TabIndex = 22;
-			this.label8.Text = "*Para evitar le problema de la frecuencia cero hemos sumado una unidad a cada val" +
-	"or en las tablas de frecuencia.";
+			this.label8.Text = resources.GetString("label8.Text");
+			this.label8.Visible = false;
+			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.Location = new System.Drawing.Point(35, 110);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(102, 13);
+			this.label9.TabIndex = 24;
+			this.label9.Text = "Número de Clusters:";
+			this.label9.Visible = false;
+			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label10.Location = new System.Drawing.Point(36, 80);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(60, 13);
+			this.label10.TabIndex = 23;
+			this.label10.Text = "K-Means:";
+			this.label10.Visible = false;
+			// 
+			// textBoxKconjuntoDisjuntos
+			// 
+			this.textBoxKconjuntoDisjuntos.Location = new System.Drawing.Point(166, 107);
+			this.textBoxKconjuntoDisjuntos.Name = "textBoxKconjuntoDisjuntos";
+			this.textBoxKconjuntoDisjuntos.Size = new System.Drawing.Size(60, 20);
+			this.textBoxKconjuntoDisjuntos.TabIndex = 25;
+			this.textBoxKconjuntoDisjuntos.Text = "1";
+			this.textBoxKconjuntoDisjuntos.Visible = false;
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(260, 105);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(75, 23);
+			this.button2.TabIndex = 26;
+			this.button2.Text = "Calcular";
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Visible = false;
+			this.button2.Click += new System.EventHandler(this.Button2Click);
 			// 
 			// AprendizajeMaquinaForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(792, 573);
+			this.ClientSize = new System.Drawing.Size(751, 573);
+			this.Controls.Add(this.button2);
+			this.Controls.Add(this.textBoxKconjuntoDisjuntos);
+			this.Controls.Add(this.label9);
+			this.Controls.Add(this.label10);
 			this.Controls.Add(this.label8);
 			this.Controls.Add(this.label7);
 			this.Controls.Add(this.panel2);

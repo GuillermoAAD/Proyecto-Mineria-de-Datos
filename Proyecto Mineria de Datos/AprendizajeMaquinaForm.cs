@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Data;
 using System.Collections.Generic;
 
+
 namespace Proyecto_Mineria_de_Datos
 {
 	/// <summary>
@@ -278,8 +279,7 @@ namespace Proyecto_Mineria_de_Datos
 			return oneR;
 		}
 
-		
-		private void calcularNaiveBayes()
+		private string calcularNaiveBayes()
 		{
 			string naiveBayes = "";
 			List<double> probabilidadesValores = new List<double>();
@@ -317,21 +317,28 @@ namespace Proyecto_Mineria_de_Datos
 				{
 					//si no es categorico lo ignora?
 					probabilidadesValores.Add(verosimilitudAtribClase[i] * verosimilitudClase[i]);
+					//MessageBox.Show(verosimilitudAtribClase[i]+"*" + verosimilitudClase[i]);//borrar
 				}
 			
 			}
 			
-			if(encabezadosNumericos.Count > 0)//Si hay atributos numericos
+			
+			string[] valoresInstanciaNumericosConValores = obtenerValInstNumConVal(valoresInstancia);
+			//if(encabezadosNumericos.Count > 0 )//Si hay atributos y valores numericos
+			if(encabezadosNumericos.Count > 0  && valoresInstanciaNumericosConValores.Length > 0)//Si hay atributos y valores numericos	
 			{
+				//string[] valoresInstanciaNumericosConValores = obtenerValInstNumConVal(valoresInstancia);
 				List<double> densidades = obtenerDensidades(valoresInstancia); //calculo todas las densidades
+				//List<double> densidades = obtenerDensidades(valoresInstancia); //calculo todas las densidades
 
 				//multipplico la densidadTotal con lo qu eya hay en la probabilidad para cada valor de la clase
 				//multiplico lo de la verisimilutdi de atributos con la clase
 				
-				MessageBox.Show("countProbabilidades"+probabilidadesValores.Count.ToString()+
-				                "countDensidades"+densidades.Count.ToString());//borrar
+				//MessageBox.Show("countProbabilidades"+probabilidadesValores.Count.ToString()+
+				//                "countDensidades"+densidades.Count.ToString());//borrar
 				for(int i = 0; i < probabilidadesValores.Count; i++)
 				{
+					//MessageBox.Show(probabilidadesValores[i]+"*"+ densidades[i]);
 					probabilidadesValores[i] = probabilidadesValores[i] * densidades[i];
 				}
 			}
@@ -362,10 +369,8 @@ namespace Proyecto_Mineria_de_Datos
 				naiveBayes += (probabilidadNormalizada[cont] * 100).ToString("0.00") + "%\n";
 				cont++;
 			}
-			
-
-			labelNaiveBayes.Text = naiveBayes;
-			
+				
+			return naiveBayes;			
 		}
 		
 		private string extraerAtribsSinClase()
@@ -398,7 +403,7 @@ namespace Proyecto_Mineria_de_Datos
 			//esto elimina la ultima columna, porque no la necesito
 			tablaFrecClase.Columns.RemoveAt(tablaFrecClase.Columns.Count-1);
 			
-			dataGridView1.DataSource = tablaFrecClase;
+			//dataGridView1.DataSource = tablaFrecClase;
 			
 			return tablaFrecClase;			
 		}
@@ -443,7 +448,7 @@ namespace Proyecto_Mineria_de_Datos
 					}
 				}
 				
-				dataGridView1.DataSource = tablasFrecAtribClas[posUltimo];
+				//dataGridView1.DataSource = tablasFrecAtribClas[posUltimo];
 				//MessageBox.Show("PAUSA");
 				
 			}
@@ -476,7 +481,7 @@ namespace Proyecto_Mineria_de_Datos
 			
 			//foreach(double a in verosimilitudClase)
 			//{
-			//	MessageBox.Show(a.ToString());
+				//MessageBox.Show(a.ToString());
 			//}
 
 			return verosimilitudClase;
@@ -499,24 +504,35 @@ namespace Proyecto_Mineria_de_Datos
 			
 			//indica cuantos de valoresInstancia se han encontrado
 			//se incrementa cada vez que encuentrael valor en la tabla
-			//int contValInstancia = 0;
+			int contValInstancia = 0;
 			
 			//Primero
 			for(int i = 0; i < tablasFrecAtribClas.Count; i++)//Recorre lista de tablas
 			{
 				DataTable tablaActual = tablasFrecAtribClas[i];
 				
-				//if(contValInstancia == valoresInstancia.Length-1)
+				//Esto hace que ignore los atributos numericos
+				if(cdd.saberTipoDeDato(cdd.encabezados[i]) == "numerico")
+				{
+					//MessageBox.Show(valoresInstancia[i]);
+					contValInstancia++;
+					//continue;
+				}
+				
+				//if(cdd.saberTipoDeDato(valoresInstancia[i]) == "numerico")
 				//{
-			//		break;
+				//	MessageBox.Show("cant: "+tablasFrecAtribClas.Count);
 				//}
+				
+				
 				
 				for(int f = 0; f < tablaActual.Rows.Count; f++)//recorre cada fila de una tabla
 				{
 					//MessageBox.Show(tablaActual.Rows[f][0] +"=="+ valoresInstancia[i]);//borrar
 						
 					//si el valor  es igual al de la instancia dada, obtiene la pos
-					if(tablaActual.Rows[f][0].ToString() == valoresInstancia[i])
+					//if(tablaActual.Rows[f][0].ToString() == valoresInstancia[i])
+					if(tablaActual.Rows[f][0].ToString() == valoresInstancia[contValInstancia])
 					{
 						
 						//contValInstancia++;
@@ -537,11 +553,16 @@ namespace Proyecto_Mineria_de_Datos
 							
 							double divisor = double.Parse(tablaActual.Rows[f][c].ToString());
 							resultados[c-1] *= divisor/dividendo;
+							
+							//dataGridView1.DataSource = tablaActual;//borrar
+							//MessageBox.Show(divisor+"/"+dividendo+"="+resultados[c-1]);
 						}
 						
 						break;
 					}
 				}
+				
+				contValInstancia++;
 				
 			}
 			
@@ -568,11 +589,11 @@ namespace Proyecto_Mineria_de_Datos
 			return valorNormalizado;
 		}
 		
-		private double funcionDeDensidad(string valorAtrib, double x, double media)
+		private double funcionDeDensidad(string valorAtrib, double x, double media, double desvEstandar)
 		{
 			//double media = cdd.calcularMedia(valorAtrib);
 			
-			double desvEstandar = cdd.calcularDesviacionEstandar(valorAtrib);
+			//double desvEstandar = cdd.calcularDesviacionEstandar(valorAtrib);
 			
 			double potencia = -1 * (Math.Pow(x-media, 2) / (2 * Math.Pow(desvEstandar, 2)));
 			
@@ -610,14 +631,24 @@ namespace Proyecto_Mineria_de_Datos
 					//calcula medias
 					List<double> medias = calcularMediasValorAtrib(cdd.encabezados[i]);
 					
-					densidades=medias;//borrar
+					List<double> desvesEst = calcularDesvEstAtrib(cdd.encabezados[i]);
 					
-					MessageBox.Show("count medias"+medias.Count.ToString()+
-					                "\ncountDens"+densidades.Count.ToString());//borrar
+					//densidades=medias;//borrar
+					//MessageBox.Show("desvestCount:" + desvesEst.Count);//borrar
 					
-					//double densidadTemp = funcionDeDensidad(cdd.encabezados[i], double.Parse(valoresInstancia[i]));
-					//densidades.Add(densidadTemp);
-					//MessageBox.Show(densidadTemp.ToString());
+					
+					
+					for(int j = 0; j < medias.Count; j++)//recorres valores de clase
+					{
+						//MessageBox.Show("encabezado:" + cdd.encabezados[i]);
+						//MessageBox.Show("valInstancia:" + valoresInstancia[i]);
+						//MessageBox.Show("media:" + medias[j]);
+						//MessageBox.Show("desvest:" + desvesEst[j]);
+						double densidadTemp = funcionDeDensidad(cdd.encabezados[i], double.Parse(valoresInstancia[i]), medias[j], desvesEst[j]);
+						
+						//MessageBox.Show("Densidad: " + densidadTemp);
+						densidades.Add(densidadTemp);
+					}
 				}
 			}
 			
@@ -672,16 +703,13 @@ namespace Proyecto_Mineria_de_Datos
 			//inicializao la lista de medias en 0 para apartar los espacios y los divisores y dividendos
 			
 			
-			MessageBox.Show("countDominios:"+domClase.Count);//borrar
+			//MessageBox.Show("countDominios:"+domClase.Count);//borrar
 			for(int i = 0; i < domClase.Count; i++)
 			{
 				medias.Add(0);
 				divisores.Add(0);
 				dividendos.Add(0);
 			}
-			
-			
-			
 			
 			List<string> valoresAtrib = cdd.obtenerValoresParaAtributo(encabezado);
 			
@@ -691,32 +719,140 @@ namespace Proyecto_Mineria_de_Datos
 				//Revisa a que valor se le agregara
 				for(int j = 0; j < medias.Count; j++)//revisa valores de la clase
 				{
-					if(cdd.dtConjuntoDatos.Rows[i][clase].ToString() == valoresClase[i])//compara 
+					//if(cdd.dtConjuntoDatos.Rows[i][clase].ToString() == valoresClase[i])//compara 
+					if(cdd.dtConjuntoDatos.Rows[i][clase].ToString() == domClase[j])//compara 
 					{
 						//MessageBox.Show(cdd.dtConjuntoDatos.Rows[i][clase].ToString()+"=="+valoresClase[i]+
 						//                "\n"+valoresAtrib[i].ToString());
 
-						dataGridView1.DataSource = cdd.dtConjuntoDatos;
-						divisores[j] += double.Parse( valoresAtrib[i].ToString() );
+						//dataGridView1.DataSource = cdd.dtConjuntoDatos;
+						//divisores[j] += double.Parse( valoresClase[i].ToString() );
+						divisores[j] += double.Parse( valoresAtrib[i] );
 						dividendos[j]++;
 						
 						medias[j] =  divisores[j] / dividendos[j];
-						
-						//MessageBox.Show(medias[j].ToString());
+						//MessageBox.Show("media:"+media);
 					}
 				}
 				
 			}
 			
+			/*int k = 0;
 			foreach(double media in medias)
 			{
-				MessageBox.Show("media:"+media);
-			}
+				
+				MessageBox.Show(divisores[k]+"/"+dividendos[k] +"media:"+media);
+				k++;
+			}*/
 			
 			return medias;
 		}
+		
+		private List<double> obtenerValoresAtribClase(string valorClase, string atrib)
+		{
+			//busca en todos los valores de un atributo los que corresponadn al valor de una clase dada
 			
-		void Button1Click(object sender, EventArgs e)
+			List<double> valoresAtribClase = new List<double>();
+						
+			string clase = cdd.obtenerClase();//nombre del atributo que sera la clase
+			//Voy fila por fila revisando que clase tiene, y la agrego a la correspondiente
+
+			for(int i = 0; i < cdd.calcularCantidadInstancias(); i++)//revisa filas
+			{
+				if(cdd.dtConjuntoDatos.Rows[i][clase].ToString() == valorClase)
+				{
+					valoresAtribClase.Add(double.Parse(cdd.dtConjuntoDatos.Rows[i][atrib].ToString()));
+				}
+			}
+			
+			foreach(double v in valoresAtribClase)
+			{
+				
+				//MessageBox.Show(valorClase + v);
+
+			}
+			
+			return valoresAtribClase;
+		}
+			
+		
+		private List<double> calcularDesvEstAtrib(string encabezado)
+		{
+			//calcula la media para todos los valores que hay de un valor de la clase
+			//ejemplo medias[0]  est ala media de todos los valores para yes
+
+			string clase = cdd.obtenerClase();//nombre del atributo que sera la clase
+			//List<string> valoresClase = cdd.obtenerValoresParaAtributo(clase);
+			List<String> domClase = cdd.obtenerDominios(clase);
+			
+			List<double> promedios = calcularMediasValorAtrib(encabezado);
+			
+			List<double> desviacionesEstandar = new List<double>();
+			
+			//inicializao la lista de medias en 0 para apartar los espacios y los divisores y dividendos
+			
+			
+			for(int i = 0; i < domClase.Count;i++)//recorre cada valor de la clase
+			{
+				List<double> valoresAtribClase = obtenerValoresAtribClase( domClase[i] ,encabezado);
+				
+				//agrego un espacio a la desvEst
+				desviacionesEstandar.Add(0);
+				
+				double valorElevado = 0;
+				int n = 0;
+				
+				for(int f = 0; f < valoresAtribClase.Count; f++)//recorre filas
+				{
+					double x = valoresAtribClase[f];
+					double a = x - promedios[i];
+					valorElevado = Math.Pow( a, 2 );
+
+					desviacionesEstandar[i] += valorElevado;
+						
+					n++;
+				}
+				desviacionesEstandar[i] /= n;
+				desviacionesEstandar[i] = Math.Sqrt(desviacionesEstandar[i]);
+				
+			}
+			
+			//foreach(double v in desviacionesEstandar)
+			//{
+				//MessageBox.Show("DEsvEst" + v);
+			//}
+			return desviacionesEstandar;
+		}
+
+		private string[] obtenerValInstNumConVal(string [] valoresInstancia)
+		{
+			List<string> vincv = new List<string>();
+			
+			string encabezado = "";
+			
+			//revisar si es numerico
+			//revisar si tiene valor
+			
+			for(int i = 0; i < valoresInstancia.Length; i++)
+			{
+				encabezado =cdd.encabezados[i];
+				if((cdd.saberTipoDeDato(encabezado) == "numerico") && (valoresInstancia[i] != ""))
+				{
+					vincv.Add(valoresInstancia[i]);
+				}
+			}
+			
+			string[] valoresInstanciaNumericoConValor = vincv.ToArray();
+			
+			//foreach(string a in valoresInstanciaNumericoConValor)
+			//{
+			//MessageBox.Show(a);
+			//}
+			
+			return valoresInstanciaNumericoConValor;
+		}
+			
+		private void Button1Click(object sender, EventArgs e)
 		{
 			//if(textBoxValores.ToString() != "")
 			//{
@@ -728,7 +864,14 @@ namespace Proyecto_Mineria_de_Datos
 					//Con esto me aseguro de que ingrese bien los espacios
 					if(valoreSeparadosInstancia.Length == cdd.encabezados.Count -1)//-1 porque no cuento la clase
 					{
-						calcularNaiveBayes();
+						try
+						{
+							labelNaiveBayes.Text = calcularNaiveBayes();
+						}
+						catch(Exception ex)
+						{
+							MessageBox.Show(ex.ToString());
+						}
 					}
 					else
 					{
@@ -747,7 +890,7 @@ namespace Proyecto_Mineria_de_Datos
 			//}
 		}
 		
-		void RadioButtonClasificacionCheckedChanged(object sender, EventArgs e)
+		private void RadioButtonClasificacionCheckedChanged(object sender, EventArgs e)
 		{
 			
 			//hace la accion solo si esta seleccionada
@@ -786,12 +929,12 @@ namespace Proyecto_Mineria_de_Datos
 	
 		}
 		
-		void RadioButtonRegresionCheckedChanged(object sender, EventArgs e)
+		private void RadioButtonRegresionCheckedChanged(object sender, EventArgs e)
 		{
 			mostrarDatosRegresion();
 		}
 		
-		void mostrarDatosClasificacion()
+		private void mostrarDatosClasificacion()
 		{
 			ocultarDatosRegresion();
 			
@@ -808,9 +951,10 @@ namespace Proyecto_Mineria_de_Datos
 			labelNaiveBayes.Visible = true;
 			
 			label8.Visible = true;
+			button1.Visible = true;
 		}
 		
-		void ocultarDatosClasificacion()
+		private void ocultarDatosClasificacion()
 		{
 			label1.Visible = false;
 			labelZeroR.Visible = false;
@@ -825,18 +969,108 @@ namespace Proyecto_Mineria_de_Datos
 			labelNaiveBayes.Visible = false;
 			
 			label8.Visible = false;
+			button1.Visible = false;
 		}
 		
-		void mostrarDatosRegresion()
+		private void mostrarDatosRegresion()
 		{
 			ocultarDatosClasificacion();
 			
-		}
-		
-		void ocultarDatosRegresion()
-		{
+			// K means
+			label9.Visible = true;
+			label10.Visible = true;
+			textBoxKconjuntoDisjuntos.Visible = true;
+			button2.Visible = true;
 			
 		}
+		
+		private void ocultarDatosRegresion()
+		{
+			// K means
+			label9.Visible = false;
+			label10.Visible = false;
+			textBoxKconjuntoDisjuntos.Visible = false;
+			button2.Visible = false;
+			
+		}
+		
+		
+		private string calcularKMeans(DataTable instancias, int k)
+		{
+			//obtiene le numero de instancias del conjunto
+			int  cantInstancias = instancias.Rows.Count;
+			
+			//carga los clusters con los centroides iniciales
+			List<int> clusters = elegirKpuntosAleatoriamente(k, cantInstancias);
+			
+			
+			for(int i = 0; i < cantInstancias; i++)
+			{
+				//medir distancias de cada instancia ocn cada cluster
+				//y agregarlo con el mas cercano
+				//voy a sacar distancia de cada atributo y luego sacar distancia promedio?
+			}
+			
+			string kmeans = "";
+			
+			//Compilador, por favor implementa el algoritmo K-means
+			//y pon el resultado en el string anterior
+			//gracias
+			
+			return kmeans;
+		}
+		
+		private List<int> elegirKpuntosAleatoriamente(int k, int cantInstancias)
+		{
+			//retorna los centroides iniciales
+			List<int> puntos = new List<int>();
+			
+			Random generarRandom = new Random(DateTime.Now.Millisecond);
+			
+			for(int i = 0; i < k; i++)
+			{
+				int puntoRandom = generarRandom.Next(cantInstancias);
+				if (!puntos.Contains(puntoRandom))
+            	{
+					MessageBox.Show(puntoRandom.ToString());
+            	    puntos.Add(puntoRandom);
+            	}
+				else
+				{
+					i--;
+				}
+			}
+			return puntos;
+		}
+		
+		private string calcularKNN()
+		{
+			string knn = "";
+			
+			//Tambien haz lo mismo para el de knn, gracias
+			
+			return knn;
+		}
+		void Button2Click(object sender, EventArgs e)
+		{
+			int k = int.Parse(textBoxKconjuntoDisjuntos.Text);
+			
+			//inicialmente le manda todo el conjunto de datos, pero 
+			//con kafold esto deberia cambiar?
+			DataTable conjuntoDeDatos = cdd.dtConjuntoDatos;
+			
+			if(k <= conjuntoDeDatos.Rows.Count)
+			{
+				calcularKMeans(conjuntoDeDatos, k);
+			}
+			else
+			{
+				MessageBox.Show("El numero de Clusters no puede ser " +
+				                "mayor a la cantidad de instancias.");
+			}
+	
+		}
+		
 		
 	}
 }
