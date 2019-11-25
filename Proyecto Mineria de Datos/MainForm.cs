@@ -424,5 +424,24 @@ namespace Proyecto_Mineria_de_Datos
 				resaltarValoresFaltantes();
 			}
 		}
+		void TransformaciónDeDatosToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			transformacionDatos tdd = new transformacionDatos(cdde);						
+			DialogResult res = tdd.ShowDialog();
+			if(res == DialogResult.OK)
+			{
+				cdde = new ConjuntoDeDatosExtendido();
+				cdde = tdd.cdd;
+				dataGridView1.DataSource = null;				
+				dataGridView1.DataSource = cdde.dtConjuntoDatos;					
+				//esto agrega el numero de fila como encabezado de filas
+				for(int i = 0; i<dataGridView1.Rows.Count; i++)
+				{
+					dataGridView1.Rows[i].HeaderCell.Value = (i + 1).ToString();
+				}
+				//La agregue para que se actualicen los valores faltantes
+				resaltarValoresFaltantes();
+			}
+		}
 	}
 }

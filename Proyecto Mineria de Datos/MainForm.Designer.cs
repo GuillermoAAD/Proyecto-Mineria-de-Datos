@@ -266,6 +266,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.transformaciónDeDatosToolStripMenuItem.Name = "transformaciónDeDatosToolStripMenuItem";
 			this.transformaciónDeDatosToolStripMenuItem.Size = new System.Drawing.Size(253, 22);
 			this.transformaciónDeDatosToolStripMenuItem.Text = "Transformación de datos";
+			this.transformaciónDeDatosToolStripMenuItem.Click += new System.EventHandler(this.TransformaciónDeDatosToolStripMenuItemClick);
 			// 
 			// aprendizajeMáquinaToolStripMenuItem
 			// 

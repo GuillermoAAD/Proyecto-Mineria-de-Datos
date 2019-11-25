@@ -356,6 +356,5 @@ namespace Proyecto_Mineria_de_Datos
 			
 			return cuartiles;
 		}
-		
 	}
 }
