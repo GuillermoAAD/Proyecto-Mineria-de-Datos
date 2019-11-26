@@ -67,7 +67,10 @@ namespace Proyecto_Mineria_de_Datos
 			utilizarL.Visible = false;
 			desviacionCB.Visible = false;
 			aceptarBTN.Enabled = false;
-			
+			desvEstL.Visible = false;
+			desvMedL.Visible = false;	
+			valorDesvEstL.Visible = false;
+			valorDesvMedL.Visible = false;
 		}
 		void ZscoreRBCheckedChanged(object sender, EventArgs e)
 		{
@@ -84,6 +87,10 @@ namespace Proyecto_Mineria_de_Datos
 			utilizarL.Visible = true;
 			desviacionCB.Visible = true;
 			aceptarBTN.Enabled = true;
+			desvEstL.Visible = true;
+			desvMedL.Visible = true;	
+			valorDesvEstL.Visible = true;
+			valorDesvMedL.Visible = true;
 		}
 		void NuevoMinTBTextChanged(object sender, EventArgs e)
 		{
@@ -110,6 +117,7 @@ namespace Proyecto_Mineria_de_Datos
 		void AtributoCBSelectedIndexChanged(object sender, EventArgs e)
 		{
 			actualizarLabelsMinMax(atributoCB.SelectedItem.ToString());
+			actualizarLabelsDesviacionEstandar(atributoCB.SelectedItem.ToString());
 		}
 		double obtenerMax(string encabezado)
 		{
@@ -178,11 +186,18 @@ namespace Proyecto_Mineria_de_Datos
 			return double.Parse(nuevoMaxTB.Text);
 		}
 		void actualizarLabelsMinMax(string encabezado)
-		{
+		{			
 			double minActual = obtenerMin(encabezado);
 			double maxActual = obtenerMax(encabezado);
 			valorMinL.Text = minActual.ToString();
 			valorMaxL.Text = maxActual.ToString();
+		}
+		void actualizarLabelsDesviacionEstandar(string encabezado)
+		{
+			double desviacionEstandar = cdd.calcularDesviacionEstandar(encabezado);
+			double desviacionMediaAbs = cdd.calcularDesviacionMediaAbs(encabezado);
+			valorDesvEstL.Text = desviacionEstandar.ToString("0.00");
+			valorDesvMedL.Text = desviacionMediaAbs.ToString("0.00");
 		}
 		void normalizarMinMax(string encabezado)
 		{
@@ -208,6 +223,35 @@ namespace Proyecto_Mineria_de_Datos
 			if(minmaxRB.Checked == true)
 			{
 				normalizarMinMax(atributoCB.SelectedItem.ToString());
+			}
+			else
+			{
+				normalizarZscoreDesviacionEst(atributoCB.SelectedItem.ToString());
+			}
+		}
+		void normalizarZscoreDesviacionEst(string encabezado)
+		{
+			double valor = 0;
+			double media = cdd.calcularMedia(encabezado);
+			if(desviacionCB.SelectedIndex == 0)
+			{
+				valor = cdd.calcularDesviacionEstandar(encabezado);
+			}
+			else
+			{
+				valor = cdd.calcularDesviacionMediaAbs(encabezado);
+			}
+			double actual;
+			double nuevo;
+			//Se localiza en indice del atributo
+			int i = cdd.encabezados.IndexOf(encabezado);
+			//Se obtiene el numero de instancias
+			int cantInstancias = cdd.calcularCantidadInstancias();
+			for(int j = 0; j < cantInstancias; j++)
+			{
+				actual = double.Parse(cdd.dtConjuntoDatos.Rows[j][i].ToString());
+				nuevo = (actual - media)/valor;
+				cdd.dtConjuntoDatos.Rows[j][i] = nuevo.ToString("0.00");
 			}
 		}
 	}

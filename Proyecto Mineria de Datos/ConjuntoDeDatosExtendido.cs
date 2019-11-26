@@ -227,6 +227,36 @@ namespace Proyecto_Mineria_de_Datos
 
 			return moda;
 		}
+		public double calcularDesviacionMediaAbs(string encabezadoAtributo)
+		{
+			double promedio = calcularMedia(encabezadoAtributo);
+			int n = 0;
+			double desviacionMedia = 0;
+			//aqui obtiene el index para el atributo en la lista de encabezados
+			int c = encabezados.IndexOf(encabezadoAtributo);
+			//ese mismo index sirve para sacar la posicion de columna de donde se saccan datos
+			int cantInstancias= calcularCantidadInstancias();
+			double valorAbsoluto = 0;
+			string valorCelda;
+			for(int f = 0; f < cantInstancias; f++)
+			{
+				valorCelda = dtConjuntoDatos.Rows[f][c].ToString();
+				if(valorCelda != "" && valorCelda != valorNulo)
+				{
+					double x = double.Parse(valorCelda);
+					double a = x - promedio;
+					//valorElevado = Math.Pow( a, 2 );
+					valorAbsoluto = Math.Abs(a);
+
+					desviacionMedia += valorAbsoluto;
+						
+					n++;
+				}
+			}
+			desviacionMedia /= n;					
+			
+			return desviacionMedia;
+		}
 		
 		public double calcularDesviacionEstandar(string encabezadoAtributo)
 		{

@@ -31,6 +31,10 @@ namespace Proyecto_Mineria_de_Datos
 		private System.Windows.Forms.Label utilizarL;
 		private System.Windows.Forms.ComboBox desviacionCB;
 		private System.Windows.Forms.Label noexisL;
+		private System.Windows.Forms.Label desvEstL;
+		private System.Windows.Forms.Label desvMedL;
+		private System.Windows.Forms.Label valorDesvEstL;
+		private System.Windows.Forms.Label valorDesvMedL;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -71,6 +75,10 @@ namespace Proyecto_Mineria_de_Datos
 			this.utilizarL = new System.Windows.Forms.Label();
 			this.desviacionCB = new System.Windows.Forms.ComboBox();
 			this.noexisL = new System.Windows.Forms.Label();
+			this.desvEstL = new System.Windows.Forms.Label();
+			this.desvMedL = new System.Windows.Forms.Label();
+			this.valorDesvEstL = new System.Windows.Forms.Label();
+			this.valorDesvMedL = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// atributoCB
@@ -220,7 +228,7 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			this.utilizarL.AutoSize = true;
 			this.utilizarL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.utilizarL.Location = new System.Drawing.Point(12, 106);
+			this.utilizarL.Location = new System.Drawing.Point(12, 141);
 			this.utilizarL.Name = "utilizarL";
 			this.utilizarL.Size = new System.Drawing.Size(50, 13);
 			this.utilizarL.TabIndex = 20;
@@ -231,7 +239,7 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			this.desviacionCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.desviacionCB.FormattingEnabled = true;
-			this.desviacionCB.Location = new System.Drawing.Point(12, 123);
+			this.desviacionCB.Location = new System.Drawing.Point(12, 158);
 			this.desviacionCB.Name = "desviacionCB";
 			this.desviacionCB.Size = new System.Drawing.Size(301, 21);
 			this.desviacionCB.TabIndex = 21;
@@ -248,11 +256,55 @@ namespace Proyecto_Mineria_de_Datos
 			this.noexisL.Text = "No existen atributos númericos en el dataset";
 			this.noexisL.Visible = false;
 			// 
+			// desvEstL
+			// 
+			this.desvEstL.AutoSize = true;
+			this.desvEstL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.desvEstL.Location = new System.Drawing.Point(12, 97);
+			this.desvEstL.Name = "desvEstL";
+			this.desvEstL.Size = new System.Drawing.Size(127, 13);
+			this.desvEstL.TabIndex = 23;
+			this.desvEstL.Text = "Desviación estandar:";
+			this.desvEstL.Visible = false;
+			// 
+			// desvMedL
+			// 
+			this.desvMedL.AutoSize = true;
+			this.desvMedL.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.desvMedL.Location = new System.Drawing.Point(12, 119);
+			this.desvMedL.Name = "desvMedL";
+			this.desvMedL.Size = new System.Drawing.Size(163, 13);
+			this.desvMedL.TabIndex = 24;
+			this.desvMedL.Text = "Desviación media absoluta:";
+			this.desvMedL.Visible = false;
+			// 
+			// valorDesvEstL
+			// 
+			this.valorDesvEstL.Location = new System.Drawing.Point(141, 97);
+			this.valorDesvEstL.Name = "valorDesvEstL";
+			this.valorDesvEstL.Size = new System.Drawing.Size(100, 17);
+			this.valorDesvEstL.TabIndex = 25;
+			this.valorDesvEstL.Text = "0";
+			this.valorDesvEstL.Visible = false;
+			// 
+			// valorDesvMedL
+			// 
+			this.valorDesvMedL.Location = new System.Drawing.Point(175, 119);
+			this.valorDesvMedL.Name = "valorDesvMedL";
+			this.valorDesvMedL.Size = new System.Drawing.Size(100, 17);
+			this.valorDesvMedL.TabIndex = 26;
+			this.valorDesvMedL.Text = "0";
+			this.valorDesvMedL.Visible = false;
+			// 
 			// transformacionDatos
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(325, 215);
+			this.Controls.Add(this.valorDesvMedL);
+			this.Controls.Add(this.valorDesvEstL);
+			this.Controls.Add(this.desvMedL);
+			this.Controls.Add(this.desvEstL);
 			this.Controls.Add(this.noexisL);
 			this.Controls.Add(this.desviacionCB);
 			this.Controls.Add(this.utilizarL);
