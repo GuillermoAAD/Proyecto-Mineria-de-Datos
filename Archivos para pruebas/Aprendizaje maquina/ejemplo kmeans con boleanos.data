@@ -1,0 +1,15 @@
+%% prueba 1 kmeans
+@relation k-means 1
+@attribute Compra nominal (vhigh | med | low)  
+@attribute Mantenimiento ordinal (bajo | medio | alto)  
+@attribute Puertas numeric [0-9]+
+@attribute fuma boleano (0 | 1)
+@attribute genero boleano (-1 | 1)
+@attribute Clase class (unacc | acc | good)
+@atribute
+@missingValue    
+@data 
+vhigh,bajo,2,0,1,unacc
+vhigh,bajo,3,0,-1,unacc
+vhigh,med,2,1,1,acc
+med,alto,3,1,-1,good

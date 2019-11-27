@@ -1,0 +1,18 @@
+%% prueba 1 kmeans
+@relation k-means 1
+@attribute edad numeric [0-9]+
+@attribute tipotrabajo boleano (0 | 1)
+@attribute escolaridad ordinal (secu | prepa | uni | maest)  
+@attribute estadoCivil nominal (casado | divorciado | unionlibre)  
+@attribute ingreso ordinal (x<=50k | 50k<x<=100k | x>100k)  
+@atribute
+@missingValue    
+@data 
+39,1,prepa,casado,x<=50k
+50,1,uni,divorciado,x>100k
+38,0,secu,divorciado,x<=50k
+28,0,uni,casado,50k<x<=100k
+37,0,maest,casado,x<=50k
+49,0,prepa,unionlibre,x>100k
+52,1,secu,unionlibre,50k<x<=100k
+42,0,uni,divorciado,x>100k

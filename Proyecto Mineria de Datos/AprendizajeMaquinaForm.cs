@@ -23,6 +23,10 @@ namespace Proyecto_Mineria_de_Datos
 		
 		public ConjuntoDeDatosExtendido cdd;// cdd = conjunto de datos
 		
+		
+		//Se usa este para no trabajar con el original y poder hacer lo de kfold
+		DataTable conjuntoDeDatos;
+		
 		public AprendizajeMaquinaForm(ConjuntoDeDatosExtendido cddx)
 		{
 			//
@@ -36,6 +40,8 @@ namespace Proyecto_Mineria_de_Datos
 			
 			cdd = new ConjuntoDeDatosExtendido();
 			cdd = cddx;
+			
+			conjuntoDeDatos = new DataTable();
 			
 			labelEncabezados.Text = extraerAtribsSinClase();
 			radioButtonClasificacion.Checked = false;
@@ -718,8 +724,8 @@ namespace Proyecto_Mineria_de_Datos
 			{
 				//Revisa a que valor se le agregara
 				for(int j = 0; j < medias.Count; j++)//revisa valores de la clase
-				{
-					//if(cdd.dtConjuntoDatos.Rows[i][clase].ToString() == valoresClase[i])//compara 
+				{ 
+					//if(cdd.dtConjuntoDatos.Rows[i][clase].ToString() == domClase[j])//compara
 					if(cdd.dtConjuntoDatos.Rows[i][clase].ToString() == domClase[j])//compara 
 					{
 						//MessageBox.Show(cdd.dtConjuntoDatos.Rows[i][clase].ToString()+"=="+valoresClase[i]+
@@ -774,7 +780,6 @@ namespace Proyecto_Mineria_de_Datos
 			
 			return valoresAtribClase;
 		}
-			
 		
 		private List<double> calcularDesvEstAtrib(string encabezado)
 		{
@@ -952,6 +957,12 @@ namespace Proyecto_Mineria_de_Datos
 			
 			label8.Visible = true;
 			button1.Visible = true;
+			
+			// K means
+			label9.Visible = true;
+			label10.Visible = true;
+			textBoxKconjuntoDisjuntos.Visible = true;
+			button2.Visible = true;
 		}
 		
 		private void ocultarDatosClasificacion()
@@ -970,46 +981,85 @@ namespace Proyecto_Mineria_de_Datos
 			
 			label8.Visible = false;
 			button1.Visible = false;
+			
+			// K means
+			label9.Visible = false;
+			label10.Visible = false;
+			textBoxKconjuntoDisjuntos.Visible = false;
+			button2.Visible = false;
 		}
 		
 		private void mostrarDatosRegresion()
 		{
 			ocultarDatosClasificacion();
 			
-			// K means
-			label9.Visible = true;
-			label10.Visible = true;
-			textBoxKconjuntoDisjuntos.Visible = true;
-			button2.Visible = true;
-			
 		}
 		
 		private void ocultarDatosRegresion()
 		{
-			// K means
-			label9.Visible = false;
-			label10.Visible = false;
-			textBoxKconjuntoDisjuntos.Visible = false;
-			button2.Visible = false;
+			
 			
 		}
 		
 		
-		private string calcularKMeans(DataTable instancias, int k)
+		//private string calcularKMeans(DataTable instancias, int k)
+		private string calcularKMeans(int k)
 		{
+			DataTable instancias = conjuntoDeDatos;
+			
 			//obtiene le numero de instancias del conjunto
 			int  cantInstancias = instancias.Rows.Count;
 			
-			//carga los clusters con los centroides iniciales
-			List<int> clusters = elegirKpuntosAleatoriamente(k, cantInstancias);
+			//carga los clusters con los centroides iniciales (Solo la posicion en el conjunto de instancias)
+			List<int> centroides = elegirKpuntosAleatoriamente(k, cantInstancias);
 			
+			//Guarda las distancias obtenidas para cada cluster
+			List<double> distancias = new List<double>();
 			
-			for(int i = 0; i < cantInstancias; i++)
+			//Guarda las pos de cada instancia en los k clusters correspondientes
+			List< List<int> > clusters = new List<List<int>>();
+			
+			for(int j = 0; j < cantInstancias; j++)//recorre cada instancia
 			{
-				//medir distancias de cada instancia ocn cada cluster
-				//y agregarlo con el mas cercano
-				//voy a sacar distancia de cada atributo y luego sacar distancia promedio?
+				//convertir instancia a comparar en List
+				//List<string> instancia = convertirInstanciaDataTtable_A_List(instancias, j);
+				List<string> instancia = convertirInstanciaDataTtable_A_List(j);
+				
+				for(int i = 0; i < k; i++)//Recorre centroides
+				{
+					//convertir instanciaCentroide e instancia a comparar en List
+					//List<string> instanciaCentroide = convertirInstanciaDataTtable_A_List(instancias, centroides[i]);
+					List<string> instanciaCentroide = convertirInstanciaDataTtable_A_List(centroides[i]);
+					
+					if(j != centroides[i]) // ignora las instancias que estan como centroide del cluster
+					{
+						//obtener distancia de instancia vs centroide
+						//double distancia = obtenerDistanciaAtributosMezclados(instanciaCentroide, instancia);
+						distancias.Add(obtenerDistanciaAtributosMezclados(instanciaCentroide, instancia));
+					}
+				}
+				
+				//pongo la posicion de la primer distancia como la minima
+				int posDistanciaMenor = 0;
+				
+				//comparo la distancia actual contra la menor
+				
+				for(int i = 1; i < k; i++)//Recorre distancias obtenidas para saber cual es la menor
+				{
+					if(distancias[i] < distancias[posDistanciaMenor])
+					{
+						posDistanciaMenor = i;//esta distancia tambien indica a cual cluster ira
+					}
+				}
+				//Añado la pos de la instancia mas cercana al centroide al cluster correspondiente
+				clusters[posDistanciaMenor].Add(j);
+				
 			}
+			
+			
+			
+			//y en este punto ya se obtuvo la pos de la distancia menor
+			//entonces se agrega con el mas cercano
 			
 			string kmeans = "";
 			
@@ -1032,7 +1082,7 @@ namespace Proyecto_Mineria_de_Datos
 				int puntoRandom = generarRandom.Next(cantInstancias);
 				if (!puntos.Contains(puntoRandom))
             	{
-					MessageBox.Show(puntoRandom.ToString());
+					//MessageBox.Show(puntoRandom.ToString());//muestra los valores random generados
             	    puntos.Add(puntoRandom);
             	}
 				else
@@ -1043,6 +1093,221 @@ namespace Proyecto_Mineria_de_Datos
 			return puntos;
 		}
 		
+		//private List<string> convertirInstanciaDataTtable_A_List(DataTable conjuntoDeDatos, int fila)
+		private List<string> convertirInstanciaDataTtable_A_List(int fila)
+		{
+			List<string> instancia = new List<string>();
+			
+			for(int c = 0; c < conjuntoDeDatos.Columns.Count; c++)//recorre cada columna
+			{
+				instancia.Add( conjuntoDeDatos.Rows[fila][c].ToString() );
+			}
+			
+			return instancia;
+		}
+		
+		private double obtenerDistanciaAtributosMezclados(List<string> instancia1, List<string> instancia2)
+		{
+			double disimilitud = 0;
+			
+			double divisor = 0;
+			double dividendo = 0;
+			
+			//Recorrer atributos
+			//identificar de que tipo son
+
+			for(int f = 0; f < instancia1.Count; f++)//recorre cada atributo
+			{
+				//cdd.saberTipoDeDato(cdd.encabezados[i]);//no interfiere con k fold por que son los encabezados
+				string tipoDato = cdd.tiposDatos[f];//no interfiere con k fold por que son los encabezados
+				
+				double s = 1;
+				//double disimilitud = 0;
+				
+				if( ( esFaltante(instancia1[f]) || esFaltante(instancia2[f]) ) ||
+					(instancia1[f] == instancia2[f] && instancia2[f] == "0" && esBinarioAsimetrico(f) ))
+				{
+					s = 0;
+				}
+				
+				//Calculo de disimilitudesPara cada tipo de dato
+				if(tipoDato == "numeric")
+				{
+					double val1 = double.Parse(instancia1[f]);
+					double val2 = double.Parse(instancia2[f]);
+					disimilitud = obtenerDisimilitudNumerico(val1, val2, f);
+				}
+				else if(tipoDato == "nominal" || tipoDato == "boleano" || tipoDato == "class")
+				{
+					if(instancia1[f] == instancia2[f])
+					{
+						disimilitud = 0;
+					}
+					else
+					{
+						disimilitud = 1;
+					}
+				}
+				else //else if(tipoDato == "ordinal")
+				{
+					
+					double z1 = calcularZparaOrdinales(f, instancia1[f]);
+					double z2 = calcularZparaOrdinales(f, instancia2[f]);
+					disimilitud = Math.Abs(z1 -z2);//distancia manhattan
+				}
+				
+				divisor += (s * disimilitud);
+				dividendo += s;
+				
+				MessageBox.Show(f+"#Atrib \n"+s +" "+disimilitud);
+
+			}
+			
+			MessageBox.Show("Final:"+divisor+"/"+dividendo);
+			
+			disimilitud = divisor / dividendo;
+			
+			return disimilitud;
+		}
+		
+		
+		private bool esBinarioAsimetrico(int posAtrib)
+		{
+			bool esBinAsimetrico = false;
+			
+			//en base a la posicion del atributo se puede determinar que encabeado tiene y su tipo
+			
+			if(cdd.tiposDatos[posAtrib] == "boleano")
+			{
+				//MessageBox.Show( cdd.tiposDatos[posAtrib]+"Es boleano");
+				List<string> dominios = cdd.obtenerDominios(cdd.encabezados[posAtrib]);
+				if(dominios.Contains("1") && dominios.Contains("0"))
+				{
+					//MessageBox.Show( cdd.tiposDatos[posAtrib]+"Es boleano asimetrico");
+					esBinAsimetrico = true;
+				}
+			}
+			
+			return esBinAsimetrico;
+		}
+		
+		private bool esFaltante(string valorAtrib)
+		{
+			bool falta = false;
+			
+			//MessageBox.Show(valorAtrib +"= nada");
+			if(valorAtrib == "" || valorAtrib == cdd.valorNulo)
+			{
+				falta = true;
+			}
+			return falta;
+		}
+		
+		private double obtenerDisimilitudNumerico(double val1, double val2, int posAtrib)
+		{
+			double divisor = Math.Abs(val1 - val2);
+			double max = obtenerMax(posAtrib);
+			double min = obtenerMin(posAtrib);
+			double dividendo = max - min;
+			double d = divisor / dividendo;
+			return d;
+		}
+		
+		private double obtenerMax(int posAtrib)
+		{
+			double max = 0;
+			
+			List<string> valoresSinFaltantes = obtenerValoresSinFaltantesDeUnAtrib(posAtrib);
+
+			int cantInstancias= valoresSinFaltantes.Count;
+			
+			string valorActual = "";
+			
+			List<double> valores = new List<double>();
+			
+			for(int f = 0; f < cantInstancias; f++)
+			{
+				valorActual = valoresSinFaltantes[f];
+				valores.Add(double.Parse(valorActual));
+			}
+			
+			valores.Sort();
+			
+			max = valores[valores.Count -1];
+			
+			return max;
+		}
+		
+		private double obtenerMin(int posAtrib)
+		{
+			double min = 0;
+			
+			List<string> valoresSinFaltantes = obtenerValoresSinFaltantesDeUnAtrib(posAtrib);
+
+			int cantInstancias= valoresSinFaltantes.Count;
+			
+			string valorActual = "";
+			
+			List<double> valores = new List<double>();
+			
+			for(int f = 0; f < cantInstancias; f++)
+			{
+				valorActual = valoresSinFaltantes[f];
+				valores.Add(double.Parse(valorActual));
+			}
+			
+			valores.Sort();
+			
+			min = valores[0];
+			
+			return min;
+		}
+		
+		private List<string> obtenerValoresSinFaltantesDeUnAtrib(int posAtrib)
+		{
+			List<string> valoresSinFaltantes = new List<string>();
+			
+			for(int i = 0; i < conjuntoDeDatos.Rows.Count; i++) // recorre cada fila
+			{
+				string valorActual = conjuntoDeDatos.Rows[i][posAtrib].ToString();
+				if(valorActual != "" && valorActual != cdd.valorNulo)
+				{
+					valoresSinFaltantes.Add(valorActual);
+				}
+			}
+			
+			return valoresSinFaltantes;
+		}
+		
+		private double calcularZparaOrdinales(int posAtrib, string valor)
+		{			
+			//se va atomar el orden de llegada de los dominios como el orden de menor a mayor importancia
+			//val1 =1, val2 =2 , ... , valN =N
+			double zNumerica = 0;
+			
+			List<string> dominios = cdd.obtenerDominios(cdd.encabezados[posAtrib]);
+			
+			List<double> z = new List<double>();
+			
+			for(int i = 0; i < dominios.Count; i++)//asigna los valores a cada valor
+			{
+				z.Add(i + 1);
+			}
+			
+			for(int i = 0; i < dominios.Count; i++)
+			{
+				if(dominios[i] == valor) //esto encuentra la pos del valor en los dominios
+				{
+					zNumerica = i;
+				}
+			}
+			
+			zNumerica -= 1;
+			zNumerica /= z.Count - 1;
+			
+			return zNumerica;
+		}
+		
 		private string calcularKNN()
 		{
 			string knn = "";
@@ -1051,17 +1316,21 @@ namespace Proyecto_Mineria_de_Datos
 			
 			return knn;
 		}
+		
 		void Button2Click(object sender, EventArgs e)
 		{
 			int k = int.Parse(textBoxKconjuntoDisjuntos.Text);
 			
 			//inicialmente le manda todo el conjunto de datos, pero 
 			//con kafold esto deberia cambiar?
-			DataTable conjuntoDeDatos = cdd.dtConjuntoDatos;
+			//DataTable conjuntoDeDatos = cdd.dtConjuntoDatos;
+			conjuntoDeDatos = cdd.dtConjuntoDatos;
+			//DataTable instancias = conjuntoDeDatos;
 			
 			if(k <= conjuntoDeDatos.Rows.Count)
 			{
-				calcularKMeans(conjuntoDeDatos, k);
+				//calcularKMeans(instancias, k);
+				calcularKMeans(k);
 			}
 			else
 			{
