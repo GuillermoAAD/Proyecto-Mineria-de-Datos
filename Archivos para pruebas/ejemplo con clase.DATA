@@ -1,11 +1,11 @@
-%%  
-@relation jugar 
-@attribute Pronostico nominal (sunny | rainy | overcast) 
-@attribute Temperatura numeric [0-9]+ 
-@attribute Humedad numeric [0-9]+ 
-@attribute Viento nominal (TRUE | FALSE) 
-@attribute Jugar class (yes | no) 
-@missingValue  
+%% Dataset de ejemplo con clase      
+@relation jugar      
+@attribute Pronostico nominal (sunny | rainy | overcast)      
+@attribute Temperatura numeric [0-9]+      
+@attribute Humedad numeric [0-9]+      
+@attribute Viento boleano (TRUE | FALSE)      
+@attribute Jugar class (yes | no)      
+@missingValue       
 @data 
 sunny,85,85,FALSE,no
 rainy,80,90,TRUE,no

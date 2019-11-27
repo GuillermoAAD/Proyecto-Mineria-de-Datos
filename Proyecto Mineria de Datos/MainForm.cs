@@ -53,6 +53,7 @@ namespace Proyecto_Mineria_de_Datos
 			tipoCB.Items.Add("numeric");
 			tipoCB.Items.Add("nominal");
 			tipoCB.Items.Add("ordinal");
+			tipoCB.Items.Add("boleano");
 			tipoCB.Items.Add("class");
 			
 			//
@@ -443,5 +444,15 @@ namespace Proyecto_Mineria_de_Datos
 				resaltarValoresFaltantes();
 			}
 		}
+		void MuestreoDeDatosToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			muestreo mdd = new muestreo(cdde, dataGridView1);						
+			DialogResult res = mdd.ShowDialog();
+			if(res == DialogResult.OK)
+			{
+				//Aquí no es necesario poner algo :v
+				//resaltarValoresFaltantes(); Por si acaso
+			}
+		}		
 	}
 }

@@ -326,6 +326,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "transformacionDatos";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Transformación de datos";
 			this.ResumeLayout(false);
 			this.PerformLayout();

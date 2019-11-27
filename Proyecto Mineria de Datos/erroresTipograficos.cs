@@ -122,11 +122,11 @@ namespace Proyecto_Mineria_de_Datos
 			}
 			if(correcto == true)
 			{
-				MessageBox.Show("No existe ninguna instancia fuera de dominio para el atributo: "+ atributoCB.SelectedItem.ToString(), "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				MessageBox.Show("No existe ninguna instancia fuera de dominio para el atributo -> "+ atributoCB.SelectedItem.ToString(), "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 			else
 			{
-				MessageBox.Show("Correcíon de errores tipográficos de " + atributoCB.SelectedItem + " completada", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				MessageBox.Show("Correccíon de errores tipográficos de " + atributoCB.SelectedItem + " completada", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 		}
 		public int distanciaDeLevenshtein(string s, string t)

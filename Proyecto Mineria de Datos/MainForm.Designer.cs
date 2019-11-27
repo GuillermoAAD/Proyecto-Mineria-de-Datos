@@ -260,6 +260,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.muestreoDeDatosToolStripMenuItem.Name = "muestreoDeDatosToolStripMenuItem";
 			this.muestreoDeDatosToolStripMenuItem.Size = new System.Drawing.Size(253, 22);
 			this.muestreoDeDatosToolStripMenuItem.Text = "Muestreo de datos";
+			this.muestreoDeDatosToolStripMenuItem.Click += new System.EventHandler(this.MuestreoDeDatosToolStripMenuItemClick);
 			// 
 			// transformaciónDeDatosToolStripMenuItem
 			// 
@@ -304,7 +305,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(218, 24);
 			this.label2.TabIndex = 4;
-			this.label2.Text = "Cantidad de  instancias:";
+			this.label2.Text = "Cantidad de instancias:";
 			// 
 			// labelNombreConjuntoDatos
 			// 
@@ -321,7 +322,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(218, 24);
 			this.label4.TabIndex = 6;
-			this.label4.Text = "Cantidad de  atributos:";
+			this.label4.Text = "Cantidad de atributos:";
 			// 
 			// labelCantidadInstancias
 			// 
