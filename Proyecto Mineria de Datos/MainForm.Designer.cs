@@ -288,6 +288,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
 			this.dataGridView1.Size = new System.Drawing.Size(600, 500);
 			this.dataGridView1.TabIndex = 1;
+			this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1CellEndEdit);
 			// 
 			// label1
 			// 

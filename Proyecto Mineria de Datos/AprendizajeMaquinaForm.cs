@@ -26,6 +26,7 @@ namespace Proyecto_Mineria_de_Datos
 		
 		//Se usa este para no trabajar con el original y poder hacer lo de kfold
 		DataTable conjuntoDeDatos;
+		public double val;
 		
 		public AprendizajeMaquinaForm(ConjuntoDeDatosExtendido cddx)
 		{
@@ -46,7 +47,18 @@ namespace Proyecto_Mineria_de_Datos
 			labelEncabezados.Text = extraerAtribsSinClase();
 			radioButtonClasificacion.Checked = false;
 			radioButtonRegresion.Checked = false;
-
+			for(int i = 0; i < cdd.encabezados.Count; i++)
+			{
+				if(cdd.tiposDatos[i] != "numeric")
+				{
+					atrclasCB.Items.Add(cdd.encabezados[i]);
+				}
+			}
+			if(atrclasCB.Items.Count > 0)
+			{
+				atrclasCB.SelectedIndex = 0;
+			}
+			valorkNumUD.Maximum = cdd.calcularCantidadInstancias();
 		}
 		
 		private string calcularZeroR ()
@@ -900,6 +912,19 @@ namespace Proyecto_Mineria_de_Datos
 			
 			//hace la accion solo si esta seleccionada
 			if(radioButtonClasificacion.Checked){
+				atrclasCB.Items.Clear();
+				for(int i = 0; i < cdd.encabezados.Count; i++)
+				{
+					if(cdd.tiposDatos[i] != "numeric")
+					{
+						atrclasCB.Items.Add(cdd.encabezados[i]);
+					}
+				}
+				if(atrclasCB.Items.Count > 0)
+				{
+					atrclasCB.SelectedIndex = 0;
+				}
+				
 				//Revisa si existe una clase definida, si no, no puede realizar ninguna operacion
 			// y no abre el form de aprendizaje maquina
 	 			if( cdd.obtenerClase() != "")
@@ -937,6 +962,21 @@ namespace Proyecto_Mineria_de_Datos
 		private void RadioButtonRegresionCheckedChanged(object sender, EventArgs e)
 		{
 			mostrarDatosRegresion();
+			if(radioButtonRegresion.Checked == true)
+			{
+				atrclasCB.Items.Clear();
+				for(int i = 0; i < cdd.encabezados.Count; i++)
+				{
+					if(cdd.tiposDatos[i] == "numeric")
+					{
+						atrclasCB.Items.Add(cdd.encabezados[i]);
+					}
+				}
+				if(atrclasCB.Items.Count > 0)
+				{
+					atrclasCB.SelectedIndex = 0;
+				}
+			}
 		}
 		
 		private void mostrarDatosClasificacion()
@@ -1159,11 +1199,11 @@ namespace Proyecto_Mineria_de_Datos
 				divisor += (s * disimilitud);
 				dividendo += s;
 				
-				MessageBox.Show(f+"#Atrib \n"+s +" "+disimilitud);
+				//MessageBox.Show(f+"#Atrib \n"+s +" "+disimilitud);
 
 			}
 			
-			MessageBox.Show("Final:"+divisor+"/"+dividendo);
+			//MessageBox.Show("Final:"+divisor+"/"+dividendo);
 			
 			disimilitud = divisor / dividendo;
 			
@@ -1310,10 +1350,73 @@ namespace Proyecto_Mineria_de_Datos
 		
 		private string calcularKNN()
 		{
+			//conjuntoDeDatos es un datatable global
+			conjuntoDeDatos = cdd.dtConjuntoDatos;
+			DataTable aux = new DataTable();
+			//Este auxiliar para que disque se muestre sin normalizar pero este tambien
+			//por una extraña razon se normaliza hahaha
+			//aux = conjuntoDeDatos;
+			aux = cdd.dtConjuntoDatos;
+			string encabezado = atrclasCB.SelectedItem.ToString();
 			string knn = "";
-			
+			int atrseleccionado = cdd.encabezados.IndexOf(encabezado);
+			//Las instancias del Datatable
+			List<string> instanciasDeDT;
+			//Con esto conozco la distancia con cada fila para saber cual es la menor
+			List<double> distanciaXfila = new List<double>();
+			//Esta aquí anda pero aun no le doy uso
+			int k = int.Parse(valorkNumUD.Value.ToString());
+			double menor = 0;
+			//Este metodo mete a un array cada valor de la instancia escrita en el textbox
+			string[] valoresInstancia = separarValoresDeUnaInstancia(nInstClasTB.Text);	
+			//Guardo el array anterior en una List
+			List<string> valoresTB = new List<string>(valoresInstancia);
+			//Para cada columna
+			for(int j = 0; j < conjuntoDeDatos.Columns.Count; j++)
+			{
+				//Si es numerico el valor de la instancia escrita en el textbox
+				if(cdd.tiposDatos[j] == "numeric")
+				{
+					//Si es el valor que se quiere predecir se iguala a 0 para que no truene este pedo 
+					if(valoresTB[j] == "")
+					{
+						valoresTB[j] = "0";
+					}
+					//Se normaliza toda la columna de ese atributo y tambien el valor de la instancia del TextBox
+					normalizarNumericos(j, valoresTB[j]);
+					//Se guarda el valor numerico normalizado en el List
+					valoresTB[j] = val.ToString();
+				}	
+			}
 			//Tambien haz lo mismo para el de knn, gracias
-			
+			for(int i = 0; i < cdd.calcularCantidadInstancias(); i++)
+			{
+				instanciasDeDT = convertirInstanciaDataTtable_A_List(i);
+				double dist = obtenerDistanciaAtributosMezclados(instanciasDeDT, valoresTB);
+				distanciaXfila.Add(dist);
+				//En la primera vuelta se guarda el primer valor como el menor
+				if(i == 0)
+				{
+					menor = distanciaXfila[i];
+				}
+				//Para los demas casos se compara si la distancia de esa fila es menor que la actual guardada
+				else if(distanciaXfila[i] < menor)
+				{
+					//De ser asi se guarda la distancia de esa fila como el nuevo menor
+					menor = distanciaXfila[i];
+				}
+				//MessageBox.Show(dist.ToString(), "DISTANCIAS");				
+			}
+			//MessageBox.Show(menor.ToString(), "MENOR");
+			//Obtengo el indice de la fila que tiene la distancia menor
+			int indicemenor = distanciaXfila.IndexOf(menor);
+			//En el conjuntoDeDatos se normalizo por lo que a idea es mostrar el resultado normalizado
+			resultadoNormL.Text = conjuntoDeDatos.Rows[indicemenor][atrseleccionado].ToString();
+			//Se muestra la distancia menor
+			distL.Text = menor.ToString("0.00");
+			//Aqui almaceno el resultado ya sea categorico o el numerico sin normalizar se supone 
+			knn = aux.Rows[indicemenor][atrseleccionado].ToString();
+			//Retorno el resultado (sin normalizar en caso de ser numerico)
 			return knn;
 		}
 		
@@ -1339,7 +1442,56 @@ namespace Proyecto_Mineria_de_Datos
 			}
 	
 		}
-		
-		
+		void CalcClasBTNClick(object sender, EventArgs e)
+		{
+			string[] valoreSeparadosInstancia = separarValoresDeUnaInstancia(nInstClasTB.Text);
+			//Con esto me aseguro de que ingrese bien los espacios
+			if(valoreSeparadosInstancia.Length == cdd.encabezados.Count)
+			{
+				try
+				{
+					//Aqui se ejecuta el kNN
+					string knn = calcularKNN();
+					//Se muestra el resultado (sin normalizar en caso de ser numerico)
+					resultadoL.Text = knn;
+					//En caso de que se trate de un problema de clasificacion, los categoricos
+					//no se pueden normalizar por lo que se queda solo con un guión
+					if(radioButtonClasificacion.Checked == true)
+					{
+						resultadoNormL.Text = "-";
+					}
+				}
+				catch(Exception ex)
+				{
+					MessageBox.Show(ex.ToString());
+				}
+			}
+			else
+			{
+				MessageBox.Show("Asegurese de ingresar correctamente la instancia");
+			}
+		}
+		void normalizarNumericos(int indice, string valor)
+		{
+			val = double.Parse(valor);
+			string encabezado = cdd.encabezados[indice];			
+			double minActual = obtenerMin(indice);
+			double maxActual = obtenerMax(indice);
+			double actual;
+			double nuevo;
+			//Se localiza en indice del atributo
+			int i = indice;
+			//Se obtiene el numero de instancias
+			int cantInstancias = cdd.calcularCantidadInstancias();
+			for(int j = 0; j < cantInstancias; j++)
+			{
+				actual = double.Parse(cdd.dtConjuntoDatos.Rows[j][i].ToString());
+				nuevo = ((actual - minActual)/(maxActual - minActual));
+				//conjuntoDeDatos es un datatable global
+				conjuntoDeDatos.Rows[j][i] = nuevo.ToString("0.00");
+			}
+			//Este sera el valor normalizado de la instancia que escribe el usuario
+			val = ((val - minActual)/(maxActual - minActual));
+		}
 	}
 }

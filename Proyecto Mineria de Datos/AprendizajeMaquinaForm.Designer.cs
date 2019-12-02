@@ -35,7 +35,6 @@ namespace Proyecto_Mineria_de_Datos
 		private System.Windows.Forms.RadioButton radioButton4;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.TextBox textBoxKfold;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.TextBox textBoxKconjuntoDisjuntos;
@@ -47,7 +46,19 @@ namespace Proyecto_Mineria_de_Datos
 		private System.Windows.Forms.TabPage tabPageKMeans;
 		private System.Windows.Forms.TabPage tabPageKNN;
 		private System.Windows.Forms.Label label11;
-		private System.Windows.Forms.TabPage tabPage1;
+		private System.Windows.Forms.ComboBox atrclasCB;
+		private System.Windows.Forms.Label label13;
+		private System.Windows.Forms.Button calcClasBTN;
+		private System.Windows.Forms.Label label14;
+		private System.Windows.Forms.Label label15;
+		private System.Windows.Forms.TextBox nInstClasTB;
+		private System.Windows.Forms.NumericUpDown valorkNumUD;
+		private System.Windows.Forms.Label label19;
+		private System.Windows.Forms.Label resultadoL;
+		private System.Windows.Forms.Label label20;
+		private System.Windows.Forms.Label distL;
+		private System.Windows.Forms.Label label21;
+		private System.Windows.Forms.Label resultadoNormL;
 		private System.Windows.Forms.Label label12;
 		
 		/// <summary>
@@ -88,7 +99,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.label5 = new System.Windows.Forms.Label();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.panel2 = new System.Windows.Forms.Panel();
-			this.textBoxKfold = new System.Windows.Forms.TextBox();
+			this.valorkNumUD = new System.Windows.Forms.NumericUpDown();
 			this.radioButton3 = new System.Windows.Forms.RadioButton();
 			this.radioButton4 = new System.Windows.Forms.RadioButton();
 			this.label6 = new System.Windows.Forms.Label();
@@ -104,19 +115,30 @@ namespace Proyecto_Mineria_de_Datos
 			this.tabPageNaiveBayes = new System.Windows.Forms.TabPage();
 			this.tabPageKMeans = new System.Windows.Forms.TabPage();
 			this.tabPageKNN = new System.Windows.Forms.TabPage();
+			this.distL = new System.Windows.Forms.Label();
+			this.label21 = new System.Windows.Forms.Label();
+			this.resultadoL = new System.Windows.Forms.Label();
+			this.label20 = new System.Windows.Forms.Label();
+			this.label19 = new System.Windows.Forms.Label();
+			this.calcClasBTN = new System.Windows.Forms.Button();
+			this.label14 = new System.Windows.Forms.Label();
+			this.label15 = new System.Windows.Forms.Label();
+			this.nInstClasTB = new System.Windows.Forms.TextBox();
+			this.atrclasCB = new System.Windows.Forms.ComboBox();
+			this.label13 = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.label12 = new System.Windows.Forms.Label();
+			this.resultadoNormL = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.valorkNumUD)).BeginInit();
 			this.tabControlClasificacion.SuspendLayout();
 			this.tabPageZeroR.SuspendLayout();
 			this.tabPageOneR.SuspendLayout();
 			this.tabPageNaiveBayes.SuspendLayout();
 			this.tabPageKMeans.SuspendLayout();
 			this.tabPageKNN.SuspendLayout();
-			this.tabPage1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -284,7 +306,7 @@ namespace Proyecto_Mineria_de_Datos
 			// panel2
 			// 
 			this.panel2.AutoSize = true;
-			this.panel2.Controls.Add(this.textBoxKfold);
+			this.panel2.Controls.Add(this.valorkNumUD);
 			this.panel2.Controls.Add(this.radioButton3);
 			this.panel2.Controls.Add(this.radioButton4);
 			this.panel2.Controls.Add(this.label6);
@@ -293,14 +315,22 @@ namespace Proyecto_Mineria_de_Datos
 			this.panel2.Size = new System.Drawing.Size(437, 53);
 			this.panel2.TabIndex = 19;
 			// 
-			// textBoxKfold
+			// valorkNumUD
 			// 
-			this.textBoxKfold.Enabled = false;
-			this.textBoxKfold.Location = new System.Drawing.Point(272, 27);
-			this.textBoxKfold.Name = "textBoxKfold";
-			this.textBoxKfold.Size = new System.Drawing.Size(60, 20);
-			this.textBoxKfold.TabIndex = 15;
-			this.textBoxKfold.Text = "1";
+			this.valorkNumUD.Location = new System.Drawing.Point(272, 27);
+			this.valorkNumUD.Minimum = new decimal(new int[] {
+			1,
+			0,
+			0,
+			0});
+			this.valorkNumUD.Name = "valorkNumUD";
+			this.valorkNumUD.Size = new System.Drawing.Size(43, 20);
+			this.valorkNumUD.TabIndex = 30;
+			this.valorkNumUD.Value = new decimal(new int[] {
+			1,
+			0,
+			0,
+			0});
 			// 
 			// radioButton3
 			// 
@@ -404,12 +434,11 @@ namespace Proyecto_Mineria_de_Datos
 			this.tabControlClasificacion.Controls.Add(this.tabPageNaiveBayes);
 			this.tabControlClasificacion.Controls.Add(this.tabPageKMeans);
 			this.tabControlClasificacion.Controls.Add(this.tabPageKNN);
-			this.tabControlClasificacion.Controls.Add(this.tabPage1);
 			this.tabControlClasificacion.Location = new System.Drawing.Point(10, 69);
 			this.tabControlClasificacion.Name = "tabControlClasificacion";
 			this.tabControlClasificacion.SelectedIndex = 0;
 			this.tabControlClasificacion.Size = new System.Drawing.Size(684, 298);
-			this.tabControlClasificacion.TabIndex = 0;
+			this.tabControlClasificacion.TabIndex = 1;
 			// 
 			// tabPageZeroR
 			// 
@@ -469,14 +498,130 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			// tabPageKNN
 			// 
+			this.tabPageKNN.Controls.Add(this.resultadoNormL);
+			this.tabPageKNN.Controls.Add(this.label12);
+			this.tabPageKNN.Controls.Add(this.distL);
+			this.tabPageKNN.Controls.Add(this.label21);
+			this.tabPageKNN.Controls.Add(this.resultadoL);
+			this.tabPageKNN.Controls.Add(this.label20);
+			this.tabPageKNN.Controls.Add(this.label19);
+			this.tabPageKNN.Controls.Add(this.calcClasBTN);
+			this.tabPageKNN.Controls.Add(this.label14);
+			this.tabPageKNN.Controls.Add(this.label15);
+			this.tabPageKNN.Controls.Add(this.nInstClasTB);
+			this.tabPageKNN.Controls.Add(this.atrclasCB);
+			this.tabPageKNN.Controls.Add(this.label13);
 			this.tabPageKNN.Controls.Add(this.label11);
 			this.tabPageKNN.Location = new System.Drawing.Point(4, 22);
 			this.tabPageKNN.Name = "tabPageKNN";
 			this.tabPageKNN.Padding = new System.Windows.Forms.Padding(3);
 			this.tabPageKNN.Size = new System.Drawing.Size(676, 272);
 			this.tabPageKNN.TabIndex = 5;
-			this.tabPageKNN.Text = "KNN (Clasificación)";
+			this.tabPageKNN.Text = "kNN";
 			this.tabPageKNN.UseVisualStyleBackColor = true;
+			// 
+			// distL
+			// 
+			this.distL.AutoSize = true;
+			this.distL.Location = new System.Drawing.Point(27, 145);
+			this.distL.Name = "distL";
+			this.distL.Size = new System.Drawing.Size(10, 13);
+			this.distL.TabIndex = 34;
+			this.distL.Text = "-";
+			// 
+			// label21
+			// 
+			this.label21.AutoSize = true;
+			this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label21.Location = new System.Drawing.Point(27, 132);
+			this.label21.Name = "label21";
+			this.label21.Size = new System.Drawing.Size(64, 13);
+			this.label21.TabIndex = 33;
+			this.label21.Text = "Distancia:";
+			// 
+			// resultadoL
+			// 
+			this.resultadoL.AutoSize = true;
+			this.resultadoL.Location = new System.Drawing.Point(27, 119);
+			this.resultadoL.Name = "resultadoL";
+			this.resultadoL.Size = new System.Drawing.Size(10, 13);
+			this.resultadoL.TabIndex = 32;
+			this.resultadoL.Text = "-";
+			// 
+			// label20
+			// 
+			this.label20.AutoSize = true;
+			this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label20.Location = new System.Drawing.Point(27, 106);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(68, 13);
+			this.label20.TabIndex = 31;
+			this.label20.Text = "Resultado:";
+			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.ForeColor = System.Drawing.SystemColors.ControlDark;
+			this.label19.Location = new System.Drawing.Point(27, 93);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(281, 13);
+			this.label19.TabIndex = 30;
+			this.label19.Text = "NOTA: Debe incluirse la coma que separa al valor faltante";
+			// 
+			// calcClasBTN
+			// 
+			this.calcClasBTN.Location = new System.Drawing.Point(430, 68);
+			this.calcClasBTN.Name = "calcClasBTN";
+			this.calcClasBTN.Size = new System.Drawing.Size(75, 23);
+			this.calcClasBTN.TabIndex = 29;
+			this.calcClasBTN.Text = "Calcular";
+			this.calcClasBTN.UseVisualStyleBackColor = true;
+			this.calcClasBTN.Click += new System.EventHandler(this.CalcClasBTNClick);
+			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.Location = new System.Drawing.Point(27, 41);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(394, 13);
+			this.label14.TabIndex = 26;
+			this.label14.Text = "Ingrese los valores para los atributos separados por coma exceptuando el faltante" +
+	":";
+			// 
+			// label15
+			// 
+			this.label15.AutoSize = true;
+			this.label15.Location = new System.Drawing.Point(27, 54);
+			this.label15.Name = "label15";
+			this.label15.Size = new System.Drawing.Size(136, 13);
+			this.label15.TabIndex = 28;
+			this.label15.Text = "ejemplo: atrib1,,atrib3,atrib4";
+			// 
+			// nInstClasTB
+			// 
+			this.nInstClasTB.Location = new System.Drawing.Point(27, 70);
+			this.nInstClasTB.Name = "nInstClasTB";
+			this.nInstClasTB.Size = new System.Drawing.Size(372, 20);
+			this.nInstClasTB.TabIndex = 27;
+			// 
+			// atrclasCB
+			// 
+			this.atrclasCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.atrclasCB.FormattingEnabled = true;
+			this.atrclasCB.Location = new System.Drawing.Point(491, 13);
+			this.atrclasCB.Name = "atrclasCB";
+			this.atrclasCB.Size = new System.Drawing.Size(179, 21);
+			this.atrclasCB.TabIndex = 25;
+			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label13.Location = new System.Drawing.Point(364, 16);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(121, 13);
+			this.label13.TabIndex = 16;
+			this.label13.Text = "Atributo a clasificar:";
 			// 
 			// label11
 			// 
@@ -484,32 +629,28 @@ namespace Proyecto_Mineria_de_Datos
 			this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label11.Location = new System.Drawing.Point(27, 16);
 			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(120, 13);
+			this.label11.Size = new System.Drawing.Size(33, 13);
 			this.label11.TabIndex = 24;
-			this.label11.Text = "KNN (clasificación):";
-			this.label11.Visible = false;
-			// 
-			// tabPage1
-			// 
-			this.tabPage1.Controls.Add(this.label12);
-			this.tabPage1.Location = new System.Drawing.Point(4, 22);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(676, 272);
-			this.tabPage1.TabIndex = 6;
-			this.tabPage1.Text = "KNN (Regresión)";
-			this.tabPage1.UseVisualStyleBackColor = true;
+			this.label11.Text = "KNN";
 			// 
 			// label12
 			// 
 			this.label12.AutoSize = true;
 			this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label12.Location = new System.Drawing.Point(27, 16);
+			this.label12.Location = new System.Drawing.Point(177, 106);
 			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(106, 13);
-			this.label12.TabIndex = 25;
-			this.label12.Text = "KNN (Regresión):";
-			this.label12.Visible = false;
+			this.label12.Size = new System.Drawing.Size(139, 13);
+			this.label12.TabIndex = 35;
+			this.label12.Text = "Resultado normalizado:";
+			// 
+			// resultadoNormL
+			// 
+			this.resultadoNormL.AutoSize = true;
+			this.resultadoNormL.Location = new System.Drawing.Point(180, 119);
+			this.resultadoNormL.Name = "resultadoNormL";
+			this.resultadoNormL.Size = new System.Drawing.Size(10, 13);
+			this.resultadoNormL.TabIndex = 36;
+			this.resultadoNormL.Text = "-";
 			// 
 			// AprendizajeMaquinaForm
 			// 
@@ -521,13 +662,17 @@ namespace Proyecto_Mineria_de_Datos
 			this.Controls.Add(this.dataGridView1);
 			this.Controls.Add(this.panel1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "AprendizajeMaquinaForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Aprendizaje máquina";
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.panel2.ResumeLayout(false);
 			this.panel2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.valorkNumUD)).EndInit();
 			this.tabControlClasificacion.ResumeLayout(false);
 			this.tabPageZeroR.ResumeLayout(false);
 			this.tabPageZeroR.PerformLayout();
@@ -539,8 +684,6 @@ namespace Proyecto_Mineria_de_Datos
 			this.tabPageKMeans.PerformLayout();
 			this.tabPageKNN.ResumeLayout(false);
 			this.tabPageKNN.PerformLayout();
-			this.tabPage1.ResumeLayout(false);
-			this.tabPage1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

@@ -119,7 +119,7 @@ namespace Proyecto_Mineria_de_Datos
 			actualizarLabelsMinMax(atributoCB.SelectedItem.ToString());
 			actualizarLabelsDesviacionEstandar(atributoCB.SelectedItem.ToString());
 		}
-		double obtenerMax(string encabezado)
+		public double obtenerMax(string encabezado)
 		{
 			double max = 0;
 			

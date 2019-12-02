@@ -275,19 +275,15 @@ namespace Proyecto_Mineria_de_Datos
 		}		
 		
 		void AprendizajeMáquinaToolStripMenuItemClick(object sender, EventArgs e)
-		{
-			//Revisa si existe una clase definida, si no, no puede realizar ninguna operacion
-			// y no abre el form de aprendizaje maquina
- 			//if( cdde.obtenerClase() != "")
-			//{
-				AprendizajeMaquinaForm am = new AprendizajeMaquinaForm(cdde);
-				am.Show();
-			//}
-			//else
-			//{
-				//MessageBox.Show("No hay una clase definida\n por favor defina una.",
-				 //               "Clase no encontrada");
-			//}
+		{			
+			AprendizajeMaquinaForm am = new AprendizajeMaquinaForm(cdde);
+			//am.Show();						
+			DialogResult res = am.ShowDialog();
+			if(res == DialogResult.OK)
+			{
+				//Aquí no es necesario poner algo :v
+				//resaltarValoresFaltantes(); Por si acaso
+			}
 		}
 		
 		void AtributoCBSelectedIndexChanged(object sender, EventArgs e)
@@ -348,6 +344,7 @@ namespace Proyecto_Mineria_de_Datos
 			
 			//La agregue para que se actualicen los valores faltantes
 			resaltarValoresFaltantes();
+			actualizarLabels();
 		}
 
 		//Pinta de naranja las celdas donde hay valores faltantes
@@ -385,6 +382,7 @@ namespace Proyecto_Mineria_de_Datos
 				}
 				//La agregue para que se actualicen los valores faltantes
 				resaltarValoresFaltantes();
+				actualizarLabels();
 			}
 		}
 		void BuscarYReemplazarPorAtributoToolStripMenuItemClick(object sender, EventArgs e)
@@ -453,6 +451,55 @@ namespace Proyecto_Mineria_de_Datos
 				//Aquí no es necesario poner algo :v
 				//resaltarValoresFaltantes(); Por si acaso
 			}
-		}		
+		}
+		void DataGridView1CellEndEdit(object sender, DataGridViewCellEventArgs e)
+		{
+			
+			resaltarValoresFaltantes();
+			cdde.dtConjuntoDatos = datagridToDataTable();
+			actualizarLabels();
+		}
+		DataTable datagridToDataTable()
+		{
+			//Esto castea el datagrid a un datatable y lo retorna
+			DataTable dt = new DataTable();
+			DataGridViewRow dgr = new DataGridViewRow();
+			foreach(DataGridViewColumn col in dataGridView1.Columns)
+			{
+				dt.Columns.Add(col.Name);
+			}			
+			for(int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+			{
+				DataRow dRow = dt.NewRow();
+				dgr = dataGridView1.Rows[i];
+				for(int j = 0; j < cdde.encabezados.Count; j++)
+				{					
+					if(dgr.Cells[j].FormattedValue.ToString() == "")
+					{
+						dRow[j] =  cdde.valorNulo.ToString();;
+					}
+					else
+					{
+						dRow[j] = dgr.Cells[j].FormattedValue.ToString();//cell.Value;
+					}
+				}
+				dt.Rows.Add(dRow);
+			}
+			return dt;
+		}
+		void actualizarLabels()
+		{
+			//labelCantidadInstancias.Text = edd.cantidadInstancias.ToString();
+			labelCantidadInstancias.Text = cdde.calcularCantidadInstancias().ToString();
+			
+			//labelCantidadAtributos.Text = edd.cantidadAtributos.ToString();
+			labelCantidadAtributos.Text = cdde.calcularCantidadAtributos().ToString();
+			
+			//labelNumeroValoresFaltantes.Text = edd.numeroValoresFaltantes.ToString();
+			labelNumeroValoresFaltantes.Text = cdde.calcularValoresFaltantes().ToString();
+			
+			//string cadena = edd.proporcionValoresFaltantes.ToString() + "a";
+			labelProporcionValoresFaltantes.Text = cdde.calcularProporcionValoresFaltantes().ToString("0.00") + "%";
+		}
 	}
 }

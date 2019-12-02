@@ -162,7 +162,7 @@ namespace Proyecto_Mineria_de_Datos
 			for(int j = 0; j < cantInstancias; j++)
 			{
 				//Solo para los valores nulos
-				if(cdd.dtConjuntoDatos.Rows[j][i].ToString() == cdd.valorNulo)
+				if(cdd.dtConjuntoDatos.Rows[j][i].ToString() == cdd.valorNulo || cdd.dtConjuntoDatos.Rows[j][i].ToString() == "")
 				{
 					existenFaltantes = true;
 					//If para saber que eligio el usuario
