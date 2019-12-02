@@ -10,7 +10,7 @@
     <AssemblyName>Proyecto Mineria de Datos</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <ApplicationIcon>Resources\iconoMineria.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\iconoMineriaGrande.ico</ApplicationIcon>
     <NoWin32Manifest>False</NoWin32Manifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">

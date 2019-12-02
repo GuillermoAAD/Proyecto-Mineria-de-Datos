@@ -35,14 +35,14 @@ namespace Proyecto_Mineria_de_Datos
 			
 			
 			// Esta parte es para el SplashScreen
-			//Thread t=new Thread(new ThreadStart(StartForm));
-			//t.Start();
-			//Thread.Sleep(5000);
+			Thread t=new Thread(new ThreadStart(StartForm));
+			t.Start();
+			Thread.Sleep(5000);
 			
 			InitializeComponent();
 			
 			//Finaliza el thread del SplashScreen
-			//t.Abort();
+			t.Abort();
 			
 			
 			this.Show();

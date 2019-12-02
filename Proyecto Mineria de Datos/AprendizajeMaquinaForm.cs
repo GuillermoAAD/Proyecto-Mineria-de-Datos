@@ -21,12 +21,12 @@ namespace Proyecto_Mineria_de_Datos
 	public partial class AprendizajeMaquinaForm : Form
 	{
 		
-		public ConjuntoDeDatosExtendido cdd;// cdd = conjunto de datos
+		private ConjuntoDeDatosExtendido cdd;// cdd = conjunto de datos
 		
 		
 		//Se usa este para no trabajar con el original y poder hacer lo de kfold
-		DataTable conjuntoDeDatos;
-		public double val;
+		private DataTable conjuntoDeDatosAM;//AM = AprendizajeMaquina
+		private double val;
 		
 		public AprendizajeMaquinaForm(ConjuntoDeDatosExtendido cddx)
 		{
@@ -42,7 +42,7 @@ namespace Proyecto_Mineria_de_Datos
 			cdd = new ConjuntoDeDatosExtendido();
 			cdd = cddx;
 			
-			conjuntoDeDatos = new DataTable();
+			conjuntoDeDatosAM = new DataTable();
 			
 			labelEncabezados.Text = extraerAtribsSinClase();
 			radioButtonClasificacion.Checked = false;
@@ -597,9 +597,9 @@ namespace Proyecto_Mineria_de_Datos
 			double valorNormalizado = 0;
 			double dividendo = 0;
 			
-			foreach(double val in valores)
+			foreach(double val1 in valores)
 			{
-				dividendo += val;
+				dividendo += val1;
 			}
 
 			valorNormalizado = valor/dividendo;
@@ -946,14 +946,13 @@ namespace Proyecto_Mineria_de_Datos
 						}
 					}
 					
-					
-					
 					mostrarDatosClasificacion();
 				}
 				else
 				{
 					MessageBox.Show("No hay una clase definida\n por favor defina una.",
 					                "Clase no encontrada");
+					mostrarDatosClasificacion();
 				}
 			}
 	
@@ -1003,6 +1002,7 @@ namespace Proyecto_Mineria_de_Datos
 			label10.Visible = true;
 			textBoxKconjuntoDisjuntos.Visible = true;
 			button2.Visible = true;
+			labelKMeans.Visible = true;
 		}
 		
 		private void ocultarDatosClasificacion()
@@ -1027,6 +1027,7 @@ namespace Proyecto_Mineria_de_Datos
 			label10.Visible = false;
 			textBoxKconjuntoDisjuntos.Visible = false;
 			button2.Visible = false;
+			labelKMeans.Visible = false;
 		}
 		
 		private void mostrarDatosRegresion()
@@ -1045,67 +1046,82 @@ namespace Proyecto_Mineria_de_Datos
 		//private string calcularKMeans(DataTable instancias, int k)
 		private string calcularKMeans(int k)
 		{
-			DataTable instancias = conjuntoDeDatos;
-			
 			//obtiene le numero de instancias del conjunto
-			int  cantInstancias = instancias.Rows.Count;
+			int  cantInstancias = conjuntoDeDatosAM.Rows.Count;
 			
 			//carga los clusters con los centroides iniciales (Solo la posicion en el conjunto de instancias)
 			List<int> centroides = elegirKpuntosAleatoriamente(k, cantInstancias);
 			
-			//Guarda las distancias obtenidas para cada cluster
-			List<double> distancias = new List<double>();
+			//Guarda la pos del cluster en la pos de la instancia
+			//Tiene el tamanio del total de instanciass
+			//ejemplo para =2 va a guardar solo los valores 0,1
+			List<int> clusters = new List<int>();
+			List<int> clustersTemp = new List<int>();
+
+			clusters = hacerClustering(k, cantInstancias, centroides);
+			clustersTemp = clusters;
 			
-			//Guarda las pos de cada instancia en los k clusters correspondientes
-			List< List<int> > clusters = new List<List<int>>();
 			
-			for(int j = 0; j < cantInstancias; j++)//recorre cada instancia
+			// N =  numero de iteraciones consecutivas en el que los clusters no cambien
+			int  N = 1;
+			int contador = 0;
+			
+			while(contador < N)
 			{
-				//convertir instancia a comparar en List
-				//List<string> instancia = convertirInstanciaDataTtable_A_List(instancias, j);
-				List<string> instancia = convertirInstanciaDataTtable_A_List(j);
+				//Calcular vector promedio
+				//volver a hacer clustering pero ahora con vector pro
+				//List<double> vectorPromedio = new List<double>();
 				
-				for(int i = 0; i < k; i++)//Recorre centroides
+				clusters = hacerClusteringConVectorPromedio(k, cantInstancias, centroides, clusters);
+				//MessageBox.Show("AAAA");
+				
+				string comparacionClusters = "comCluster: \n";
+				//MessageBox.Show("countcluster " + clusters.Count);
+				for(int i = 0; i < clusters.Count; i++)
 				{
-					//convertir instanciaCentroide e instancia a comparar en List
-					//List<string> instanciaCentroide = convertirInstanciaDataTtable_A_List(instancias, centroides[i]);
-					List<string> instanciaCentroide = convertirInstanciaDataTtable_A_List(centroides[i]);
-					
-					if(j != centroides[i]) // ignora las instancias que estan como centroide del cluster
+					comparacionClusters += clusters[i] + " == " + clustersTemp[i] +"\n";
+				}
+				comparacionClusters += "\n tamanios:" + clusters.Count +"=="+clustersTemp.Count;
+				//MessageBox.Show(comparacionClusters);
+				
+				//Reviso si los valores del cluster actual, y del anterior son iguales
+				bool iguales = true;
+				for(int i = 0; i < clusters.Count; i++)
+				{
+					if(clusters[i] != clustersTemp[i])
 					{
-						//obtener distancia de instancia vs centroide
-						//double distancia = obtenerDistanciaAtributosMezclados(instanciaCentroide, instancia);
-						distancias.Add(obtenerDistanciaAtributosMezclados(instanciaCentroide, instancia));
+						iguales = false;
+						break;
 					}
 				}
 				
-				//pongo la posicion de la primer distancia como la minima
-				int posDistanciaMenor = 0;
-				
-				//comparo la distancia actual contra la menor
-				
-				for(int i = 1; i < k; i++)//Recorre distancias obtenidas para saber cual es la menor
+				//if(clusters.Equals(clusters)){//revisa si el cluster nuevo es igual al anterior
+				if(iguales)
 				{
-					if(distancias[i] < distancias[posDistanciaMenor])
-					{
-						posDistanciaMenor = i;//esta distancia tambien indica a cual cluster ira
-					}
+					contador++;
+					//MessageBox.Show("igualdad"+contador);//muestra si son iguales
 				}
-				//Añado la pos de la instancia mas cercana al centroide al cluster correspondiente
-				clusters[posDistanciaMenor].Add(j);
-				
+				clustersTemp = clusters;
 			}
-			
-			
-			
-			//y en este punto ya se obtuvo la pos de la distancia menor
-			//entonces se agrega con el mas cercano
-			
-			string kmeans = "";
 			
 			//Compilador, por favor implementa el algoritmo K-means
 			//y pon el resultado en el string anterior
 			//gracias
+			
+			
+			/*
+			Esto es para la grafica de dispersion, masomenos asi deberia estar
+			chart1.Series[0].Points.AddXY(3, 1);
+			chart1.Series[0].Points.AddXY(3, 2);
+			chart1.Series[0].Points.AddXY(3, 3);
+			chart1.Series.Add("cluster2");
+			chart1.Series[1].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastPoint;
+			chart1.Series[1].Points.AddXY(5, 1);
+			chart1.Series[1].Points.AddXY(5, 2);
+			chart1.Series[1].Points.AddXY(5, 3);
+			*/
+			
+			string kmeans = convertirResultadosKMeansAString(k, clusters);
 			
 			return kmeans;
 		}
@@ -1133,14 +1149,14 @@ namespace Proyecto_Mineria_de_Datos
 			return puntos;
 		}
 		
-		//private List<string> convertirInstanciaDataTtable_A_List(DataTable conjuntoDeDatos, int fila)
+		//private List<string> convertirInstanciaDataTtable_A_List(DataTable conjuntoDeDatosAM, int fila)
 		private List<string> convertirInstanciaDataTtable_A_List(int fila)
 		{
 			List<string> instancia = new List<string>();
 			
-			for(int c = 0; c < conjuntoDeDatos.Columns.Count; c++)//recorre cada columna
+			for(int c = 0; c < conjuntoDeDatosAM.Columns.Count; c++)//recorre cada columna
 			{
-				instancia.Add( conjuntoDeDatos.Rows[fila][c].ToString() );
+				instancia.Add( conjuntoDeDatosAM.Rows[fila][c].ToString() );
 			}
 			
 			return instancia;
@@ -1209,7 +1225,6 @@ namespace Proyecto_Mineria_de_Datos
 			
 			return disimilitud;
 		}
-		
 		
 		private bool esBinarioAsimetrico(int posAtrib)
 		{
@@ -1307,9 +1322,9 @@ namespace Proyecto_Mineria_de_Datos
 		{
 			List<string> valoresSinFaltantes = new List<string>();
 			
-			for(int i = 0; i < conjuntoDeDatos.Rows.Count; i++) // recorre cada fila
+			for(int i = 0; i < conjuntoDeDatosAM.Rows.Count; i++) // recorre cada fila
 			{
-				string valorActual = conjuntoDeDatos.Rows[i][posAtrib].ToString();
+				string valorActual = conjuntoDeDatosAM.Rows[i][posAtrib].ToString();
 				if(valorActual != "" && valorActual != cdd.valorNulo)
 				{
 					valoresSinFaltantes.Add(valorActual);
@@ -1348,14 +1363,180 @@ namespace Proyecto_Mineria_de_Datos
 			return zNumerica;
 		}
 		
+		private string convertirResultadosKMeansAString(int k, List<int> clusters)
+		{
+			string kmeans = "Instancias X cluster:\n\n";
+			
+			// En este punto voy a recorrer cada cluster
+			//para mostrar las instancias que contiene cada uno
+			for(int i = 0; i < k; i++)
+			{
+				kmeans += "Cluster[" + i +"] = { ";
+				//recorrolos cluster y busco aquellos que coincidan con el cluster
+				for(int j = 0; j < clusters.Count; j++)
+				{
+					if(clusters[j] == i)
+					{
+						kmeans += j+1 + " ";
+					}
+				}
+				kmeans += "}\n";
+			}
+			
+			return kmeans;
+		}
+		
+		private int obtenerDistanciaMenor(int k, List<double> distancias)
+		{
+			//pongo la posicion de la primer distancia como la minima
+			int posDistanciaMenor = 0;
+			
+			//comparo la distancia actual contra la menor
+			
+			for(int i = 1; i < k; i++)//Recorre distancias obtenidas para saber cual es la menor
+			{
+				//MessageBox.Show("tamanioDistancias:"+distancias.Count+"\ni: " +i +"< posDistmenor: "+ posDistanciaMenor);
+				if(distancias[i] < distancias[posDistanciaMenor])
+				{
+					posDistanciaMenor = i;//esta distancia tambien indica a cual cluster ira
+				}
+			}
+			return posDistanciaMenor;
+		}
+		
+		private List<int> hacerClustering(int k, int cantInstancias, List<int> centroides)
+		{
+			List<int> clusters = new List<int>();
+			
+			for(int j = 0; j < cantInstancias; j++)//recorre cada instancia
+			{
+				//Guarda las distancias obtenidas para cada cluster
+				List<double> distancias = new List<double>();
+				
+				//convertir instancia a comparar en List
+				List<string> instancia = convertirInstanciaDataTtable_A_List(j);
+				
+				for(int i = 0; i < k; i++)//Recorre centroides
+				{
+					//convertir instanciaCentroide e instancia a comparar en List
+					//List<string> instanciaCentroide = convertirInstanciaDataTtable_A_List(instancias, centroides[i]);
+					List<string> instanciaCentroide = convertirInstanciaDataTtable_A_List(centroides[i]);
+					
+					//if(j != centroides[i]) // ignora las instancias que estan como centroide del cluster
+					//{
+						//obtener distancia de instancia vs centroide
+						distancias.Add(obtenerDistanciaAtributosMezclados(instanciaCentroide, instancia));
+					//}
+					//MessageBox.Show("pos:" + i + "\ndistancia:"+distancias[i]);
+				}
+				
+				int posDistanciaMenor = obtenerDistanciaMenor(k, distancias);
+				
+				//MessageBox.Show("posDistanciaMenor"+ posDistanciaMenor + "\nJ "+j);
+				//"\nclusters:"+clusters.Count);
+				//Añado la pos de la instancia mas cercana al centroide al cluster correspondiente
+				clusters.Add(posDistanciaMenor);
+			}
+			
+			return clusters;
+		}
+		
+		private List<int> hacerClusteringConVectorPromedio(int k, int cantInstancias, List<int> centroides, List<int> clustersTemp)
+		{
+			List<int> clusters = new List<int>();
+			
+			for(int j = 0; j < cantInstancias; j++)//recorre cada instancia
+			{
+				//Guarda las distancias obtenidas para cada cluster
+				List<double> distancias = new List<double>();
+				
+				//convertir instancia a comparar en List
+				List<string> instancia = convertirInstanciaDataTtable_A_List(j);
+			
+				//convertir
+				
+				for(int i = 0; i < k; i++)//Recorre centroides
+				{
+					//convertir instanciaCentroide e instancia a comparar en List
+					//List<string> instanciaCentroide = convertirInstanciaDataTtable_A_List(centroides[i]);
+					
+					//calcular vectorpromedio que sera la nueva instanciaCentroide
+					List<string> instanciaCentroide = calcularVectorPromedio(i, clustersTemp);
+					
+					//obtener distancia de instancia vs centroide
+					//double distancia = obtenerDistanciaAtributosMezclados(instanciaCentroide, instancia);
+					distancias.Add(obtenerDistanciaAtributosMezclados(instanciaCentroide, instancia));
+					//MessageBox.Show("pos:" + i + "\ndistancia:"+distancias[i]);
+				}
+				
+				
+				int posDistanciaMenor = obtenerDistanciaMenor(k, distancias);
+				
+				//MessageBox.Show("posDistanciaMenor"+ posDistanciaMenor + "\nJ "+j);
+				//"\nclusters:"+clusters.Count);
+				//Añado la pos de la instancia mas cercana al centroide al cluster correspondiente
+				clusters.Add(posDistanciaMenor);
+			}
+			
+			return clusters;
+		}
+		
+		private List<string> calcularVectorPromedio(int numeroCluster, List<int> clusters)
+		{
+			List<double> divisores = new List<double>();
+			//aparto los espacios de divisores(1 para cada atrib) e inicializo en 0
+			for(int c = 0; c < conjuntoDeDatosAM.Columns.Count; c++ )//recorre cada atributo y lo suma al espacio divisor correspondiente
+			{
+				divisores.Add(0);
+			}
+			
+			
+			double dividendo = 0; // va a tener la suma de todas las instancias que correspondan a un cluster
+			
+			for(int i = 0; i < clusters.Count; i++)
+			{
+				if(clusters[i] == numeroCluster)//if la posicion, tiene el valor del cluster a revisar, se suma
+				{
+					dividendo++;//suma a uno el dividendo
+					
+					for(int c = 0; c < conjuntoDeDatosAM.Columns.Count; c++ )//recorre cada atributo y lo suma al espacio divisor correspondiente
+					{
+						//MessageBox.Show(conjuntoDeDatosAM.Rows[i][c].ToString());
+						double valorCelda = double.Parse(conjuntoDeDatosAM.Rows[i][c].ToString());
+						divisores[c] += valorCelda;
+					}
+				}
+			}
+			
+			//divido cada valor de divisores entre el dividendo
+			for(int i = 0; i < divisores.Count; i++)
+			{
+				divisores[i] /= dividendo;
+			}
+			
+			//transformo la lista de divisores a string, ya que para este
+			//punto ya tiene los promedios para cada atrib del cluster
+			List<string> vectorPromedio = new List<string>(); // cada espacio es el promedio para atributo
+			
+			for(int i = 0; i < divisores.Count; i++)
+			{
+				string valorPromedio = divisores[i].ToString();
+				vectorPromedio.Add(valorPromedio);
+			}
+			
+			//MessageBox.Show("CantAtribs"+vectorPromedio.Count.ToString());
+			
+			return vectorPromedio;			
+		}
+		
 		private string calcularKNN()
 		{
-			//conjuntoDeDatos es un datatable global
-			conjuntoDeDatos = cdd.dtConjuntoDatos;
+			//conjuntoDeDatosAM es un datatable global
+			conjuntoDeDatosAM = cdd.dtConjuntoDatos;
 			DataTable aux = new DataTable();
 			//Este auxiliar para que disque se muestre sin normalizar pero este tambien
 			//por una extraña razon se normaliza hahaha
-			//aux = conjuntoDeDatos;
+			//aux = conjuntoDeDatosAM;
 			aux = cdd.dtConjuntoDatos;
 			string encabezado = atrclasCB.SelectedItem.ToString();
 			string knn = "";
@@ -1372,7 +1553,7 @@ namespace Proyecto_Mineria_de_Datos
 			//Guardo el array anterior en una List
 			List<string> valoresTB = new List<string>(valoresInstancia);
 			//Para cada columna
-			for(int j = 0; j < conjuntoDeDatos.Columns.Count; j++)
+			for(int j = 0; j < conjuntoDeDatosAM.Columns.Count; j++)
 			{
 				//Si es numerico el valor de la instancia escrita en el textbox
 				if(cdd.tiposDatos[j] == "numeric")
@@ -1410,8 +1591,8 @@ namespace Proyecto_Mineria_de_Datos
 			//MessageBox.Show(menor.ToString(), "MENOR");
 			//Obtengo el indice de la fila que tiene la distancia menor
 			int indicemenor = distanciaXfila.IndexOf(menor);
-			//En el conjuntoDeDatos se normalizo por lo que a idea es mostrar el resultado normalizado
-			resultadoNormL.Text = conjuntoDeDatos.Rows[indicemenor][atrseleccionado].ToString();
+			//En el conjuntoDeDatosAM se normalizo por lo que a idea es mostrar el resultado normalizado
+			resultadoNormL.Text = conjuntoDeDatosAM.Rows[indicemenor][atrseleccionado].ToString();
 			//Se muestra la distancia menor
 			distL.Text = menor.ToString("0.00");
 			//Aqui almaceno el resultado ya sea categorico o el numerico sin normalizar se supone 
@@ -1426,14 +1607,14 @@ namespace Proyecto_Mineria_de_Datos
 			
 			//inicialmente le manda todo el conjunto de datos, pero 
 			//con kafold esto deberia cambiar?
-			//DataTable conjuntoDeDatos = cdd.dtConjuntoDatos;
-			conjuntoDeDatos = cdd.dtConjuntoDatos;
-			//DataTable instancias = conjuntoDeDatos;
+			//DataTable conjuntoDeDatosAM = cdd.dtConjuntoDatos;
+			conjuntoDeDatosAM = cdd.dtConjuntoDatos;
+			//DataTable instancias = conjuntoDeDatosAM;
 			
-			if(k <= conjuntoDeDatos.Rows.Count)
+			if(k <= conjuntoDeDatosAM.Rows.Count)
 			{
 				//calcularKMeans(instancias, k);
-				calcularKMeans(k);
+				labelKMeans.Text =  calcularKMeans(k);
 			}
 			else
 			{
@@ -1442,6 +1623,7 @@ namespace Proyecto_Mineria_de_Datos
 			}
 	
 		}
+		
 		void CalcClasBTNClick(object sender, EventArgs e)
 		{
 			string[] valoreSeparadosInstancia = separarValoresDeUnaInstancia(nInstClasTB.Text);
@@ -1487,8 +1669,8 @@ namespace Proyecto_Mineria_de_Datos
 			{
 				actual = double.Parse(cdd.dtConjuntoDatos.Rows[j][i].ToString());
 				nuevo = ((actual - minActual)/(maxActual - minActual));
-				//conjuntoDeDatos es un datatable global
-				conjuntoDeDatos.Rows[j][i] = nuevo.ToString("0.00");
+				//conjuntoDeDatosAM es un datatable global
+				conjuntoDeDatosAM.Rows[j][i] = nuevo.ToString("0.00");
 			}
 			//Este sera el valor normalizado de la instancia que escribe el usuario
 			val = ((val - minActual)/(maxActual - minActual));

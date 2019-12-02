@@ -60,7 +60,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.progressBar1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
 			this.progressBar1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
 			this.progressBar1.Location = new System.Drawing.Point(107, 241);
-			this.progressBar1.MarqueeAnimationSpeed = 170;
+			this.progressBar1.MarqueeAnimationSpeed = 190;
 			this.progressBar1.Name = "progressBar1";
 			this.progressBar1.Size = new System.Drawing.Size(286, 10);
 			this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;

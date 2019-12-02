@@ -60,6 +60,7 @@ namespace Proyecto_Mineria_de_Datos
 		private System.Windows.Forms.Label label21;
 		private System.Windows.Forms.Label resultadoNormL;
 		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.Label labelKMeans;
 		
 		/// <summary>
 		/// Disposes resources used by the form.
@@ -84,7 +85,6 @@ namespace Proyecto_Mineria_de_Datos
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AprendizajeMaquinaForm));
 			this.label1 = new System.Windows.Forms.Label();
-			this.dataGridView1 = new System.Windows.Forms.DataGridView();
 			this.labelZeroR = new System.Windows.Forms.Label();
 			this.labelOneR = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
@@ -114,7 +114,10 @@ namespace Proyecto_Mineria_de_Datos
 			this.tabPageOneR = new System.Windows.Forms.TabPage();
 			this.tabPageNaiveBayes = new System.Windows.Forms.TabPage();
 			this.tabPageKMeans = new System.Windows.Forms.TabPage();
+			this.labelKMeans = new System.Windows.Forms.Label();
 			this.tabPageKNN = new System.Windows.Forms.TabPage();
+			this.resultadoNormL = new System.Windows.Forms.Label();
+			this.label12 = new System.Windows.Forms.Label();
 			this.distL = new System.Windows.Forms.Label();
 			this.label21 = new System.Windows.Forms.Label();
 			this.resultadoL = new System.Windows.Forms.Label();
@@ -127,9 +130,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.atrclasCB = new System.Windows.Forms.ComboBox();
 			this.label13 = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
-			this.label12 = new System.Windows.Forms.Label();
-			this.resultadoNormL = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+			this.dataGridView1 = new System.Windows.Forms.DataGridView();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.valorkNumUD)).BeginInit();
@@ -139,6 +140,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.tabPageNaiveBayes.SuspendLayout();
 			this.tabPageKMeans.SuspendLayout();
 			this.tabPageKNN.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -151,20 +153,6 @@ namespace Proyecto_Mineria_de_Datos
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Zero-R:";
 			this.label1.Visible = false;
-			// 
-			// dataGridView1
-			// 
-			this.dataGridView1.AllowUserToAddRows = false;
-			this.dataGridView1.AllowUserToDeleteRows = false;
-			this.dataGridView1.AllowUserToOrderColumns = true;
-			this.dataGridView1.AllowUserToResizeColumns = false;
-			this.dataGridView1.AllowUserToResizeRows = false;
-			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView1.Location = new System.Drawing.Point(254, 430);
-			this.dataGridView1.Name = "dataGridView1";
-			this.dataGridView1.RowHeadersVisible = false;
-			this.dataGridView1.Size = new System.Drawing.Size(436, 131);
-			this.dataGridView1.TabIndex = 1;
 			// 
 			// labelZeroR
 			// 
@@ -484,6 +472,7 @@ namespace Proyecto_Mineria_de_Datos
 			// 
 			// tabPageKMeans
 			// 
+			this.tabPageKMeans.Controls.Add(this.labelKMeans);
 			this.tabPageKMeans.Controls.Add(this.textBoxKconjuntoDisjuntos);
 			this.tabPageKMeans.Controls.Add(this.button2);
 			this.tabPageKMeans.Controls.Add(this.label10);
@@ -495,6 +484,16 @@ namespace Proyecto_Mineria_de_Datos
 			this.tabPageKMeans.TabIndex = 4;
 			this.tabPageKMeans.Text = "K-Means";
 			this.tabPageKMeans.UseVisualStyleBackColor = true;
+			// 
+			// labelKMeans
+			// 
+			this.labelKMeans.AutoSize = true;
+			this.labelKMeans.Location = new System.Drawing.Point(27, 87);
+			this.labelKMeans.Name = "labelKMeans";
+			this.labelKMeans.Size = new System.Drawing.Size(102, 13);
+			this.labelKMeans.TabIndex = 28;
+			this.labelKMeans.Text = "Instancias X cluster:";
+			this.labelKMeans.Visible = false;
 			// 
 			// tabPageKNN
 			// 
@@ -519,6 +518,25 @@ namespace Proyecto_Mineria_de_Datos
 			this.tabPageKNN.TabIndex = 5;
 			this.tabPageKNN.Text = "kNN";
 			this.tabPageKNN.UseVisualStyleBackColor = true;
+			// 
+			// resultadoNormL
+			// 
+			this.resultadoNormL.AutoSize = true;
+			this.resultadoNormL.Location = new System.Drawing.Point(180, 119);
+			this.resultadoNormL.Name = "resultadoNormL";
+			this.resultadoNormL.Size = new System.Drawing.Size(10, 13);
+			this.resultadoNormL.TabIndex = 36;
+			this.resultadoNormL.Text = "-";
+			// 
+			// label12
+			// 
+			this.label12.AutoSize = true;
+			this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label12.Location = new System.Drawing.Point(177, 106);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(139, 13);
+			this.label12.TabIndex = 35;
+			this.label12.Text = "Resultado normalizado:";
 			// 
 			// distL
 			// 
@@ -633,30 +651,25 @@ namespace Proyecto_Mineria_de_Datos
 			this.label11.TabIndex = 24;
 			this.label11.Text = "KNN";
 			// 
-			// label12
+			// dataGridView1
 			// 
-			this.label12.AutoSize = true;
-			this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label12.Location = new System.Drawing.Point(177, 106);
-			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(139, 13);
-			this.label12.TabIndex = 35;
-			this.label12.Text = "Resultado normalizado:";
-			// 
-			// resultadoNormL
-			// 
-			this.resultadoNormL.AutoSize = true;
-			this.resultadoNormL.Location = new System.Drawing.Point(180, 119);
-			this.resultadoNormL.Name = "resultadoNormL";
-			this.resultadoNormL.Size = new System.Drawing.Size(10, 13);
-			this.resultadoNormL.TabIndex = 36;
-			this.resultadoNormL.Text = "-";
+			this.dataGridView1.AllowUserToAddRows = false;
+			this.dataGridView1.AllowUserToDeleteRows = false;
+			this.dataGridView1.AllowUserToOrderColumns = true;
+			this.dataGridView1.AllowUserToResizeColumns = false;
+			this.dataGridView1.AllowUserToResizeRows = false;
+			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dataGridView1.Location = new System.Drawing.Point(254, 430);
+			this.dataGridView1.Name = "dataGridView1";
+			this.dataGridView1.RowHeadersVisible = false;
+			this.dataGridView1.Size = new System.Drawing.Size(436, 131);
+			this.dataGridView1.TabIndex = 1;
 			// 
 			// AprendizajeMaquinaForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(707, 545);
+			this.ClientSize = new System.Drawing.Size(707, 375);
 			this.Controls.Add(this.tabControlClasificacion);
 			this.Controls.Add(this.panel2);
 			this.Controls.Add(this.dataGridView1);
@@ -667,7 +680,6 @@ namespace Proyecto_Mineria_de_Datos
 			this.Name = "AprendizajeMaquinaForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Aprendizaje máquina";
-			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.panel2.ResumeLayout(false);
@@ -684,6 +696,7 @@ namespace Proyecto_Mineria_de_Datos
 			this.tabPageKMeans.PerformLayout();
 			this.tabPageKNN.ResumeLayout(false);
 			this.tabPageKNN.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

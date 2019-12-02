@@ -5,7 +5,7 @@
 @attribute Humedad numeric [0-9]+ 
 @attribute Viento nominal (TRUE | FALSE) 
 @attribute Jugar class (yes | no) 
-@missingValue ?
+@missingValue  
 @data 
 sunny,85,85,FALSE,no
 rainy,80,90,TRUE,no
